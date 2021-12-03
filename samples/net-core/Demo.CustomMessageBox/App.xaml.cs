@@ -9,7 +9,7 @@ namespace Demo.CustomMessageBox
         protected override void OnStartup(StartupEventArgs e)
         {
             SimpleIoc.Default.Register<IDialogService>(
-                () => new DialogService(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
+                () => new DialogServiceBase(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
         }
     }
 }

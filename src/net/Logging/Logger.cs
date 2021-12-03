@@ -10,7 +10,7 @@ namespace MvvmDialogs.Logging
     /// </summary>
     public static class Logger
     {
-        private static Action<string> writer = s => { };
+        private static Action<string> writer = _ => { };
 
         /// <summary>
         /// Set this property to expose logs for diagnostics purposes.

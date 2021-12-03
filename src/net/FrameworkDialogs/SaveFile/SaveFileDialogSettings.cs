@@ -1,9 +1,8 @@
-﻿using System.Windows.Forms;
-
+﻿
 namespace MvvmDialogs.FrameworkDialogs.SaveFile
 {
     /// <summary>
-    /// Settings for <see cref="SaveFileDialog"/>.
+    /// Settings for SaveFileDialog.
     /// </summary>
     public class SaveFileDialogSettings : FileDialogSettings
     {

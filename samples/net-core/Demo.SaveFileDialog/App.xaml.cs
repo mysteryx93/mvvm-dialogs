@@ -8,7 +8,7 @@ namespace Demo.SaveFileDialog
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
+            SimpleIoc.Default.Register<IDialogService>(() => new DialogServiceBase());
         }
     }
 }

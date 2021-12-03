@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace MvvmDialogs.FrameworkDialogs.FolderBrowser
 {
     /// <summary>
-    /// Settings for <see cref="FolderBrowserDialog"/>.
+    /// Settings for FolderBrowserDialog.
     /// </summary>
     public class FolderBrowserDialogSettings
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using MvvmDialogs.DialogFactories;
 using MvvmDialogs.DialogTypeLocators;
 using MvvmDialogs.FrameworkDialogs;
@@ -11,7 +10,6 @@ using MvvmDialogs.FrameworkDialogs.OpenFile;
 using MvvmDialogs.FrameworkDialogs.SaveFile;
 using MvvmDialogs.Logging;
 using MvvmDialogs.Reflection;
-using MvvmDialogs.Views;
 
 namespace MvvmDialogs
 {
@@ -19,7 +17,7 @@ namespace MvvmDialogs
     /// Class abstracting the interaction between view models and views when it comes to
     /// opening dialogs using the MVVM pattern in WPF.
     /// </summary>
-    public class DialogService : IDialogService
+    public abstract class DialogServiceBase : IDialogService
     {
         private static readonly string DialogResultPropertyName =
             Members.GetPropertyName((IModalDialogViewModel viewModel) => viewModel.DialogResult);
@@ -28,21 +26,21 @@ namespace MvvmDialogs
         private readonly IDialogTypeLocator dialogTypeLocator;
         private readonly IFrameworkDialogFactory frameworkDialogFactory;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DialogService"/> class.
-        /// </summary>
-        /// <remarks>
-        /// By default <see cref="ReflectionDialogFactory"/> is used as dialog factory,
-        /// <see cref="NamingConventionDialogTypeLocator"/> is used as dialog type locator
-        /// and <see cref="DefaultFrameworkDialogFactory"/> is used as framework dialog factory.
-        /// </remarks>
-        public DialogService()
-            : this(null)
-        {
-        }
+        // /// <summary>
+        // /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
+        // /// </summary>
+        // /// <remarks>
+        // /// By default <see cref="ReflectionDialogFactory"/> is used as dialog factory,
+        // /// <see cref="NamingConventionDialogTypeLocator"/> is used as dialog type locator
+        // /// and <see cref="DefaultFrameworkDialogFactory"/> is used as framework dialog factory.
+        // /// </remarks>
+        // public DialogServiceBase()
+        //     : this(null)
+        // {
+        // }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DialogService"/> class.
+        /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
         /// </summary>
         /// <param name="dialogFactory">
         /// Factory responsible for creating dialogs. Default value is an instance of
@@ -56,32 +54,23 @@ namespace MvvmDialogs
         /// Factory responsible for creating framework dialogs. Default value is an instance of
         /// <see cref="DefaultFrameworkDialogFactory"/>.
         /// </param>
-        public DialogService(
-            IDialogFactory? dialogFactory = null,
-            IDialogTypeLocator? dialogTypeLocator = null,
-            IFrameworkDialogFactory? frameworkDialogFactory = null)
+        public DialogServiceBase(
+            IDialogFactory dialogFactory,
+            IDialogTypeLocator dialogTypeLocator,
+            IFrameworkDialogFactory frameworkDialogFactory)
         {
-            this.dialogFactory = dialogFactory ?? new ReflectionDialogFactory();
-            this.dialogTypeLocator = dialogTypeLocator ?? new NamingConventionDialogTypeLocator();
-            this.frameworkDialogFactory = frameworkDialogFactory ?? new DefaultFrameworkDialogFactory();
+            this.dialogFactory = dialogFactory;
+            this.dialogTypeLocator = dialogTypeLocator;
+            this.frameworkDialogFactory = frameworkDialogFactory;
+            // this.dialogFactory = dialogFactory ?? new ReflectionDialogFactory();
+            // this.dialogTypeLocator = dialogTypeLocator ?? new NamingConventionDialogTypeLocator();
+            // this.frameworkDialogFactory = frameworkDialogFactory ?? new DefaultFrameworkDialogFactory();
         }
 
         #region IDialogService Members
 
         /// <inheritdoc />
         public void Show<T>(
-            INotifyPropertyChanged ownerViewModel,
-            INotifyPropertyChanged viewModel)
-            where T : Window
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            Show(ownerViewModel, viewModel, typeof(T));
-        }
-
-        /// <inheritdoc />
-        public void ShowCustom<T>(
             INotifyPropertyChanged ownerViewModel,
             INotifyPropertyChanged viewModel)
             where T : IWindow
@@ -91,6 +80,18 @@ namespace MvvmDialogs
 
             Show(ownerViewModel, viewModel, typeof(T));
         }
+
+        // /// <inheritdoc />
+        // public void ShowCustom<T>(
+        //     INotifyPropertyChanged ownerViewModel,
+        //     INotifyPropertyChanged viewModel)
+        //     where T : IWindow
+        // {
+        //     if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+        //     if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        //
+        //     Show(ownerViewModel, viewModel, typeof(T));
+        // }
 
         /// <inheritdoc />
         public void Show(
@@ -108,18 +109,6 @@ namespace MvvmDialogs
         public bool? ShowDialog<T>(
             INotifyPropertyChanged ownerViewModel,
             IModalDialogViewModel viewModel)
-            where T : Window
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            return ShowDialog(ownerViewModel, viewModel, typeof(T));
-        }
-
-        /// <inheritdoc />
-        public bool? ShowCustomDialog<T>(
-            INotifyPropertyChanged ownerViewModel,
-            IModalDialogViewModel viewModel)
             where T : IWindow
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
@@ -127,6 +116,18 @@ namespace MvvmDialogs
 
             return ShowDialog(ownerViewModel, viewModel, typeof(T));
         }
+
+        // /// <inheritdoc />
+        // public bool? ShowCustomDialog<T>(
+        //     INotifyPropertyChanged ownerViewModel,
+        //     IModalDialogViewModel viewModel)
+        //     where T : IWindow
+        // {
+        //     if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+        //     if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        //
+        //     return ShowDialog(ownerViewModel, viewModel, typeof(T));
+        // }
 
         /// <inheritdoc />
         public bool? ShowDialog(
@@ -141,48 +142,50 @@ namespace MvvmDialogs
         }
 
         /// <inheritdoc />
-        public bool Activate(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        public abstract bool Activate(INotifyPropertyChanged viewModel);
+        // public bool Activate(INotifyPropertyChanged viewModel)
+        // {
+        //     if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        //
+        //     Window? windowToActivate =
+        //         (
+        //             from Window? window in Application.Current.Windows
+        //             where window != null
+        //             where viewModel.Equals(window.DataContext)
+        //             select window
+        //         )
+        //         .FirstOrDefault();
+        //
+        //     return windowToActivate?.Activate() ?? false;
+        // }
 
-            Window? windowToActivate =
-                (
-                    from Window? window in Application.Current.Windows
-                    where window != null
-                    where viewModel.Equals(window.DataContext)
-                    select window
-                )
-                .FirstOrDefault();
+        public abstract bool Close(INotifyPropertyChanged viewModel);
 
-            return windowToActivate?.Activate() ?? false;
-        }
-
-        /// <inheritdoc />
-        public bool Close(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            foreach (Window? window in Application.Current.Windows)
-            {
-                if (window == null || !viewModel.Equals(window.DataContext))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    window.Close();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Logger.Write($"Failed to close dialog: {e}");
-                    break;
-                }
-            }
-
-            return false;
-        }
+        // public bool Close(INotifyPropertyChanged viewModel)
+        // {
+        //     if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        //
+        //     foreach (Window? window in Application.Current.Windows)
+        //     {
+        //         if (window == null || !viewModel.Equals(window.DataContext))
+        //         {
+        //             continue;
+        //         }
+        //
+        //         try
+        //         {
+        //             window.Close();
+        //             return true;
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             Logger.Write($"Failed to close dialog: {e}");
+        //             break;
+        //         }
+        //     }
+        //
+        //     return false;
+        // }
 
         /// <inheritdoc />
         public MessageBoxResult ShowMessageBox(
@@ -331,11 +334,11 @@ namespace MvvmDialogs
         /// <summary>
         /// Finds window corresponding to specified view model.
         /// </summary>
-        private static Window FindOwnerWindow(INotifyPropertyChanged viewModel)
+        private static IWindow FindOwnerWindow(INotifyPropertyChanged viewModel)
         {
-            IView? view = DialogServiceViews.Views.SingleOrDefault(
+            var view = DialogServiceViews.Views.SingleOrDefault(
                 registeredView =>
-                    registeredView.Source.IsLoaded &&
+                    registeredView.IsLoaded &&
                     ReferenceEquals(registeredView.DataContext, viewModel));
 
             if (view == null)
@@ -347,7 +350,7 @@ namespace MvvmDialogs
             }
 
             // Get owner window
-            Window? owner = view.GetOwner();
+            var owner = view.GetOwner();
             if (owner == null) throw new InvalidOperationException($"View of type '{view.GetType()}' is not registered.");
 
             return owner;

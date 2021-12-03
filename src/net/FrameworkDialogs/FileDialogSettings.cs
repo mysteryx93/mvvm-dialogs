@@ -1,7 +1,6 @@
 ﻿#if !PRE_NET40
 using System.Collections.Generic;
 #endif
-using System.Windows.Forms;
 
 namespace MvvmDialogs.FrameworkDialogs
 {
@@ -30,21 +29,21 @@ namespace MvvmDialogs.FrameworkDialogs
         /// </value>
         public bool CheckPathExists { get; set; } = true;
 
-#if !PRE_NET40
-        /// <summary>
-        /// Gets or sets the list of custom places for file dialog boxes.
-        /// </summary>
-        /// <value>
-        /// The list of custom places.
-        /// </value>
-        /// <remarks>
-        /// Starting in Windows Vista, open and save file dialog boxes have a <b>Favorite Links</b>
-        /// panel on the left side of the dialog box that allows the user to quickly navigate to a
-        /// different location. These links are called custom places. This property allows you to
-        /// modify the list that appears when your application uses a file dialog box.
-        /// </remarks>
-        public IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get; set; } = new List<Microsoft.Win32.FileDialogCustomPlace>();
-#endif
+// #if !PRE_NET40
+//         /// <summary>
+//         /// Gets or sets the list of custom places for file dialog boxes.
+//         /// </summary>
+//         /// <value>
+//         /// The list of custom places.
+//         /// </value>
+//         /// <remarks>
+//         /// Starting in Windows Vista, open and save file dialog boxes have a <b>Favorite Links</b>
+//         /// panel on the left side of the dialog box that allows the user to quickly navigate to a
+//         /// different location. These links are called custom places. This property allows you to
+//         /// modify the list that appears when your application uses a file dialog box.
+//         /// </remarks>
+//         public IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get; set; } = new List<Microsoft.Win32.FileDialogCustomPlace>();
+// #endif
 
         /// <summary>
         /// Gets or sets a value that specifies the default extension string to use to filter the

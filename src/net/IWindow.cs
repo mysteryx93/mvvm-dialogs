@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace MvvmDialogs
 {
@@ -13,6 +11,11 @@ namespace MvvmDialogs
     /// </remarks>
     public interface IWindow
     {
+        /// <summary>
+        /// Occurs when the window is closed.
+        /// </summary>
+        event EventHandler Closed;
+
         /// <summary>
         /// Gets or sets the data context for an element when it participates in data binding.
         /// </summary>
@@ -30,7 +33,7 @@ namespace MvvmDialogs
         /// <summary>
         /// Gets or sets the <see cref="ContentControl"/> that owns this <see cref="IWindow"/>.
         /// </summary>
-        ContentControl Owner { get; set; }
+        IWindow Owner { get; set; }
 
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.

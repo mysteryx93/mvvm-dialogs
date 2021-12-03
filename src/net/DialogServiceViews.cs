@@ -9,9 +9,9 @@ using MvvmDialogs.Views;
 namespace MvvmDialogs
 {
     /// <summary>
-    /// Class containing means to register a <see cref="FrameworkElement"/> as a view for a view
+    /// Class containing means to register a FrameworkElement as a view for a view
     /// model when using the MVVM pattern. The view will then be used by the
-    /// <see cref="DialogService"/> when opening dialogs.
+    /// <see cref="DialogServiceBase"/> when opening dialogs.
     /// </summary>
     public static class DialogServiceViews
     {
@@ -20,66 +20,66 @@ namespace MvvmDialogs
         /// </summary>
         private static readonly List<IView> InternalViews = new List<IView>();
 
-        #region Attached properties
-
-        /// <summary>
-        /// Attached property describing whether a <see cref="FrameworkElement"/> is acting as a
-        /// view for a view model when using the MVVM pattern.
-        /// </summary>
-        public static readonly DependencyProperty IsRegisteredProperty =
-            DependencyProperty.RegisterAttached(
-                "IsRegistered",
-                typeof(bool),
-                typeof(DialogServiceViews),
-                new PropertyMetadata(IsRegisteredChanged));
-
-        /// <summary>
-        /// Gets value describing whether <see cref="DependencyObject"/> is acting as a view for a
-        /// view model when using the MVVM pattern
-        /// </summary>
-        public static bool GetIsRegistered(DependencyObject target)
-        {
-            return (bool)target.GetValue(IsRegisteredProperty);
-        }
-
-        /// <summary>
-        /// Sets value describing whether <see cref="DependencyObject"/> is acting as a view for a
-        /// view model when using the MVVM pattern
-        /// </summary>
-        public static void SetIsRegistered(DependencyObject target, bool value)
-        {
-            target.SetValue(IsRegisteredProperty, value);
-        }
-
-        /// <summary>
-        /// Is responsible for handling <see cref="IsRegisteredProperty"/> changes, i.e.
-        /// whether <see cref="FrameworkElement"/> is acting as a view for a view model when using
-        /// the MVVM pattern.
-        /// </summary>
-        private static void IsRegisteredChanged(
-            DependencyObject target,
-            DependencyPropertyChangedEventArgs e)
-        {
-            // The Visual Studio Designer or Blend will run this code when setting the attached
-            // property in XAML, however we wish to abort the execution since the behavior adds
-            // nothing to a designer.
-            if (DesignerProperties.GetIsInDesignMode(target))
-                return;
-
-            if (target is FrameworkElement view)
-            {
-                if ((bool)e.NewValue)
-                {
-                    Register(new ViewWrapper(view));
-                }
-                else
-                {
-                    Unregister(new ViewWrapper(view));
-                }
-            }
-        }
-
-        #endregion
+        // #region Attached properties
+        //
+        // /// <summary>
+        // /// Attached property describing whether a <see cref="FrameworkElement"/> is acting as a
+        // /// view for a view model when using the MVVM pattern.
+        // /// </summary>
+        // public static readonly DependencyProperty IsRegisteredProperty =
+        //     DependencyProperty.RegisterAttached(
+        //         "IsRegistered",
+        //         typeof(bool),
+        //         typeof(DialogServiceViews),
+        //         new PropertyMetadata(IsRegisteredChanged));
+        //
+        // /// <summary>
+        // /// Gets value describing whether <see cref="DependencyObject"/> is acting as a view for a
+        // /// view model when using the MVVM pattern
+        // /// </summary>
+        // public static bool GetIsRegistered(DependencyObject target)
+        // {
+        //     return (bool)target.GetValue(IsRegisteredProperty);
+        // }
+        //
+        // /// <summary>
+        // /// Sets value describing whether <see cref="DependencyObject"/> is acting as a view for a
+        // /// view model when using the MVVM pattern
+        // /// </summary>
+        // public static void SetIsRegistered(DependencyObject target, bool value)
+        // {
+        //     target.SetValue(IsRegisteredProperty, value);
+        // }
+        //
+        // /// <summary>
+        // /// Is responsible for handling <see cref="IsRegisteredProperty"/> changes, i.e.
+        // /// whether <see cref="FrameworkElement"/> is acting as a view for a view model when using
+        // /// the MVVM pattern.
+        // /// </summary>
+        // private static void IsRegisteredChanged(
+        //     DependencyObject target,
+        //     DependencyPropertyChangedEventArgs e)
+        // {
+        //     // The Visual Studio Designer or Blend will run this code when setting the attached
+        //     // property in XAML, however we wish to abort the execution since the behavior adds
+        //     // nothing to a designer.
+        //     if (DesignerProperties.GetIsInDesignMode(target))
+        //         return;
+        //
+        //     if (target is FrameworkElement view)
+        //     {
+        //         if ((bool)e.NewValue)
+        //         {
+        //             Register(new ViewWrapper(view));
+        //         }
+        //         else
+        //         {
+        //             Unregister(new ViewWrapper(view));
+        //         }
+        //     }
+        // }
+        //
+        // #endregion
 
         /// <summary>
         /// Gets the registered views.
@@ -98,7 +98,7 @@ namespace MvvmDialogs
             if (view == null) throw new ArgumentNullException(nameof(view));
 
             // Get owner window
-            Window owner = view.GetOwner();
+            var owner = view.GetOwner();
             if (owner == null)
             {
                 // Perform a late register when the view hasn't been loaded yet.
@@ -149,22 +149,24 @@ namespace MvvmDialogs
         /// Callback for late view register. It wasn't possible to do a instant register since the
         /// view wasn't at that point part of the logical nor visual tree.
         /// </summary>
-        private static void LateRegister(object sender, RoutedEventArgs e)
+        private static void LateRegister(object? sender, EventArgs e)
         {
-            if (e.Source is FrameworkElement frameworkElement)
+            if (sender is IView view)
             {
                 // Unregister loaded event
-                frameworkElement.Loaded -= LateRegister;
+                view.Loaded -= LateRegister;
+
+                Register(view);
 
                 // Register the view
-                if (frameworkElement is IView view)
-                {
-                    Register(view);
-                }
-                else
-                {
-                    Register(new ViewWrapper(frameworkElement));
-                }
+                // if (frameworkElement is IView view)
+                // {
+                //     Register(view);
+                // }
+                // else
+                // {
+                //     Register(new ViewWrapper(frameworkElement));
+                // }
             }
         }
 
@@ -174,7 +176,7 @@ namespace MvvmDialogs
         /// </summary>
         private static void OwnerClosed(object? sender, EventArgs e)
         {
-            if (sender is Window owner)
+            if (sender is IWindow owner)
             {
                 // Find views acting within closed window
                 IView[] windowViews = Views

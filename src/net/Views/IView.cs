@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System;
 
 namespace MvvmDialogs.Views
 {
@@ -10,7 +10,7 @@ namespace MvvmDialogs.Views
         /// <summary>
         /// Occurs when the view is laid out, rendered, and ready for interaction.
         /// </summary>
-        event RoutedEventHandler Loaded;
+        event EventHandler Loaded;
 
         /// <summary>
         /// Gets the id.
@@ -20,7 +20,7 @@ namespace MvvmDialogs.Views
         /// <summary>
         /// Gets the source.
         /// </summary>
-        FrameworkElement Source { get; }
+        IElement Source { get; }
 
         /// <summary>
         /// Gets the data context for an element when it participates in data binding.
@@ -33,8 +33,13 @@ namespace MvvmDialogs.Views
         bool IsAlive { get; }
 
         /// <summary>
-        /// Gets the owning <see cref="Window"/>.
+        /// Gets whether the view has been loaded.
         /// </summary>
-        Window GetOwner();
+        bool IsLoaded { get; }
+
+        /// <summary>
+        /// Gets the owning <see cref="IWindow"/>.
+        /// </summary>
+        IWindow? GetOwner();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-
+﻿
 namespace MvvmDialogs.FrameworkDialogs.MessageBox
 {
     /// <summary>
@@ -17,6 +16,6 @@ namespace MvvmDialogs.FrameworkDialogs.MessageBox
         /// A <see cref="MessageBoxResult"/> value that specifies which message box button is
         /// clicked by the user.
         /// </returns>
-        MessageBoxResult Show(Window owner);
+        MessageBoxResult Show(IWindow owner);
     }
 }

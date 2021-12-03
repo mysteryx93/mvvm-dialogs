@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Windows;
 using MvvmDialogs.FrameworkDialogs.FolderBrowser;
 using MvvmDialogs.FrameworkDialogs.MessageBox;
 using MvvmDialogs.FrameworkDialogs.OpenFile;
 using MvvmDialogs.FrameworkDialogs.SaveFile;
-using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
-using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace MvvmDialogs
 {
@@ -30,23 +26,23 @@ namespace MvvmDialogs
         void Show<T>(
             INotifyPropertyChanged ownerViewModel,
             INotifyPropertyChanged viewModel)
-            where T : Window;
-
-        /// <summary>
-        /// Displays a non-modal custom dialog of specified type <typeparamref name="T"/>.
-        /// </summary>
-        /// <param name="ownerViewModel">
-        /// A view model that represents the owner window of the custom dialog.
-        /// </param>
-        /// <param name="viewModel">The view model of the new custom dialog.</param>
-        /// <typeparam name="T">The type of the custom dialog to show.</typeparam>
-        /// <exception cref="ViewNotRegisteredException">
-        /// No view is registered with specified owner view model as data context.
-        /// </exception>
-        void ShowCustom<T>(
-            INotifyPropertyChanged ownerViewModel,
-            INotifyPropertyChanged viewModel)
             where T : IWindow;
+
+        // /// <summary>
+        // /// Displays a non-modal custom dialog of specified type <typeparamref name="T"/>.
+        // /// </summary>
+        // /// <param name="ownerViewModel">
+        // /// A view model that represents the owner window of the custom dialog.
+        // /// </param>
+        // /// <param name="viewModel">The view model of the new custom dialog.</param>
+        // /// <typeparam name="T">The type of the custom dialog to show.</typeparam>
+        // /// <exception cref="ViewNotRegisteredException">
+        // /// No view is registered with specified owner view model as data context.
+        // /// </exception>
+        // void ShowCustom<T>(
+        //     INotifyPropertyChanged ownerViewModel,
+        //     INotifyPropertyChanged viewModel)
+        //     where T : IWindow;
 
         /// <summary>
         /// Displays a non-modal dialog of a type that is determined by the dialog type locator.
@@ -80,27 +76,27 @@ namespace MvvmDialogs
         bool? ShowDialog<T>(
             INotifyPropertyChanged ownerViewModel,
             IModalDialogViewModel viewModel)
-            where T : Window;
-
-        /// <summary>
-        /// Displays a custom modal dialog of specified type <typeparamref name="T"/>.
-        /// </summary>
-        /// <param name="ownerViewModel">
-        /// A view model that represents the owner window of the custom dialog.
-        /// </param>
-        /// <param name="viewModel">The view model of the new custom dialog.</param>
-        /// <typeparam name="T">The type of the custom dialog to show.</typeparam>
-        /// <returns>
-        /// A nullable value of type <see cref="bool"/> that signifies how a window was closed by
-        /// the user.
-        /// </returns>
-        /// <exception cref="ViewNotRegisteredException">
-        /// No view is registered with specified owner view model as data context.
-        /// </exception>
-        bool? ShowCustomDialog<T>(
-            INotifyPropertyChanged ownerViewModel,
-            IModalDialogViewModel viewModel)
             where T : IWindow;
+
+        // /// <summary>
+        // /// Displays a custom modal dialog of specified type <typeparamref name="T"/>.
+        // /// </summary>
+        // /// <param name="ownerViewModel">
+        // /// A view model that represents the owner window of the custom dialog.
+        // /// </param>
+        // /// <param name="viewModel">The view model of the new custom dialog.</param>
+        // /// <typeparam name="T">The type of the custom dialog to show.</typeparam>
+        // /// <returns>
+        // /// A nullable value of type <see cref="bool"/> that signifies how a window was closed by
+        // /// the user.
+        // /// </returns>
+        // /// <exception cref="ViewNotRegisteredException">
+        // /// No view is registered with specified owner view model as data context.
+        // /// </exception>
+        // bool? ShowCustomDialog<T>(
+        //     INotifyPropertyChanged ownerViewModel,
+        //     IModalDialogViewModel viewModel)
+        //     where T : IWindow;
 
         /// <summary>
         /// Displays a modal dialog of a type that is determined by the dialog type locator.

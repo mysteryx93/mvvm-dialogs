@@ -1,9 +1,8 @@
-﻿using System.Windows.Forms;
-
+﻿
 namespace MvvmDialogs.FrameworkDialogs.OpenFile
 {
     /// <summary>
-    /// Settings for <see cref="OpenFileDialog"/>.
+    /// Settings for OpenFileDialog.
     /// </summary>
     public class OpenFileDialogSettings : FileDialogSettings
     {

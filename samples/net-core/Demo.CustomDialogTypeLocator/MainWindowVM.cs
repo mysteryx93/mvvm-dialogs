@@ -12,7 +12,7 @@ namespace Demo.CustomDialogTypeLocator
 
         public MainWindowVM()
         {
-            dialogService = new DialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
+            dialogService = new DialogServiceBase(dialogTypeLocator: new MyCustomDialogTypeLocator());
 
             ShowDialogCommand = new RelayCommand(ShowDialog);
         }

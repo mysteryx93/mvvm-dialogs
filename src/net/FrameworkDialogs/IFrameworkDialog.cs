@@ -1,4 +1,3 @@
-using System.Windows;
 
 namespace MvvmDialogs.FrameworkDialogs
 {
@@ -16,6 +15,6 @@ namespace MvvmDialogs.FrameworkDialogs
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        bool? ShowDialog(Window owner);
+        bool? ShowDialog(IWindow owner);
     }
 }
