@@ -1,9 +1,5 @@
-﻿using MvvmDialogs.Wpf.FrameworkDialogs.FolderBrowser;
-using MvvmDialogs.Wpf.FrameworkDialogs.MessageBox;
-using MvvmDialogs.Wpf.FrameworkDialogs.OpenFile;
-using MvvmDialogs.Wpf.FrameworkDialogs.SaveFile;
-
-namespace MvvmDialogs.Wpf.FrameworkDialogs
+﻿
+namespace MvvmDialogs.Core.FrameworkDialogs
 {
     /// <summary>
     /// Interface responsible for creating framework dialogs.
@@ -14,7 +10,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// Create an instance of the Windows message box.
         /// </summary>
         /// <param name="settings">The settings for the message box.</param>
-        IMessageBox CreateMessageBox(MessageBoxSettings settings);
+        IFrameworkDialog CreateMessageBox(MessageBoxSettings settings);
 
         /// <summary>
         /// Create an instance of the Windows open file dialog.

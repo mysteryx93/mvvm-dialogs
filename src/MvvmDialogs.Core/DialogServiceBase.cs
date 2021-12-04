@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using MvvmDialogs.Core.DialogTypeLocators;
+using MvvmDialogs.Core.FrameworkDialogs;
 
 namespace MvvmDialogs.Core
 {
@@ -8,7 +9,7 @@ namespace MvvmDialogs.Core
     /// Class abstracting the interaction between view models and views when it comes to
     /// opening dialogs using the MVVM pattern in WPF.
     /// </summary>
-    public abstract class DialogServiceBase<TWindow> : IDialogService<TWindow>
+    public abstract class DialogServiceBase : IDialogService
     {
         /// <summary>
         /// Factory responsible for creating dialogs.
@@ -20,7 +21,7 @@ namespace MvvmDialogs.Core
         protected readonly IDialogTypeLocator DialogTypeLocator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DialogServiceBase{TWindow}"/> class.
+        /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
         /// </summary>
         /// <param name="dialogFactory">Factory responsible for creating dialogs.</param>
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model.</param>
@@ -42,7 +43,6 @@ namespace MvvmDialogs.Core
 
         /// <inheritdoc />
         public void Show<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
-            where T : TWindow
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -87,7 +87,6 @@ namespace MvvmDialogs.Core
 
         /// <inheritdoc />
         public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel)
-            where T : TWindow
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -159,5 +158,26 @@ namespace MvvmDialogs.Core
 
         /// <inheritdoc />
         public abstract bool Close(INotifyPropertyChanged viewModel);
+
+        /// <inheritdoc />
+        public abstract bool? ShowMessageBox(
+            INotifyPropertyChanged ownerViewModel,
+            string? messageBoxText,
+            string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.None);
+
+        /// <inheritdoc />
+        public abstract bool? ShowMessageBox(INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings);
+
+        /// <inheritdoc />
+        public abstract bool? ShowOpenFileDialog(INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings);
+
+        /// <inheritdoc />
+        public abstract bool? ShowSaveFileDialog(INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings);
+
+        /// <inheritdoc />
+        public abstract bool? ShowFolderBrowserDialog(INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings);
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace MvvmDialogs.Core
 {
     /// <summary>
-    /// Exception thrown by <see cref="DialogServiceBase{TWindow}"/> when a view isn't registered, but its
+    /// Exception thrown by <see cref="DialogServiceBase"/> when a view isn't registered, but its
     /// DataContext is accessing the dialog service.
     /// </summary>
     [Serializable]

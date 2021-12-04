@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>default</LangVersion>
@@ -10,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MvvmDialogs.Core\MvvmDialogs.Core.csproj" />
-    <ProjectReference Include="..\net\MvvmDialogs.Core.csproj" />
   </ItemGroup>
 
 </Project>

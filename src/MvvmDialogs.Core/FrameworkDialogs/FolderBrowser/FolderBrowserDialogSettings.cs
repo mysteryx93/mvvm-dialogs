@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Windows.Forms;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs.FolderBrowser
+namespace MvvmDialogs.Core.FrameworkDialogs
 {
     /// <summary>
-    /// Settings for <see cref="FolderBrowserDialog"/>.
+    /// Settings for FolderBrowserDialog.
     /// </summary>
     public class FolderBrowserDialogSettings
     {
-        /// <summary>
-        /// Gets or sets the descriptive text displayed above the tree view control in the dialog
-        /// box.
-        /// </summary>
-        /// <value>
-        /// The description to display. The default is an empty string ("").
-        /// </value>
+        /// <summary>Gets or sets the descriptive text displayed above the tree view control in the dialog box.</summary>
+        /// <value>The description to display. The default is an empty string ("").</value>
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the root folder where the browsing starts from.
         /// </summary>
-        /// <value>
-        /// One of the <see cref="Environment.SpecialFolder"/> values. The default is
-        /// <c>Desktop</c>.
-        /// </value>
+        /// <value>One of the <see cref="Environment.SpecialFolder"/> values. The default is <c>Desktop</c>.</value>
         /// <remarks>
         /// Only the specified folder and any subfolders that are beneath it will appear in the dialog
         /// box and be selectable. The <see cref="SelectedPath"/> property, along with

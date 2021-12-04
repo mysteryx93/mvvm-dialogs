@@ -9,7 +9,7 @@ namespace MvvmDialogs.Core
     /// <summary>
     /// Class containing means to register a FrameworkElement as a view for a view
     /// model when using the MVVM pattern. The view will then be used by the
-    /// <see cref="DialogServiceBase{TWindow}"/> when opening dialogs.
+    /// <see cref="DialogServiceBase"/> when opening dialogs.
     /// </summary>
     public static class ViewLocator
     {

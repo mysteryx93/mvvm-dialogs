@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MvvmDialogs.Core
+namespace MvvmDialogs.Core.DialogTypeLocators
 {
     /// <summary>
     /// Interface responsible for creating dialogs.

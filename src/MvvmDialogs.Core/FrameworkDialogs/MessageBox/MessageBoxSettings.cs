@@ -1,9 +1,8 @@
-﻿using System.Windows;
-
-namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
+﻿
+namespace MvvmDialogs.Core.FrameworkDialogs
 {
     /// <summary>
-    /// Settings for <see cref="System.Windows.MessageBox"/>.
+    /// Settings for a MessageBox.
     /// </summary>
     public class MessageBoxSettings
     {
@@ -37,9 +36,23 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
         public string? MessageBoxText { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="MessageBoxOptions"/> value object that specifies the options.
-        /// Default value is <see cref="MessageBoxOptions.None"/>.
+        /// Gets or sets whether to display on the default desktop of the interactive window station. Specifies that the message box is displayed from a .NET Windows Service application in order to notify the user of an event.
         /// </summary>
-        public MessageBoxOptions Options { get; set; } = MessageBoxOptions.None;
+        public bool DefaultDesktopOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the message box text and title bar caption are right-aligned.
+        /// </summary>
+        public bool RightAlign { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether all text, buttons, icons, and title bars are displayed right-to-left.
+        /// </summary>
+        public bool RtlReading { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to display on the currently active desktop even if a user is not logged on to the computer. Specifies that the message box is displayed from a .NET Windows Service application in order to notify the user of an event.
+        /// </summary>
+        public bool ServiceNotification { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace MvvmDialogs.Core
 {
     /// <summary>
-    /// Exception thrown by <see cref="DialogServiceBase{TWindow}"/> when a certain dialog isn't found.
+    /// Exception thrown by <see cref="DialogServiceBase"/> when a certain dialog isn't found.
     /// </summary>
     [Serializable]
     public class DialogNotFoundException : Exception
