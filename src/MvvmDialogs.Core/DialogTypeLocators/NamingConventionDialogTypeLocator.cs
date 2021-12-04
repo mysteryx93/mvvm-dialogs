@@ -60,16 +60,7 @@ namespace MvvmDialogs.Core.DialogTypeLocators
             throw new TypeLoadException(AppendInfoAboutDialogTypeLocators($"View model of type '{viewModelType}' doesn't follow naming convention since it isn't suffixed with 'ViewModel'."));
         }
 
-        private static Assembly GetAssemblyFromType(Type type)
-        {
-#if NETFX_CORE
-            // GetTypeInfo is supported on UWP
-            return type.GetTypeInfo().Assembly;
-#else
-            // Assembly is supported on all .NET versions
-            return type.Assembly;
-#endif
-        }
+        private static Assembly GetAssemblyFromType(Type type) => type.Assembly;
 
         private static string AppendInfoAboutDialogTypeLocators(string errorMessage) =>
             errorMessage + Environment.NewLine +

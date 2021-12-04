@@ -34,11 +34,7 @@ namespace MvvmDialogs.Core.DialogTypeLocators
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>
         /// <returns>The dialog type if found; otherwise null.</returns>
-#if NETFX_CORE
-        internal Type Get(Type viewModelType)
-#else
         internal Type? Get(Type viewModelType)
-#endif
         {
             if (viewModelType == null)
                 throw new ArgumentNullException(nameof(viewModelType));
