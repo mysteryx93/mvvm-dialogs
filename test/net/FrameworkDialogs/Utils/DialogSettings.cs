@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MvvmDialogs.FrameworkDialogs.Utils
+namespace MvvmDialogs.Wpf.FrameworkDialogs.Utils
 {
     public static class DialogSettings
     {

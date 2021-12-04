@@ -53,9 +53,9 @@
     <Compile Include="ScreenObjects\OpenFileScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.csproj">
+    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj">
       <Project>{bc306ec6-b992-4e54-b251-4ca06a67073f}</Project>
-      <Name>MvvmDialogs</Name>
+      <Name>MvvmDialogs.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Demo.OpenFileDialog\Demo.OpenFileDialog.Framework.csproj">
       <Project>{e61092fc-fcd8-4eef-8626-185ef80c1d7f}</Project>

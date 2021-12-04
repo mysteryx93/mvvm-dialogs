@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using MvvmDialogs.FrameworkDialogs.MessageBox;
+using MvvmDialogs.Core.FrameworkDialogs.MessageBox;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomMessageBox

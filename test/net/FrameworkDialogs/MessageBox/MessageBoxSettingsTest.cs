@@ -1,8 +1,8 @@
 using System.Linq;
-using MvvmDialogs.FrameworkDialogs.Utils;
+using MvvmDialogs.Wpf.FrameworkDialogs.Utils;
 using NUnit.Framework;
 
-namespace MvvmDialogs.FrameworkDialogs.MessageBox
+namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
 {
     [TestFixture]
     public class MessageBoxSettingsTest

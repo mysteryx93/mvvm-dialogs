@@ -1,5 +1,5 @@
-﻿using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.FolderBrowser;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
 
 namespace Demo.CustomFolderBrowserDialog
 {

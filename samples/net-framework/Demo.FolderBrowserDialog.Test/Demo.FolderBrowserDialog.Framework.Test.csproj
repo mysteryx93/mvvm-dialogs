@@ -53,9 +53,9 @@
     <Compile Include="ScreenObjects\MainScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.csproj">
+    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj">
       <Project>{bc306ec6-b992-4e54-b251-4ca06a67073f}</Project>
-      <Name>MvvmDialogs</Name>
+      <Name>MvvmDialogs.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Demo.FolderBrowserDialog\Demo.FolderBrowserDialog.Framework.csproj">
       <Project>{952849d6-df09-408f-8b14-8d4e420e133e}</Project>

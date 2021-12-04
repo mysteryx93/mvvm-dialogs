@@ -53,9 +53,9 @@
     <Compile Include="ScreenObjects\MessageBoxScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.csproj">
+    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj">
       <Project>{bc306ec6-b992-4e54-b251-4ca06a67073f}</Project>
-      <Name>MvvmDialogs</Name>
+      <Name>MvvmDialogs.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Demo.MessageBox\Demo.MessageBox.Framework.csproj">
       <Project>{5440572c-08c8-4d6e-a4ef-dce93060ed66}</Project>

@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
 using IOPath = System.IO.Path;
 
 namespace Demo.OpenFileDialog

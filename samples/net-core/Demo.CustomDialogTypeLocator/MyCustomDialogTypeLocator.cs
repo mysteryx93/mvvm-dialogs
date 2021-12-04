@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using MvvmDialogs.DialogTypeLocators;
+using MvvmDialogs.Core.DialogTypeLocators;
 
 namespace Demo.CustomDialogTypeLocator
 {

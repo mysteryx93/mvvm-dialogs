@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.ModalDialog
 {

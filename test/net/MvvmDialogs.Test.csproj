@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\net\MvvmDialogs.csproj" />
+    <ProjectReference Include="..\..\src\net\MvvmDialogs.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

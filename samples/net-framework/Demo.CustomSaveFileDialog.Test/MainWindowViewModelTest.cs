@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
 using NUnit.Framework;
 
 namespace Demo.CustomSaveFileDialog

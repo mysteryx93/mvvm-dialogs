@@ -1,9 +1,9 @@
 using System.Linq;
 using Microsoft.Win32;
-using MvvmDialogs.FrameworkDialogs.Utils;
+using MvvmDialogs.Wpf.FrameworkDialogs.Utils;
 using NUnit.Framework;
 
-namespace MvvmDialogs.FrameworkDialogs.SaveFile
+namespace MvvmDialogs.Wpf.FrameworkDialogs.SaveFile
 {
     [TestFixture]
     public class SaveFileDialogSettingsTest

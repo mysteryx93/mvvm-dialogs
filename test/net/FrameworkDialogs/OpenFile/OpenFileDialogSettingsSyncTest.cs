@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using NUnit.Framework;
 
-namespace MvvmDialogs.FrameworkDialogs.OpenFile
+namespace MvvmDialogs.Wpf.FrameworkDialogs.OpenFile
 {
     [TestFixture]
     public class OpenFileDialogSettingsSyncTest

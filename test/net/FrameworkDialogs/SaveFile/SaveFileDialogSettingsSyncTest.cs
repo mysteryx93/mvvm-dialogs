@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using NUnit.Framework;
 
-namespace MvvmDialogs.FrameworkDialogs.SaveFile
+namespace MvvmDialogs.Wpf.FrameworkDialogs.SaveFile
 {
     [TestFixture]
     public class SaveFileDialogSettingsSyncTest

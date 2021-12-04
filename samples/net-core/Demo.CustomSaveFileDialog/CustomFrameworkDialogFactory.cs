@@ -1,5 +1,5 @@
-﻿using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.SaveFile;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
 
 namespace Demo.CustomSaveFileDialog
 {

@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
 using IOPath = System.IO.Path;
 
 namespace Demo.FolderBrowserDialog

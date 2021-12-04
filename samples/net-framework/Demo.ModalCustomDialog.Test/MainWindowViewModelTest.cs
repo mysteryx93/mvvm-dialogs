@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using Moq;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 using NUnit.Framework;
 
 namespace Demo.ModalCustomDialog
@@ -8,9 +8,9 @@ namespace Demo.ModalCustomDialog
     [TestFixture]
     public class MainWindowViewModelTest
     {
-        private Mock<IDialogService> dialogService; 
+        private Mock<IDialogService> dialogService;
         private MainWindowViewModel viewModel;
-        
+
         [SetUp]
         public void SetUp()
         {

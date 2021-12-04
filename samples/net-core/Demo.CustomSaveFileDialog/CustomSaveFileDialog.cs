@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
-using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomSaveFileDialog

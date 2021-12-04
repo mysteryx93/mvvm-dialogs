@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.CustomMessageBox
 {
@@ -12,7 +12,7 @@ namespace Demo.CustomMessageBox
         private readonly IDialogService dialogService;
 
         private string confirmation;
-        
+
         public MainWindowViewModel(IDialogService dialogService)
         {
             this.dialogService = dialogService;

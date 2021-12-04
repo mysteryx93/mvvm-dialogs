@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
 using IOPath = System.IO.Path;
 
 namespace Demo.CustomSaveFileDialog

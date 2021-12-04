@@ -2,14 +2,14 @@ using System;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.NonModalCustomDialog
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IDialogService dialogService;
-        
+
         public MainWindowViewModel(IDialogService dialogService)
         {
             this.dialogService = dialogService;

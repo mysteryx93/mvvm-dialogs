@@ -2,7 +2,7 @@
 using Demo.CustomDialogTypeLocator.ComponentA;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.CustomDialogTypeLocator
 {

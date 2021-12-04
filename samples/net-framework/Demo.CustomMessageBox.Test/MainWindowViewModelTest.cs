@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using Moq;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 using NUnit.Framework;
 
 namespace Demo.CustomMessageBox

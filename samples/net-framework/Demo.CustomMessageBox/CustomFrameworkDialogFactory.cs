@@ -1,5 +1,5 @@
-﻿using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.MessageBox;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Core.FrameworkDialogs.MessageBox;
 
 namespace Demo.CustomMessageBox
 {

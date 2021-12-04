@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
 using NUnit.Framework;
 
 namespace Demo.FolderBrowserDialog

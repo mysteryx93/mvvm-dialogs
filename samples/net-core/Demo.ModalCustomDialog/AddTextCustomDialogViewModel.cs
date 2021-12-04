@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.ModalCustomDialog
 {

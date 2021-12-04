@@ -3,7 +3,7 @@ using System.Windows;
 using Moq;
 using NUnit.Framework;
 
-namespace MvvmDialogs.FrameworkDialogs.MessageBox
+namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
 {
     [TestFixture]
     public class MessageBoxWrapperTest

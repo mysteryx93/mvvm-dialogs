@@ -53,9 +53,9 @@
     <Compile Include="ScreenObjects\SaveFileScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.csproj">
+    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj">
       <Project>{bc306ec6-b992-4e54-b251-4ca06a67073f}</Project>
-      <Name>MvvmDialogs</Name>
+      <Name>MvvmDialogs.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Demo.SaveFileDialog\Demo.SaveFileDialog.Framework.csproj">
       <Project>{102298ef-0ff2-4d7e-a140-8a2ea6ebda60}</Project>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using MvvmDialogs;
+using MvvmDialogs.Core;
 
 namespace Demo.NonModalCustomDialog
 {

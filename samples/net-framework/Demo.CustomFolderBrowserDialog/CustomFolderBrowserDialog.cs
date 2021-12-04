@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
-using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomFolderBrowserDialog
