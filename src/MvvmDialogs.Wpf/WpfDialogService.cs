@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using MvvmDialogs.Core;
 using MvvmDialogs.Core.DialogTypeLocators;
 using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.DialogFactories;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using MessageBoxButton = MvvmDialogs.Core.FrameworkDialogs.MessageBoxButton;
@@ -12,7 +12,7 @@ using MessageBoxImage = MvvmDialogs.Core.FrameworkDialogs.MessageBoxImage;
 using MessageBoxResult = MvvmDialogs.Core.FrameworkDialogs.MessageBoxResult;
 using Application = System.Windows.Application;
 
-namespace MvvmDialogs.Wpf
+namespace MvvmDialogs.Core
 {
     /// <summary>
     /// Class abstracting the interaction between view models and views when it comes to
@@ -20,11 +20,6 @@ namespace MvvmDialogs.Wpf
     /// </summary>
     public class WpfDialogService : DialogServiceBase
     {
-        /// <summary>
-        /// Factory responsible for creating framework dialogs.
-        /// </summary>
-        internal readonly IFrameworkDialogFactory FrameworkDialogFactory;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
         /// </summary>
@@ -41,34 +36,27 @@ namespace MvvmDialogs.Wpf
         /// <summary>
         /// Initializes a new instance of the <see cref="WpfDialogService"/> class.
         /// </summary>
-        /// <param name="dialogFactory">
-        /// Factory responsible for creating dialogs. Default value is an instance of
-        /// <see cref="WpfReflectionDialogFactory"/>.
-        /// </param>
-        /// <param name="dialogTypeLocator">
-        /// Locator responsible for finding a dialog type matching a view model. Default value is
-        /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.
-        /// </param>
-        /// <param name="frameworkDialogFactory">
-        /// Factory responsible for creating framework dialogs. Default value is an instance of
-        /// <see cref="WpfFrameworkDialogFactory"/>.
-        /// </param>
+        /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
+        /// <see cref="WpfReflectionDialogFactory"/>.</param>
+        /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
+        /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.</param>
+        /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
+        /// <see cref="WpfFrameworkDialogFactory"/>.</param>
         public WpfDialogService(
             IDialogFactory? dialogFactory = null,
             IDialogTypeLocator? dialogTypeLocator = null,
             IFrameworkDialogFactory? frameworkDialogFactory = null)
-            : base(dialogFactory ?? new WpfReflectionDialogFactory(), dialogTypeLocator ?? new NamingConventionDialogTypeLocator())
+            : base(dialogFactory ?? new WpfReflectionDialogFactory(),
+                dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
+                frameworkDialogFactory ?? new WpfFrameworkDialogFactory())
         {
-            FrameworkDialogFactory = frameworkDialogFactory ?? new WpfFrameworkDialogFactory();
         }
 
         /// <summary>
         /// Attempts to bring the window to the foreground and activates it.
         /// </summary>
         /// <param name="viewModel">The view model of the window.</param>
-        /// <returns>
-        /// true if the <see cref="Window"/> was successfully activated; otherwise, false.
-        /// </returns>
+        /// <returns>true if the <see cref="Window"/> was successfully activated; otherwise, false.</returns>
         public override bool Activate(INotifyPropertyChanged viewModel)
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -90,9 +78,7 @@ namespace MvvmDialogs.Wpf
         /// <see cref="DialogServiceBase.Show{T}"/> or <see cref="DialogServiceBase.ShowCustom{T}"/>.
         /// </summary>
         /// <param name="viewModel">The view model of the dialog to close.</param>
-        /// <returns>
-        /// true if the <see cref="Window"/> was successfully closed; otherwise, false.
-        /// </returns>
+        /// <returns>true if the <see cref="Window"/> was successfully closed; otherwise, false.</returns>
         public override bool Close(INotifyPropertyChanged viewModel)
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));

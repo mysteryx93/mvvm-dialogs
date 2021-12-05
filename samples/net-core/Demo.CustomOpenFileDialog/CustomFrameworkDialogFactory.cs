@@ -5,7 +5,11 @@ namespace Demo.CustomOpenFileDialog
 {
     public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
     {
-        public override IFrameworkDialog CreateOpenFileDialog(OpenFileDialogSettings settings) =>
-            new CustomOpenFileDialog(settings);
+        public override IFrameworkDialog Create<T>(T settings) =>
+            settings switch
+            {
+                OpenFileDialogSettings s => new CustomOpenFileDialog(s),
+                _ => base.Create(settings)
+            };
     }
 }

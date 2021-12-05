@@ -5,7 +5,11 @@ namespace Demo.CustomSaveFileDialog
 {
     public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
     {
-        public override IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings) =>
-            new CustomSaveFileDialog(settings);
+        public override IFrameworkDialog Create<T>(T settings) =>
+            settings switch
+            {
+                SaveFileDialogSettings s => new CustomSaveFileDialog(s),
+                _ => base.Create(settings)
+            };
     }
 }

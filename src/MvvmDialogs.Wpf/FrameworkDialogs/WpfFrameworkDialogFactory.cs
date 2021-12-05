@@ -1,4 +1,5 @@
-﻿using MvvmDialogs.Core.FrameworkDialogs;
+﻿using System;
+using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.MessageBox;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
@@ -9,15 +10,14 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     public class WpfFrameworkDialogFactory : IFrameworkDialogFactory
     {
         /// <inheritdoc />
-        public virtual IFrameworkDialog CreateMessageBox(MessageBoxSettings settings) => new WpfMessageBox(settings);
-
-        /// <inheritdoc />
-        public virtual IFrameworkDialog CreateOpenFileDialog(OpenFileDialogSettings settings) => new WpfOpenFileDialog(settings);
-
-        /// <inheritdoc />
-        public virtual IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings) => new WpfSaveFileDialog(settings);
-
-        /// <inheritdoc />
-        public virtual IFrameworkDialog CreateFolderBrowserDialog(FolderBrowserDialogSettings settings) => new WpfBrowserDialog(settings);
+        public virtual IFrameworkDialog Create<T>(T settings) =>
+            settings switch
+            {
+                MessageBoxSettings s => new WpfMessageBox(s),
+                OpenFileDialogSettings s => new WpfOpenFileDialog(s),
+                SaveFileDialogSettings s => new WpfSaveFileDialog(s),
+                FolderBrowserDialogSettings s => new WpfFolderBrowserDialog(s),
+                _ => throw new NotSupportedException()
+            };
     }
 }

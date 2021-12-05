@@ -12,6 +12,10 @@ namespace MvvmDialogs.Core
     public abstract class DialogServiceBase : IDialogService
     {
         /// <summary>
+        /// Factory responsible for creating framework dialogs.
+        /// </summary>
+        public IFrameworkDialogFactory FrameworkDialogFactory { get; }
+        /// <summary>
         /// Factory responsible for creating dialogs.
         /// </summary>
         protected readonly IDialogFactory DialogFactory;
@@ -25,10 +29,12 @@ namespace MvvmDialogs.Core
         /// </summary>
         /// <param name="dialogFactory">Factory responsible for creating dialogs.</param>
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model.</param>
-        protected DialogServiceBase(IDialogFactory dialogFactory, IDialogTypeLocator dialogTypeLocator)
+        /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs.</param>
+        protected DialogServiceBase(IDialogFactory dialogFactory, IDialogTypeLocator dialogTypeLocator, IFrameworkDialogFactory frameworkDialogFactory)
         {
-            this.DialogFactory = dialogFactory;
-            this.DialogTypeLocator = dialogTypeLocator;
+            DialogFactory = dialogFactory;
+            DialogTypeLocator = dialogTypeLocator;
+            FrameworkDialogFactory = frameworkDialogFactory;
         }
 
         /// <inheritdoc />

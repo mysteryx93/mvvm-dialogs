@@ -1,16 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf.FrameworkDialogs;
-using MvvmDialogs.Wpf.FrameworkDialogs.MessageBox;
 
 namespace MvvmDialogs.Core
 {
+    /// <summary>
+    /// Provides IDialogService extensions for standard dialog methods.
+    /// </summary>
     public static class FrameworkDialogsExtensions
     {
         /// <summary>
         /// Displays the FolderBrowserDialog.
         /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the folder browser dialog.</param>
         /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
@@ -22,7 +24,7 @@ namespace MvvmDialogs.Core
 
             DialogLogger.Write($"Description: {settings.Description}");
 
-            return new WpfBrowserDialog(settings)
+            return service.FrameworkDialogFactory.Create(settings)
                 .ShowDialog(ViewLocator.FindView(ownerViewModel));
         }
 
@@ -30,14 +32,14 @@ namespace MvvmDialogs.Core
         /// Displays a message box that has a message, title bar caption, button, and icon; and
         /// that accepts a default message box result and returns a result.
         /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="messageBoxText">A <see cref="string"/> that specifies the text to display.</param>
         /// <param name="caption">A <see cref="string"/> that specifies the title bar caption to display. Default value is an empty string.</param>
         /// <param name="button">A <see cref="MessageBoxButton"/> value that specifies which button or buttons to display.
         /// Default value is <see cref="MessageBoxButton.OK"/>.</param>
         /// <param name="icon">A <see cref="MessageBoxImage"/> value that specifies the icon to display.
-        /// Default value is <see cref="MessageBoxImage.None"/>.
-        /// </param>
+        /// Default value is <see cref="MessageBoxImage.None"/>.</param>
         /// <param name="defaultResult">A <see cref="MessageBoxResult"/> value that specifies the default result of the message box.
         /// Default value is <see cref="MessageBoxResult.None"/>.</param>
         /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
@@ -67,6 +69,7 @@ namespace MvvmDialogs.Core
         /// Displays a message box that has a message, title bar caption, button, and icon; and
         /// that accepts a default message box result and returns a result.
         /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the message box dialog.</param>
         /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
@@ -78,13 +81,14 @@ namespace MvvmDialogs.Core
 
             DialogLogger.Write($"Caption: {settings.Caption}; Message: {settings.MessageBoxText}");
 
-            return new WpfMessageBox(settings)
+            return service.FrameworkDialogFactory.Create(settings)
                 .ShowDialog(ViewLocator.FindView(ownerViewModel));
         }
 
         /// <summary>
         /// Displays the OpenFileDialog.
         /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the open file dialog.</param>
         /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
@@ -96,13 +100,14 @@ namespace MvvmDialogs.Core
 
             DialogLogger.Write($"Title: {settings.Title}");
 
-            return new WpfOpenFileDialog(settings)
+            return service.FrameworkDialogFactory.Create(settings)
                 .ShowDialog(ViewLocator.FindView(ownerViewModel));
         }
 
         /// <summary>
         /// Displays the SaveFileDialog.
         /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the save file dialog.</param>
         /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
@@ -114,7 +119,7 @@ namespace MvvmDialogs.Core
 
             DialogLogger.Write($"Title: {settings.Title}");
 
-            return new WpfSaveFileDialog(settings)
+            return service.FrameworkDialogFactory.Create(settings)
                 .ShowDialog(ViewLocator.FindView(ownerViewModel));
         }
     }
