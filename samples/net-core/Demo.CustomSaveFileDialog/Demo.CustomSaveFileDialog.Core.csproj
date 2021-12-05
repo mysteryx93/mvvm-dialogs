@@ -9,12 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\MvvmDialogs.Core\MvvmDialogs.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\MvvmDialogs.Wpf\MvvmDialogs.Wpf.csproj" />
   </ItemGroup>
 
 </Project>

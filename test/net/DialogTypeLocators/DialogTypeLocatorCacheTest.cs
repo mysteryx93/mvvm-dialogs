@@ -1,4 +1,5 @@
 ﻿using System;
+using MvvmDialogs.Core.DialogTypeLocators;
 using NUnit.Framework;
 
 namespace MvvmDialogs.DialogTypeLocators
@@ -41,7 +42,7 @@ namespace MvvmDialogs.DialogTypeLocators
             cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
 
             // Act
-            Type dialogType = cache.Get(typeof(TestDialogViewModel));
+            var dialogType = cache.Get(typeof(TestDialogViewModel));
 
             // Assert
             Assert.That(dialogType, Is.EqualTo(typeof(TestDialog)));
@@ -60,8 +61,6 @@ namespace MvvmDialogs.DialogTypeLocators
             Assert.That(cache.Count, Is.EqualTo(0));
         }
 
-        #region Helper classes
-
         private class TestDialogViewModel : ViewModelBase
         {
         }
@@ -69,7 +68,5 @@ namespace MvvmDialogs.DialogTypeLocators
         private class TestDialog
         {
         }
-
-        #endregion
     }
 }

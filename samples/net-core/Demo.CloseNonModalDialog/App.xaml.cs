@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs.Core;
+using MvvmDialogs.Wpf;
 
 namespace Demo.CloseNonModalDialog
 {
@@ -8,7 +9,7 @@ namespace Demo.CloseNonModalDialog
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SimpleIoc.Default.Register<IDialogService>(() => new DialogServiceBase());
+            SimpleIoc.Default.Register<IDialogService>(() => new WpfDialogService());
         }
     }
 }

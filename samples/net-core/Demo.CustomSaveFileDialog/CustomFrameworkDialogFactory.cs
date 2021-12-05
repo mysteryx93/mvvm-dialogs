@@ -1,13 +1,11 @@
 ﻿using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomSaveFileDialog
 {
-    public class CustomFrameworkDialogFactory : DefaultFrameworkDialogFactory
+    public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
     {
-        public override IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings)
-        {
-            return new CustomSaveFileDialog(settings);
-        }
+        public override IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings) =>
+            new CustomSaveFileDialog(settings);
     }
 }

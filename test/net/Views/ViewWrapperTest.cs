@@ -1,41 +1,39 @@
 ﻿using System.Threading;
 using System.Windows;
+using MvvmDialogs.Wpf;
 using NUnit.Framework;
 
 namespace MvvmDialogs.Views
 {
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    public class ViewWrapperTest
+    public class WpfViewTest
     {
         private FrameworkElement frameworkElement;
 
         [SetUp]
-        public void SetUp()
-        {
-            frameworkElement = new FrameworkElement();
-        }
+        public void SetUp() => frameworkElement = new FrameworkElement();
 
         [Test]
         public void Source()
         {
             // Arrange
-            var viewWrapper = new ViewWrapper(frameworkElement);
+            var view = new WpfView(frameworkElement);
 
             // Assert
-            Assert.That(viewWrapper.Source, Is.EqualTo(frameworkElement));
+            Assert.That(view.Source, Is.EqualTo(frameworkElement));
         }
 
         [Test]
         public void GetHashCodeOverride()
         {
             // Arrange
-            var viewWrapperA = new ViewWrapper(frameworkElement);
-            var viewWrapperB = new ViewWrapper(frameworkElement);
+            var viewA = new WpfView(frameworkElement);
+            var viewB = new WpfView(frameworkElement);
 
             // Act
-            int hashCodeA = viewWrapperA.GetHashCode();
-            int hashCodeB = viewWrapperB.GetHashCode();
+            var hashCodeA = viewA.GetHashCode();
+            var hashCodeB = viewB.GetHashCode();
 
             // Assert
             Assert.That(hashCodeA, Is.EqualTo(hashCodeB));
@@ -45,11 +43,11 @@ namespace MvvmDialogs.Views
         public void EqualsOverride()
         {
             // Arrange
-            var viewWrapperA = new ViewWrapper(frameworkElement);
-            var viewWrapperB = new ViewWrapper(frameworkElement);
+            var viewA = new WpfView(frameworkElement);
+            var viewB = new WpfView(frameworkElement);
 
             // Act
-            bool equals = viewWrapperA.Equals(viewWrapperB);
+            var equals = viewA.Equals(viewB);
 
             // Assert
             Assert.That(equals, Is.True);

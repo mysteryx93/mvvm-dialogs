@@ -7,10 +7,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="SaveFileDialog"/>.
     /// </summary>
-    internal sealed class SaveFileDialogWrapper : WpfFrameworkDialogBase<SaveFileDialogSettings>
+    internal sealed class WpfSaveFileDialog : WpfFrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <inheritdoc />
-        public SaveFileDialogWrapper(SaveFileDialogSettings settings)
+        public WpfSaveFileDialog(SaveFileDialogSettings settings)
             : base(settings)
         {
         }

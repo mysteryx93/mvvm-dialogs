@@ -1,37 +1,19 @@
-﻿using System;
-using System.Windows;
-using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomOpenFileDialog
 {
-    public class CustomOpenFileDialog : IFrameworkDialog
+    public class CustomOpenFileDialog : WpfFrameworkDialogBase<OpenFileDialogSettings>
     {
-        private readonly OpenFileDialogSettings settings;
-        private readonly VistaOpenFileDialog openFileDialog;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomOpenFileDialog"/> class.
         /// </summary>
         /// <param name="settings">The settings for the open file dialog.</param>
         public CustomOpenFileDialog(OpenFileDialogSettings settings)
+            : base(settings)
         {
-            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
-
-            openFileDialog = new VistaOpenFileDialog
-            {
-                AddExtension = settings.AddExtension,
-                CheckFileExists = settings.CheckFileExists,
-                CheckPathExists = settings.CheckPathExists,
-                DefaultExt = settings.DefaultExt,
-                FileName = settings.FileName,
-                Filter = settings.Filter,
-                FilterIndex = settings.FilterIndex,
-                InitialDirectory = settings.InitialDirectory,
-                Multiselect = settings.Multiselect,
-                Title = settings.Title
-            };
         }
 
         /// <summary>
@@ -43,16 +25,28 @@ namespace Demo.CustomOpenFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public override bool? ShowDialog(WpfWindow owner)
         {
-            if (owner == null) throw new ArgumentNullException(nameof(owner));
+            var openFileDialog = new VistaOpenFileDialog
+            {
+                AddExtension = Settings.AddExtension,
+                CheckFileExists = Settings.CheckFileExists,
+                CheckPathExists = Settings.CheckPathExists,
+                DefaultExt = Settings.DefaultExt,
+                FileName = Settings.FileName,
+                Filter = Settings.Filter,
+                FilterIndex = Settings.FilterIndex,
+                InitialDirectory = Settings.InitialDirectory,
+                Multiselect = Settings.Multiselect,
+                Title = Settings.Title
+            };
 
-            var result = openFileDialog.ShowDialog(owner);
+            var result = openFileDialog.ShowDialog(owner.Ref);
 
             // Update settings
-            settings.FileName = openFileDialog.FileName;
-            settings.FileNames = openFileDialog.FileNames;
-            settings.FilterIndex = openFileDialog.FilterIndex;
+            Settings.FileName = openFileDialog.FileName;
+            Settings.FileNames = openFileDialog.FileNames;
+            Settings.FilterIndex = openFileDialog.FilterIndex;
 
             return result;
         }

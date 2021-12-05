@@ -3,7 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
 namespace Demo.FolderBrowserDialog

@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using System.Windows;
 using Moq;
-using MvvmDialogs.Views;
+using MvvmDialogs.Core;
+using MvvmDialogs.Wpf;
+using MvvmDialogs.Wpf.DialogFactories;
 using NUnit.Framework;
 
 namespace MvvmDialogs
@@ -12,10 +14,7 @@ namespace MvvmDialogs
     public class DialogServiceViewsTest
     {
         [TearDown]
-        public void TearDown()
-        {
-            DialogServiceViews.Clear();
-        }
+        public void TearDown() => ViewLocator.Clear();
 
         [Test]
         public void RegisterWindowUsingAttachedProperty()
@@ -25,14 +24,14 @@ namespace MvvmDialogs
 
             var expected = new[]
             {
-                new ViewWrapper(window)
+                new WpfView(window)
             };
 
             // Act
             window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
-            
+
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.EqualTo(expected));
+            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
         }
 
         [Test]
@@ -41,12 +40,12 @@ namespace MvvmDialogs
             // Arrange
             var window = new Window();
             window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
-            
+
             // Act
             window.SetValue(DialogServiceViews.IsRegisteredProperty, false);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.Empty);
+            Assert.That(ViewLocator.Views, Is.Empty);
         }
 
         [Test]
@@ -54,7 +53,7 @@ namespace MvvmDialogs
         {
             // Arrange
             var frameworkElement = new FrameworkElement();
-            
+
             var window = new Window
             {
                 Content = frameworkElement
@@ -62,14 +61,14 @@ namespace MvvmDialogs
 
             var expected = new[]
             {
-                new ViewWrapper(frameworkElement)
+                new WpfView(frameworkElement)
             };
 
             // Act
             frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.EqualTo(expected));
+            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
         }
 
         [Test]
@@ -77,7 +76,7 @@ namespace MvvmDialogs
         {
             // Arrange
             var frameworkElement = new FrameworkElement();
-            
+
 
             var window = new Window
             {
@@ -85,91 +84,91 @@ namespace MvvmDialogs
             };
 
             frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
-            
+
             // Act
             frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, false);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.Empty);
+            Assert.That(ViewLocator.Views, Is.Empty);
         }
 
         [Test]
         public void RegisterLoadedView()
         {
             // Arrange
-            var view = new Mock<FrameworkElementMock>();
+            var view = new Mock<ViewMock>();
             view
                 .Setup(mock => mock.IsAlive)
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new Window());
+                .Returns(new WpfWindow(new Window()));
 
             var expected = new[]
             {
                 view.Object
             };
-            
+
             // Act
-            DialogServiceViews.Register(view.Object);
+            ViewLocator.Register(view.Object);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.EqualTo(expected));
+            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
         }
 
         [Test]
         public void UnregisterLoadedView()
         {
             // Arrange
-            var view = new Mock<FrameworkElementMock>();
+            var view = new Mock<ViewMock>();
             view
                 .Setup(mock => mock.IsAlive)
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new Window());
+                .Returns(new WpfWindow(new Window()));
 
-            DialogServiceViews.SetIsRegistered(view.Object, true);
+            DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, true);
 
             // Act
-            DialogServiceViews.SetIsRegistered(view.Object, false);
+            DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, false);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.Empty);
+            Assert.That(ViewLocator.Views, Is.Empty);
         }
 
         [Test]
         public void RegisterViewThatNeverGetsLoaded()
         {
             // Arrange
-            var view = new Mock<FrameworkElementMock>();
+            var view = new Mock<ViewMock>();
             view
                 .Setup(mock => mock.IsAlive)
                 .Returns(true);
-            
+
             // Act
-            DialogServiceViews.Register(view.Object);
+            ViewLocator.Register(view.Object);
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.Empty);
+            Assert.That(ViewLocator.Views, Is.Empty);
         }
 
         [Test]
         public void RegisterViewThatGetsLoaded()
         {
             // Arrange
-            var view = new Mock<FrameworkElementMock>();
+            var view = new Mock<ViewMock>();
             view
                 .Setup(mock => mock.IsAlive)
                 .Returns(true);
-            
+
             // At time of register the view has no parent, thus is not loaded
-            DialogServiceViews.Register(view.Object);
+            ViewLocator.Register(view.Object);
 
             // After register we can simulate that the view gets loaded
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new Window());
+                .Returns(new WpfWindow(new Window()));
 
             var expected = new[]
             {
@@ -180,7 +179,7 @@ namespace MvvmDialogs
             view.Raise(mock => mock.Loaded += null, new RoutedEventArgs(null, view.Object));
 
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.EqualTo(expected));
+            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
         }
 
         [Test]
@@ -189,42 +188,29 @@ namespace MvvmDialogs
             // Arrange
             var window = new Window();
 
-            var view = new Mock<FrameworkElementMock>();
+            var view = new Mock<ViewMock>();
             view
                 .Setup(mock => mock.IsAlive)
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(window);
+                .Returns(new WpfWindow(window));
 
-            DialogServiceViews.Register(view.Object);
+            ViewLocator.Register(view.Object);
 
             // Act
             window.Close();
-            
+
             // Assert
-            Assert.That(DialogServiceViews.Views, Is.Empty);
+            Assert.That(ViewLocator.Views, Is.Empty);
         }
 
-        #region Helper classes
-
-// ReSharper disable once MemberCanBePrivate.Global
-        public abstract class FrameworkElementMock : FrameworkElement, IView
+        public abstract class ViewMock : ViewBase
         {
-            new public abstract event RoutedEventHandler Loaded;
-
-            public abstract int Id { get; }
-
-            public abstract FrameworkElement Source { get; }
-
-            new public abstract object DataContext { get; }
-
-            public abstract bool IsAlive { get; }
-
-            public abstract Window GetOwner();
+            protected ViewMock()
+                : base(new FrameworkElement())
+            {
+            }
         }
-
-        #endregion
     }
-    // ReSharper restore UnusedVariable
 }

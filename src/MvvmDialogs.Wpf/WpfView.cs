@@ -6,13 +6,13 @@ namespace MvvmDialogs.Wpf
     /// <summary>
     /// Holds a weak reference to a FrameworkElement.
     /// </summary>
-    internal class WpfView : ViewBase
+    public class WpfView : ViewBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WpfView"/> class and hold a weak reference to specified <see cref="FrameworkElement"/>.
         /// </summary>
         /// <param name="view">The object to hold a weak reference for.</param>
-        internal WpfView(FrameworkElement view) : base(view)
+        public WpfView(FrameworkElement view) : base(view)
         {
             view.Loaded += (_, _) => RaiseLoaded();
         }

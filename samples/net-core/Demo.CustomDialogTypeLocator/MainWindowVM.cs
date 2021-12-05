@@ -3,6 +3,7 @@ using Demo.CustomDialogTypeLocator.ComponentA;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MvvmDialogs.Core;
+using MvvmDialogs.Wpf;
 
 namespace Demo.CustomDialogTypeLocator
 {
@@ -12,7 +13,7 @@ namespace Demo.CustomDialogTypeLocator
 
         public MainWindowVM()
         {
-            dialogService = new DialogServiceBase(dialogTypeLocator: new MyCustomDialogTypeLocator());
+            dialogService = new WpfDialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
 
             ShowDialogCommand = new RelayCommand(ShowDialog);
         }

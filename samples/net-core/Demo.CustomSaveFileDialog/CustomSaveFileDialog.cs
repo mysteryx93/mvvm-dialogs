@@ -1,38 +1,19 @@
-﻿using System;
-using System.Windows;
-using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomSaveFileDialog
 {
-    public class CustomSaveFileDialog : IFrameworkDialog
+    public class CustomSaveFileDialog : WpfFrameworkDialogBase<SaveFileDialogSettings>
     {
-        private readonly SaveFileDialogSettings settings;
-        private readonly VistaSaveFileDialog saveFileDialog;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomSaveFileDialog"/> class.
         /// </summary>
         /// <param name="settings">The settings for the save file dialog.</param>
         public CustomSaveFileDialog(SaveFileDialogSettings settings)
+            : base(settings)
         {
-            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
-
-            saveFileDialog = new VistaSaveFileDialog
-            {
-                AddExtension = settings.AddExtension,
-                CheckFileExists = settings.CheckFileExists,
-                CheckPathExists = settings.CheckPathExists,
-                CreatePrompt = settings.CreatePrompt,
-                DefaultExt = settings.DefaultExt,
-                FileName = settings.FileName,
-                Filter = settings.Filter,
-                FilterIndex = settings.FilterIndex,
-                InitialDirectory = settings.InitialDirectory,
-                OverwritePrompt = settings.OverwritePrompt,
-                Title = settings.Title
-            };
         }
 
         /// <summary>
@@ -44,16 +25,29 @@ namespace Demo.CustomSaveFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public override bool? ShowDialog(WpfWindow owner)
         {
-            if (owner == null) throw new ArgumentNullException(nameof(owner));
+            var saveFileDialog = new VistaSaveFileDialog
+            {
+                AddExtension = Settings.AddExtension,
+                CheckFileExists = Settings.CheckFileExists,
+                CheckPathExists = Settings.CheckPathExists,
+                CreatePrompt = Settings.CreatePrompt,
+                DefaultExt = Settings.DefaultExt,
+                FileName = Settings.FileName,
+                Filter = Settings.Filter,
+                FilterIndex = Settings.FilterIndex,
+                InitialDirectory = Settings.InitialDirectory,
+                OverwritePrompt = Settings.OverwritePrompt,
+                Title = Settings.Title
+            };
 
-            var result = saveFileDialog.ShowDialog(owner);
+            var result = saveFileDialog.ShowDialog(owner.Ref);
 
             // Update settings
-            settings.FileName = saveFileDialog.FileName;
-            settings.FileNames = saveFileDialog.FileNames;
-            settings.FilterIndex = saveFileDialog.FilterIndex;
+            Settings.FileName = saveFileDialog.FileName;
+            Settings.FileNames = saveFileDialog.FileNames;
+            Settings.FilterIndex = saveFileDialog.FilterIndex;
 
             return result;
         }

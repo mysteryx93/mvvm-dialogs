@@ -39,10 +39,10 @@ namespace MvvmDialogs.Core.FrameworkDialogs
         /// <see cref="RootFolder"/> (or more accurately, points to a subfolder of the shell
         /// namespace represented by <see cref="RootFolder"/>).
         /// <para/>
-        /// If the <see cref="IDialogService.ShowFolderBrowserDialog"/> returns <c>true</c>,
+        /// If IDialogService.ShowFolderBrowserDialog returns <c>true</c>,
         /// meaning the user clicked the <c>OK</c> button, the <see cref="SelectedPath"/> property
         /// will return a string containing the path to the selected folder. If
-        /// <see cref="IDialogService.ShowFolderBrowserDialog"/> returns <c>false</c>, meaning the
+        /// IDialogService.ShowFolderBrowserDialog returns <c>false</c>, meaning the
         /// user canceled out of the dialog box, this property will have the same value that it had
         /// prior to displaying the dialog box. If the user selects a folder that does not have a
         /// physical path (for example, My Computer), the <c>OK</c> button on the dialog box will

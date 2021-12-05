@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using MvvmDialogs.Core;
 using MvvmDialogs.Core.DialogTypeLocators;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.DialogFactories;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using MessageBoxButton = MvvmDialogs.Core.FrameworkDialogs.MessageBoxButton;
@@ -12,18 +12,18 @@ using MessageBoxImage = MvvmDialogs.Core.FrameworkDialogs.MessageBoxImage;
 using MessageBoxResult = MvvmDialogs.Core.FrameworkDialogs.MessageBoxResult;
 using Application = System.Windows.Application;
 
-namespace MvvmDialogs.Core
+namespace MvvmDialogs.Wpf
 {
     /// <summary>
     /// Class abstracting the interaction between view models and views when it comes to
     /// opening dialogs using the MVVM pattern in WPF.
     /// </summary>
-    public class DialogService : DialogServiceBase
+    public class WpfDialogService : DialogServiceBase
     {
         /// <summary>
         /// Factory responsible for creating framework dialogs.
         /// </summary>
-        protected readonly IFrameworkDialogFactory FrameworkDialogFactory;
+        internal readonly IFrameworkDialogFactory FrameworkDialogFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
@@ -33,13 +33,13 @@ namespace MvvmDialogs.Core
         /// <see cref="NamingConventionDialogTypeLocator"/> is used as dialog type locator
         /// and <see cref="WpfFrameworkDialogFactory"/> is used as framework dialog factory.
         /// </remarks>
-        public DialogService()
+        public WpfDialogService()
             : this(null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DialogService"/> class.
+        /// Initializes a new instance of the <see cref="WpfDialogService"/> class.
         /// </summary>
         /// <param name="dialogFactory">
         /// Factory responsible for creating dialogs. Default value is an instance of
@@ -53,7 +53,7 @@ namespace MvvmDialogs.Core
         /// Factory responsible for creating framework dialogs. Default value is an instance of
         /// <see cref="WpfFrameworkDialogFactory"/>.
         /// </param>
-        public DialogService(
+        public WpfDialogService(
             IDialogFactory? dialogFactory = null,
             IDialogTypeLocator? dialogTypeLocator = null,
             IFrameworkDialogFactory? frameworkDialogFactory = null)
@@ -117,78 +117,6 @@ namespace MvvmDialogs.Core
             }
 
             return false;
-        }
-
-        /// <inheritdoc />
-        public override bool? ShowMessageBox(
-            INotifyPropertyChanged ownerViewModel,
-            string? messageBoxText,
-            string caption = "",
-            MessageBoxButton button = MessageBoxButton.OK,
-            MessageBoxImage icon = MessageBoxImage.None,
-            MessageBoxResult defaultResult = MessageBoxResult.None)
-        {
-            var settings = new MessageBoxSettings
-            {
-                MessageBoxText = messageBoxText,
-                Caption = caption,
-                Button = button,
-                Icon = icon,
-                DefaultResult = defaultResult
-            };
-
-            return ShowMessageBox(ownerViewModel, settings);
-        }
-
-        /// <inheritdoc />
-        public override bool? ShowMessageBox(INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            DialogLogger.Write($"Caption: {settings.Caption}; Message: {settings.MessageBoxText}");
-
-            var messageBox = FrameworkDialogFactory.CreateMessageBox(settings);
-            return messageBox.ShowDialog(ViewLocator.FindView(ownerViewModel));
-        }
-
-        /// <inheritdoc />
-        public override bool? ShowOpenFileDialog(INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            DialogLogger.Write($"Title: {settings.Title}");
-
-            return FrameworkDialogFactory
-                .CreateOpenFileDialog(settings)
-                .ShowDialog(ViewLocator.FindView(ownerViewModel));
-        }
-
-        /// <inheritdoc />
-        public override bool? ShowSaveFileDialog(INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            DialogLogger.Write($"Title: {settings.Title}");
-
-            return FrameworkDialogFactory
-                .CreateSaveFileDialog(settings)
-                .ShowDialog(ViewLocator.FindView(ownerViewModel));
-        }
-
-        /// <inheritdoc />
-        public override bool? ShowFolderBrowserDialog(INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            DialogLogger.Write($"Description: {settings.Description}");
-
-            return FrameworkDialogFactory
-                .CreateFolderBrowserDialog(settings)
-                .ShowDialog(ViewLocator.FindView(ownerViewModel));
         }
 
         protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>

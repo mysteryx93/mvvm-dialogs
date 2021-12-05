@@ -158,26 +158,5 @@ namespace MvvmDialogs.Core
 
         /// <inheritdoc />
         public abstract bool Close(INotifyPropertyChanged viewModel);
-
-        /// <inheritdoc />
-        public abstract bool? ShowMessageBox(
-            INotifyPropertyChanged ownerViewModel,
-            string? messageBoxText,
-            string caption = "",
-            MessageBoxButton button = MessageBoxButton.OK,
-            MessageBoxImage icon = MessageBoxImage.None,
-            MessageBoxResult defaultResult = MessageBoxResult.None);
-
-        /// <inheritdoc />
-        public abstract bool? ShowMessageBox(INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings);
-
-        /// <inheritdoc />
-        public abstract bool? ShowOpenFileDialog(INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings);
-
-        /// <inheritdoc />
-        public abstract bool? ShowSaveFileDialog(INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings);
-
-        /// <inheritdoc />
-        public abstract bool? ShowFolderBrowserDialog(INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings);
     }
 }

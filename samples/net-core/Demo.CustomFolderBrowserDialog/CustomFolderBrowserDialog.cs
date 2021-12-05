@@ -1,30 +1,19 @@
-﻿using System;
-using System.Windows;
-using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomFolderBrowserDialog
 {
-    public class CustomFolderBrowserDialog : IFrameworkDialog
+    public class CustomFolderBrowserDialog : WpfFrameworkDialogBase<FolderBrowserDialogSettings>
     {
-        private readonly FolderBrowserDialogSettings settings;
-        private readonly VistaFolderBrowserDialog folderBrowserDialog;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FolderBrowserDialogWrapper"/> class.
         /// </summary>
         /// <param name="settings">The settings for the folder browser dialog.</param>
         public CustomFolderBrowserDialog(FolderBrowserDialogSettings settings)
+            : base(settings)
         {
-            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
-
-            folderBrowserDialog = new VistaFolderBrowserDialog
-            {
-                Description = settings.Description,
-                SelectedPath = settings.SelectedPath,
-                ShowNewFolderButton = settings.ShowNewFolderButton
-            };
         }
 
         /// <summary>
@@ -36,15 +25,16 @@ namespace Demo.CustomFolderBrowserDialog
         /// <returns>
         /// true if user clicks the OK or YES button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public override bool? ShowDialog(WpfWindow owner)
         {
-            if (owner == null) throw new ArgumentNullException(nameof(owner));
+            var folderBrowserDialog = new VistaFolderBrowserDialog
+            {
+                Description = Settings.Description, SelectedPath = Settings.SelectedPath, ShowNewFolderButton = Settings.ShowNewFolderButton
+            };
 
-            var result = folderBrowserDialog.ShowDialog(owner);
+            var result = folderBrowserDialog.ShowDialog(owner.Ref);
 
-            // Update settings
-            settings.SelectedPath = folderBrowserDialog.SelectedPath;
-
+            Settings.SelectedPath = folderBrowserDialog.SelectedPath;
             return result;
         }
     }

@@ -7,7 +7,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="FolderBrowserDialog"/>.
     /// </summary>
-    internal sealed class WpfBrowserDialog : WpfFrameworkDialogBase<FolderBrowserDialogSettings>
+    public class WpfBrowserDialog : WpfFrameworkDialogBase<FolderBrowserDialogSettings>
     {
         /// <inheritdoc />
         public WpfBrowserDialog(FolderBrowserDialogSettings settings)

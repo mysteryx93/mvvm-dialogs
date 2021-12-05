@@ -21,7 +21,7 @@ namespace MvvmDialogs.Core
         /// <summary>
         /// Gets the registered views.
         /// </summary>
-        internal static IEnumerable<ViewBase> Views =>
+        public static IEnumerable<ViewBase> Views =>
             InternalViews
                 .Where(view => view.IsAlive)
                 .ToArray();

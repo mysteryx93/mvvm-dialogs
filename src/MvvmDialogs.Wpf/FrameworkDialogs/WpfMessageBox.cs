@@ -10,7 +10,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
     /// <summary>
     /// Class wrapping <see cref="System.Windows.MessageBox"/>.
     /// </summary>
-    internal sealed class WpfMessageBox : WpfFrameworkDialogBase<MessageBoxSettings>
+    public sealed class WpfMessageBox : WpfFrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
         public WpfMessageBox(MessageBoxSettings settings)
@@ -69,7 +69,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
             (value) switch
             {
                 MessageBoxResult.None => Win32Result.None,
-                MessageBoxResult.OK => Win32Result.OK,
+                MessageBoxResult.Ok => Win32Result.OK,
                 MessageBoxResult.Cancel => Win32Result.Cancel,
                 MessageBoxResult.Yes => Win32Result.Yes,
                 MessageBoxResult.No => Win32Result.No,

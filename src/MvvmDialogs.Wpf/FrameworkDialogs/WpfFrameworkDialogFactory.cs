@@ -15,7 +15,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         public virtual IFrameworkDialog CreateOpenFileDialog(OpenFileDialogSettings settings) => new WpfOpenFileDialog(settings);
 
         /// <inheritdoc />
-        public virtual IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings) => new SaveFileDialogWrapper(settings);
+        public virtual IFrameworkDialog CreateSaveFileDialog(SaveFileDialogSettings settings) => new WpfSaveFileDialog(settings);
 
         /// <inheritdoc />
         public virtual IFrameworkDialog CreateFolderBrowserDialog(FolderBrowserDialogSettings settings) => new WpfBrowserDialog(settings);
