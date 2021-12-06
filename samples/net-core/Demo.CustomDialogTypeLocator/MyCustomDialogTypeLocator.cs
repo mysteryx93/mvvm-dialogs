@@ -10,11 +10,11 @@ namespace Demo.CustomDialogTypeLocator
     {
         public Type Locate(INotifyPropertyChanged viewModel)
         {
-            Type viewModelType = viewModel.GetType();
-            string viewModelTypeName = viewModelType.FullName;
+            var viewModelType = viewModel.GetType();
+            var viewModelTypeName = viewModelType.FullName;
 
             // Get dialog type name by removing the 'VM' suffix
-            string dialogTypeName = viewModelTypeName.Substring(
+            var dialogTypeName = viewModelTypeName.Substring(
                 0,
                 viewModelTypeName.Length - "VM".Length);
 

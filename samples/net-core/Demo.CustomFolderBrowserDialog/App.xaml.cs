@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs.Core;
-using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomFolderBrowserDialog

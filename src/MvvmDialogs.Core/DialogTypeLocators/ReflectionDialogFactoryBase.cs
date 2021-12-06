@@ -1,5 +1,4 @@
 ﻿using System;
-using MvvmDialogs.Core;
 
 namespace MvvmDialogs.Core.DialogTypeLocators
 {

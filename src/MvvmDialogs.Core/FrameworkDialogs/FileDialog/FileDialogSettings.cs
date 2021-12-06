@@ -1,8 +1,4 @@
-﻿
-using System;
-#if !PRE_NET40
-using System.Collections.Generic;
-#endif
+﻿using System.Collections.Generic;
 
 namespace MvvmDialogs.Core.FrameworkDialogs
 {

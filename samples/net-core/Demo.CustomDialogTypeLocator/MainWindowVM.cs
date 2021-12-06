@@ -3,7 +3,6 @@ using Demo.CustomDialogTypeLocator.ComponentA;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MvvmDialogs.Core;
-using MvvmDialogs.Wpf;
 
 namespace Demo.CustomDialogTypeLocator
 {

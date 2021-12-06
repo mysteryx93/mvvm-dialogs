@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using MvvmDialogs.Core.FrameworkDialogs;
+﻿using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomFolderBrowserDialog

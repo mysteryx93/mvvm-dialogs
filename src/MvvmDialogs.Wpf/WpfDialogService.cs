@@ -7,9 +7,6 @@ using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.DialogFactories;
 using MvvmDialogs.Wpf.FrameworkDialogs;
-using MessageBoxButton = MvvmDialogs.Core.FrameworkDialogs.MessageBoxButton;
-using MessageBoxImage = MvvmDialogs.Core.FrameworkDialogs.MessageBoxImage;
-using MessageBoxResult = MvvmDialogs.Core.FrameworkDialogs.MessageBoxResult;
 using Application = System.Windows.Application;
 
 namespace MvvmDialogs.Core
@@ -75,7 +72,7 @@ namespace MvvmDialogs.Core
 
         /// <summary>
         /// Closes a non-modal dialog that previously was opened using <see cref="DialogServiceBase.Show"/>,
-        /// <see cref="DialogServiceBase.Show{T}"/> or <see cref="DialogServiceBase.ShowCustom{T}"/>.
+        /// <see cref="DialogServiceBase.Show{T}"/>.
         /// </summary>
         /// <param name="viewModel">The view model of the dialog to close.</param>
         /// <returns>true if the <see cref="Window"/> was successfully closed; otherwise, false.</returns>
