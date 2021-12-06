@@ -9,7 +9,7 @@ namespace MvvmDialogs.Core
     {
         /// <summary>
         /// Gets the dialog result value, which is the value that is returned from the
-        /// <see cref="DialogServiceBase.ShowDialog"/> and <see cref="DialogServiceBase.ShowDialog{T}"/>
+        /// <see cref="DialogServiceBase.ShowDialogAsync"/> and <see cref="DialogServiceBase.ShowDialogAsync{T}"/>
         /// methods.
         /// </summary>
         bool? DialogResult { get; }

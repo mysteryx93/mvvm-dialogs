@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.DialogFactories;
 
@@ -16,16 +17,19 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override bool? ShowDialog(WpfWindow owner)
-        {
-            using var dialog = new FolderBrowserDialog();
-            ToDialog(dialog);
+        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+            Task.Run(
+                () =>
+                {
+                    using var dialog = new FolderBrowserDialog();
+                    ToDialog(dialog);
 
-            var result = dialog.ShowDialog(owner.Win32Window);
+                    var result = dialog.ShowDialog(owner.Win32Window);
 
-            ToSettings(dialog);
-            return result.AsBool();
-        }
+                    ToSettings(dialog);
+                    return result.AsBool();
+                });
+
 
         private void ToDialog(FolderBrowserDialog d)
         {

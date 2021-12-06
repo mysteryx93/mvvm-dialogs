@@ -25,7 +25,7 @@ namespace Demo.CustomOpenFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public override bool? ShowDialog(WpfWindow owner)
+        public override bool? ShowDialogAsync(WpfWindow owner)
         {
             var openFileDialog = new VistaOpenFileDialog
             {

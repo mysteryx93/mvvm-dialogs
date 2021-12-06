@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Demo.CustomDialogTypeLocator.ComponentA;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -14,15 +15,15 @@ namespace Demo.CustomDialogTypeLocator
         {
             dialogService = new WpfDialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
 
-            ShowDialogCommand = new RelayCommand(ShowDialog);
+            ShowDialogCommand = new RelayCommand(ShowDialogAsync);
         }
 
         public ICommand ShowDialogCommand { get; }
 
-        private void ShowDialog()
+        private Task ShowDialogAsync()
         {
             var dialogViewModel = new MyDialogVM();
-            dialogService.ShowDialog(this, dialogViewModel);
+            return dialogService.ShowDialogAsync(this, dialogViewModel);
         }
     }
 }

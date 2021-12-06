@@ -1,4 +1,5 @@
-﻿using MvvmDialogs.Core.FrameworkDialogs;
+﻿using System.Threading.Tasks;
+using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.DialogFactories;
 using Win32Button = System.Windows.MessageBoxButton;
 using Win32Image = System.Windows.MessageBoxImage;
@@ -19,26 +20,28 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
         }
 
         /// <inheritdoc />
-        public override bool? ShowDialog(WpfWindow owner)
-        {
-            var result = System.Windows.MessageBox.Show(
-                owner.Ref,
-                Settings.MessageBoxText,
-                Settings.Caption,
-                SyncButton(Settings.Button),
-                SyncImage(Settings.Icon),
-                SyncDefault(Settings.DefaultResult),
-                SyncOptions());
+        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+            Task.Run(
+                () =>
+                {
+                    var result = System.Windows.MessageBox.Show(
+                        owner.Ref,
+                        Settings.MessageBoxText,
+                        Settings.Caption,
+                        SyncButton(Settings.Button),
+                        SyncImage(Settings.Icon),
+                        SyncDefault(Settings.DefaultResult),
+                        SyncOptions());
 
-            return result switch
-            {
-                Win32Result.Yes => true,
-                Win32Result.OK => true,
-                Win32Result.No => false,
-                Win32Result.Cancel => null,
-                _ => null
-            };
-        }
+                    return result switch
+                    {
+                        Win32Result.Yes => true,
+                        Win32Result.OK => true,
+                        Win32Result.No => false,
+                        Win32Result.Cancel => null,
+                        _ => (bool?)null
+                    };
+                });
 
         // Convert platform-agnostic types into Win32 types.
 

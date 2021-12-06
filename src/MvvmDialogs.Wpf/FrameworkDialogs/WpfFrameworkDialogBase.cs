@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using MvvmDialogs.Core;
 using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.DialogFactories;
@@ -19,14 +20,15 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
         /// <param name="settings">The settings for the framework dialog.</param>
-        protected WpfFrameworkDialogBase(TSettings settings) => Settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        protected WpfFrameworkDialogBase(TSettings settings) =>
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
         /// <inheritdoc />
-        public bool? ShowDialog(IWindow owner)
+        public Task<bool?> ShowDialogAsync(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
             if (owner is not WpfWindow window) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WpfWindow)}");
-            return ShowDialog(window);
+            return ShowDialogAsync(window);
         }
 
         /// <summary>
@@ -34,6 +36,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// </summary>
         /// <param name="owner">Handle to the window that owns the dialog.</param>
         /// <returns>true if user clicks the OK button; otherwise false.</returns>
-        public abstract bool? ShowDialog(WpfWindow owner);
+        public abstract Task<bool?> ShowDialogAsync(WpfWindow owner);
     }
 }

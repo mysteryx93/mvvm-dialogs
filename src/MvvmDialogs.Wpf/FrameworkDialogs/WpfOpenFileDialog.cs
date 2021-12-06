@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 using MvvmDialogs.Core.FrameworkDialogs;
 using MvvmDialogs.Wpf.DialogFactories;
 using FileDialogCustomPlaces = MvvmDialogs.Core.FrameworkDialogs.FileDialogCustomPlaces;
@@ -22,16 +23,18 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override bool? ShowDialog(WpfWindow owner)
-        {
-            var dialog = new OpenFileDialog();
-            ToDialog(dialog);
+        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+            Task.Run(
+                () =>
+                {
+                    var dialog = new OpenFileDialog();
+                    ToDialog(dialog);
 
-            var result = dialog.ShowDialog(owner.Win32Window);
+                    var result = dialog.ShowDialog(owner.Win32Window);
 
-            ToSettings(dialog);
-            return result.AsBool();
-        }
+                    ToSettings(dialog);
+                    return result.AsBool();
+                });
 
         private void ToDialog(OpenFileDialog d)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MvvmDialogs.Core
 {
@@ -23,7 +24,7 @@ namespace MvvmDialogs.Core
 
         /// <summary>
         /// Gets or sets the dialog result value, which is the value that is returned from the
-        /// <see cref="ShowDialog" /> method.
+        /// <see cref="ShowDialogAsync" /> method.
         /// </summary>
         /// <value>The default is false.</value>
         bool? DialogResult { get; set; }
@@ -34,6 +35,11 @@ namespace MvvmDialogs.Core
         IWindow? Owner { get; set; }
 
         /// <summary>
+        /// Opens a window and returns without waiting for the newly opened window to close.
+        /// </summary>
+        void Show();
+
+        /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.
         /// </summary>
         /// <returns>
@@ -41,11 +47,6 @@ namespace MvvmDialogs.Core
         /// accepted (true) or canceled (false). The return value is the value of the
         /// <see cref="DialogResult"/> property before a window closes.
         /// </returns>
-        bool? ShowDialog();
-
-        /// <summary>
-        /// Opens a window and returns without waiting for the newly opened window to close.
-        /// </summary>
-        void Show();
+        Task<bool?> ShowDialogAsync();
     }
 }

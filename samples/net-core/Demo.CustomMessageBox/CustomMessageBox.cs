@@ -28,7 +28,7 @@ namespace Demo.CustomMessageBox
         /// A <see cref="System.Windows.MessageBoxResult"/> value that specifies which message box button is
         /// clicked by the user.
         /// </returns>
-        public override bool? ShowDialog(WpfWindow owner)
+        public override bool? ShowDialogAsync(WpfWindow owner)
         {
             var messageBox = new TaskDialog
             {

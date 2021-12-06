@@ -25,7 +25,7 @@ namespace Demo.CustomFolderBrowserDialog
         /// <returns>
         /// true if user clicks the OK or YES button; otherwise false.
         /// </returns>
-        public override bool? ShowDialog(WpfWindow owner)
+        public override bool? ShowDialogAsync(WpfWindow owner)
         {
             var folderBrowserDialog = new VistaFolderBrowserDialog
             {

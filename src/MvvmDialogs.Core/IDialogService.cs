@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using MvvmDialogs.Core.FrameworkDialogs;
 
 namespace MvvmDialogs.Core
@@ -38,7 +39,7 @@ namespace MvvmDialogs.Core
         /// <param name="viewModel">The view model of the new dialog.</param>
         /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel);
+        Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel);
 
         /// <summary>
         /// Displays a modal dialog of specified type <typeparamref name="T"/>.
@@ -48,7 +49,7 @@ namespace MvvmDialogs.Core
         /// <typeparam name="T">The type of the dialog to show.</typeparam>
         /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel); // where T : TWindow;
+        Task<bool?> ShowDialogAsync<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel); // where T : TWindow;
 
         /// <summary>
         /// Attempts to bring the window to the foreground and activates it.

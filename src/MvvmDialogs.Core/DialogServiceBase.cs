@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using MvvmDialogs.Core.DialogTypeLocators;
 using MvvmDialogs.Core.FrameworkDialogs;
 
@@ -38,23 +39,12 @@ namespace MvvmDialogs.Core
         }
 
         /// <inheritdoc />
-        public void Show(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            Type dialogType = DialogTypeLocator.Locate(viewModel);
-            ShowInternal(ownerViewModel, viewModel, dialogType);
-        }
+        public void Show(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
+            ShowInternal(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel));
 
         /// <inheritdoc />
-        public void Show<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
+        public void Show<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
             ShowInternal(ownerViewModel, viewModel, typeof(T));
-        }
 
         /// <summary>
         /// Displays a non-modal dialog of specified type.
@@ -65,6 +55,9 @@ namespace MvvmDialogs.Core
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
         protected void ShowInternal(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
         {
+            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
             DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
             IWindow dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
@@ -72,23 +65,12 @@ namespace MvvmDialogs.Core
         }
 
         /// <inheritdoc />
-        public bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            Type dialogType = DialogTypeLocator.Locate(viewModel);
-            return ShowDialogInternal(ownerViewModel, viewModel, dialogType);
-        }
+        public Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+            Task.Run(() => ShowDialogInternalAsync(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel)));
 
         /// <inheritdoc />
-        public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            return ShowDialogInternal(ownerViewModel, viewModel, typeof(T));
-        }
+        public Task<bool?> ShowDialogAsync<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+            Task.Run(() => ShowDialogInternalAsync(ownerViewModel, viewModel, typeof(T)));
 
         /// <summary>
         /// Displays a modal dialog of specified type.
@@ -98,14 +80,17 @@ namespace MvvmDialogs.Core
         /// <param name="dialogType">The type of the dialog to show.</param>
         /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        protected bool? ShowDialogInternal(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
+        protected async Task<bool?> ShowDialogInternalAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
         {
+            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
             DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
             IWindow dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
 
             PropertyChangedEventHandler handler = RegisterDialogResult(dialog, viewModel);
-            dialog.ShowDialog();
+            await dialog.ShowDialogAsync();
             UnregisterDialogResult(viewModel, handler);
 
             return viewModel.DialogResult;

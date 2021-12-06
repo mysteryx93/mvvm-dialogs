@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 
 namespace MvvmDialogs.Core.FrameworkDialogs
 {
@@ -11,6 +12,6 @@ namespace MvvmDialogs.Core.FrameworkDialogs
         /// </summary>
         /// <param name="owner">Handle to the window that owns the dialog.</param>
         /// <returns>true if user clicks Yes or OK; false if user clicks No; null if user cancels.</returns>
-        bool? ShowDialog(IWindow owner);
+        Task<bool?> ShowDialogAsync(IWindow owner);
     }
 }
