@@ -40,6 +40,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
             };
         }
 
+        // Convert platform-agnostic types into Win32 types.
+
         private static Win32Button SyncButton(MessageBoxButton value) =>
             (value) switch
             {
