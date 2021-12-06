@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Core.FrameworkDialogs;
 using NUnit.Framework;
 
 namespace Demo.OpenFileDialog

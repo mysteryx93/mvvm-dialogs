@@ -3,7 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Core.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
 namespace Demo.OpenFileDialog
@@ -34,11 +34,11 @@ namespace Demo.OpenFileDialog
             var settings = new OpenFileDialogSettings
             {
                 Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
                 Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
             };
 
-            bool? success = dialogService.ShowOpenFileDialog(this, settings);
+            var success = dialogService.ShowOpenFileDialog(this, settings);
             if (success == true)
             {
                 Path = settings.FileName;

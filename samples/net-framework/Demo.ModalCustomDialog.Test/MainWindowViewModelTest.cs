@@ -60,7 +60,7 @@ namespace Demo.ModalCustomDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowCustomDialog<AddTextCustomDialog>(viewModel, It.IsAny<AddTextCustomDialogViewModel>()))
+                .Setup(mock => mock.ShowDialog<AddTextCustomDialog>(viewModel, It.IsAny<AddTextCustomDialogViewModel>()))
                 .Returns(true)
                 .Callback((INotifyPropertyChanged ownerViewModel, IModalDialogViewModel addTextDialogViewModel) =>
                     ((AddTextCustomDialogViewModel)addTextDialogViewModel).Text = "Some text");
@@ -82,7 +82,7 @@ namespace Demo.ModalCustomDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowCustomDialog<AddTextCustomDialog>(viewModel, It.IsAny<AddTextCustomDialogViewModel>()))
+                .Setup(mock => mock.ShowDialog<AddTextCustomDialog>(viewModel, It.IsAny<AddTextCustomDialogViewModel>()))
                 .Returns(false);
 
             // Act

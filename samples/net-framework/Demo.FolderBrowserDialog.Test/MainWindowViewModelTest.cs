@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core.FrameworkDialogs;
 using NUnit.Framework;
 
 namespace Demo.FolderBrowserDialog
@@ -26,7 +26,7 @@ namespace Demo.FolderBrowserDialog
             dialogService
                 .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<FolderBrowserDialogSettings>()))
                 .Returns(true)
-                .Callback((INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings) =>
+                .Callback((INotifyPropertyChanged _, FolderBrowserDialogSettings settings) =>
                     settings.SelectedPath = @"C:\SomeFolder");
 
             // Act

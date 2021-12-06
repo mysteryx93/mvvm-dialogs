@@ -1,9 +1,8 @@
-using System;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs;
 
 namespace Demo.CustomMessageBox
 {
@@ -37,12 +36,12 @@ namespace Demo.CustomMessageBox
         public string Confirmation
         {
             get => confirmation;
-            private set { Set(() => Confirmation, ref confirmation, value); }
+            private set => Set(() => Confirmation, ref confirmation, value);
         }
 
         private void ShowMessageBoxWithMessage()
         {
-            MessageBoxResult result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBox(
                 this,
                 "This is the text.");
 
@@ -51,7 +50,7 @@ namespace Demo.CustomMessageBox
 
         private void ShowMessageBoxWithCaption()
         {
-            MessageBoxResult result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBox(
                 this,
                 "This is the text.",
                 "This Is The Caption");
@@ -61,7 +60,7 @@ namespace Demo.CustomMessageBox
 
         private void ShowMessageBoxWithButton()
         {
-            MessageBoxResult result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBox(
                 this,
                 "This is the text.",
                 "This Is The Caption",
@@ -72,7 +71,7 @@ namespace Demo.CustomMessageBox
 
         private void ShowMessageBoxWithIcon()
         {
-            MessageBoxResult result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBox(
                 this,
                 "This is the text.",
                 "This Is The Caption",
@@ -84,7 +83,7 @@ namespace Demo.CustomMessageBox
 
         private void ShowMessageBoxWithDefaultResult()
         {
-            MessageBoxResult result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBox(
                 this,
                 "This is the text.",
                 "This Is The Caption",
@@ -95,21 +94,7 @@ namespace Demo.CustomMessageBox
             UpdateResult(result);
         }
 
-        private void UpdateResult(MessageBoxResult result)
-        {
-            switch (result)
-            {
-                case MessageBoxResult.OK:
-                    Confirmation = "We got confirmation to continue!";
-                    break;
-
-                case MessageBoxResult.Cancel:
-                    Confirmation = string.Empty;
-                    break;
-
-                default:
-                    throw new NotSupportedException($"{confirmation} is not supported.");
-            }
-        }
+        private void UpdateResult(bool? result) =>
+            Confirmation = result == true ? "We got confirmation to continue!" : string.Empty;
     }
 }

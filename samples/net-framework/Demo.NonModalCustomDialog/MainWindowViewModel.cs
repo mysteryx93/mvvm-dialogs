@@ -22,15 +22,9 @@ namespace Demo.NonModalCustomDialog
 
         public ICommand ExplicitShowCommand { get; }
 
-        private void ImplicitShow()
-        {
-            Show(viewModel => dialogService.Show(this, viewModel));
-        }
+        private void ImplicitShow() => Show(viewModel => dialogService.Show(this, viewModel));
 
-        private void ExplicitShow()
-        {
-            Show(viewModel => dialogService.ShowCustom<CurrentTimeCustomDialog>(this, viewModel));
-        }
+        private void ExplicitShow() => Show(viewModel => dialogService.Show<CurrentTimeCustomDialog>(this, viewModel));
 
         private static void Show(Action<CurrentTimeCustomDialogViewModel> show)
         {

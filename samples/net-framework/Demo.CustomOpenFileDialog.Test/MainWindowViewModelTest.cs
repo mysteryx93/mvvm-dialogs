@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Core.FrameworkDialogs;
 using NUnit.Framework;
 
 namespace Demo.CustomOpenFileDialog
@@ -26,7 +26,7 @@ namespace Demo.CustomOpenFileDialog
             dialogService
                 .Setup(mock => mock.ShowOpenFileDialog(viewModel, It.IsAny<OpenFileDialogSettings>()))
                 .Returns(true)
-                .Callback((INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings) =>
+                .Callback((INotifyPropertyChanged _, OpenFileDialogSettings settings) =>
                     settings.FileName = @"C:\SomeFile.txt");
 
             // Act

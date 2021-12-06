@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,9 +54,13 @@
     <Compile Include="ScreenObjects\MainScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\net\MvvmDialogs.Core.csproj">
-      <Project>{bc306ec6-b992-4e54-b251-4ca06a67073f}</Project>
+    <ProjectReference Include="..\..\..\src\MvvmDialogs.Core\MvvmDialogs.Core.csproj">
+      <Project>{e947a62d-2ed8-4ee2-8092-6fd5070d9ae9}</Project>
       <Name>MvvmDialogs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\MvvmDialogs.Wpf\MvvmDialogs.Wpf.csproj">
+      <Project>{0c6ccd8d-d655-48cf-94dc-abc60de60ff5}</Project>
+      <Name>MvvmDialogs.Wpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Demo.NonModalDialog\Demo.NonModalDialog.Framework.csproj">
       <Project>{24095a3b-096e-4d19-b29e-755fe08c81fd}</Project>

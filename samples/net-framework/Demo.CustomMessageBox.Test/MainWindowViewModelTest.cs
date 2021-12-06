@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using Moq;
+﻿using Moq;
 using MvvmDialogs.Core;
+using MvvmDialogs.Core.FrameworkDialogs;
 using NUnit.Framework;
 
 namespace Demo.CustomMessageBox
@@ -31,7 +31,7 @@ namespace Demo.CustomMessageBox
                         MessageBoxButton.OK,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
-                .Returns(MessageBoxResult.OK);
+                .Returns(true);
 
             // Act
             viewModel.ShowMessageBoxWithMessageCommand.Execute(null);
@@ -53,7 +53,7 @@ namespace Demo.CustomMessageBox
                         MessageBoxButton.OK,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
-                .Returns(MessageBoxResult.OK);
+                .Returns(true);
 
             // Act
             viewModel.ShowMessageBoxWithCaptionCommand.Execute(null);
@@ -75,7 +75,7 @@ namespace Demo.CustomMessageBox
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
-                .Returns(MessageBoxResult.OK); ;
+                .Returns(true);
 
             // Act
             viewModel.ShowMessageBoxWithButtonCommand.Execute(null);
@@ -97,7 +97,7 @@ namespace Demo.CustomMessageBox
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Information,
                         MessageBoxResult.None))
-                .Returns(MessageBoxResult.OK); ;
+                .Returns(true);
 
             // Act
             viewModel.ShowMessageBoxWithIconCommand.Execute(null);
@@ -119,7 +119,7 @@ namespace Demo.CustomMessageBox
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Information,
                         MessageBoxResult.Cancel))
-                .Returns(MessageBoxResult.OK); ;
+                .Returns(true);
 
             // Act
             viewModel.ShowMessageBoxWithDefaultResultCommand.Execute(null);

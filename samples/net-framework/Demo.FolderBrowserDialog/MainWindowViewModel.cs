@@ -3,7 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Core.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
 namespace Demo.FolderBrowserDialog
@@ -34,10 +34,10 @@ namespace Demo.FolderBrowserDialog
             var settings = new FolderBrowserDialogSettings
             {
                 Description = "This is a description",
-                SelectedPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                SelectedPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
             };
 
-            bool? success = dialogService.ShowFolderBrowserDialog(this, settings);
+            var success = dialogService.ShowFolderBrowserDialog(this, settings);
             if (success == true)
             {
                 Path = settings.SelectedPath;

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows;
+using MvvmDialogs.Core;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.FolderBrowser;
+using MvvmDialogs.Wpf.DialogFactories;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomFolderBrowserDialog
@@ -36,11 +36,12 @@ namespace Demo.CustomFolderBrowserDialog
         /// <returns>
         /// true if user clicks the OK or YES button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public bool? ShowDialog(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
+            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WpfWindow)}");
 
-            var result = folderBrowserDialog.ShowDialog(owner);
+            var result = folderBrowserDialog.ShowDialog(w.Ref);
 
             // Update settings
             settings.SelectedPath = folderBrowserDialog.SelectedPath;

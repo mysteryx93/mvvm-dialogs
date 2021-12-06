@@ -9,7 +9,7 @@ namespace Demo.CustomSaveFileDialog
         protected override void OnStartup(StartupEventArgs e)
         {
             SimpleIoc.Default.Register<IDialogService>(
-                () => new DialogServiceBase(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
+                () => new WpfDialogService(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
         }
     }
 }

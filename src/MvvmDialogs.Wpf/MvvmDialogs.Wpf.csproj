@@ -9,6 +9,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\StrongName.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <PackageVersion>9.0.0</PackageVersion>
+    <Copyright>Copyright © 2009-2021 MVVM Dialogs contributors</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

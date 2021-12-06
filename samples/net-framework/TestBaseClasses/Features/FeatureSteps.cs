@@ -46,11 +46,11 @@ namespace TestBaseClasses.Features
 
         private static void TakeScreenshot()
         {
-            string directoryName = Path.Combine(
+            var directoryName = Path.Combine(
                 TestContext.CurrentContext.TestDirectory,
                 "FailedTestScreenshots");
 
-            string filePath = Path.Combine(
+            var filePath = Path.Combine(
                 directoryName,
                 $"Failed_{TestContext.CurrentContext.Test.FullName}.png");
 

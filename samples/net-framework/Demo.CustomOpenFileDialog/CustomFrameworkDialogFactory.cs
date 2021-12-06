@@ -1,13 +1,15 @@
 ﻿using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomOpenFileDialog
 {
-    public class CustomFrameworkDialogFactory : DefaultFrameworkDialogFactory
+    public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
     {
-        public override IFrameworkDialog CreateOpenFileDialog(OpenFileDialogSettings settings)
-        {
-            return new CustomOpenFileDialog(settings);
-        }
+        public override IFrameworkDialog Create<T>(T settings) =>
+            settings switch
+            {
+                OpenFileDialogSettings s => new CustomOpenFileDialog(s),
+                _ => base.Create(settings)
+            };
     }
 }

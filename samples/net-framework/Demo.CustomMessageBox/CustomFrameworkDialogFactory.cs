@@ -1,13 +1,15 @@
 ﻿using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.MessageBox;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomMessageBox
 {
-    public class CustomFrameworkDialogFactory : DefaultFrameworkDialogFactory
+    public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
     {
-        public override IMessageBox CreateMessageBox(MessageBoxSettings settings)
-        {
-            return new CustomMessageBox(settings);
-        }
+        public override IFrameworkDialog Create<T>(T settings) =>
+            settings switch
+            {
+                MessageBoxSettings s => new CustomMessageBox(s),
+                _ => base.Create(settings)
+            };
     }
 }

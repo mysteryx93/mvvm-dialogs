@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows;
+using MvvmDialogs.Core;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Wpf.DialogFactories;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomSaveFileDialog
@@ -44,11 +44,12 @@ namespace Demo.CustomSaveFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public bool? ShowDialog(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
+            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WpfWindow)}");
 
-            var result = saveFileDialog.ShowDialog(owner);
+            var result = saveFileDialog.ShowDialog(w.Ref);
 
             // Update settings
             settings.FileName = saveFileDialog.FileName;

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows;
+using MvvmDialogs.Core;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs.OpenFile;
+using MvvmDialogs.Wpf.DialogFactories;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomOpenFileDialog
@@ -43,11 +43,12 @@ namespace Demo.CustomOpenFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public bool? ShowDialog(Window owner)
+        public bool? ShowDialog(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
+            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WpfWindow)}");
 
-            var result = openFileDialog.ShowDialog(owner);
+            var result = openFileDialog.ShowDialog(w.Ref);
 
             // Update settings
             settings.FileName = openFileDialog.FileName;

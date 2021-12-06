@@ -37,7 +37,7 @@ namespace Demo.NonModalCustomDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowCustom<CurrentTimeCustomDialog>(It.IsAny<MainWindowViewModel>(), It.IsAny<CurrentTimeCustomDialogViewModel>()))
+                .Setup(mock => mock.Show<CurrentTimeCustomDialog>(It.IsAny<MainWindowViewModel>(), It.IsAny<CurrentTimeCustomDialogViewModel>()))
                 .Verifiable();
 
             // Act
