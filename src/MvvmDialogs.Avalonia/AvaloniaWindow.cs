@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using MvvmDialogs.Core;
 
 namespace MvvmDialogs.Avalonia
 {

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs;
 using Win32Button = System.Windows.MessageBoxButton;
 using Win32Image = System.Windows.MessageBoxImage;
 using Win32Result = System.Windows.MessageBoxResult;

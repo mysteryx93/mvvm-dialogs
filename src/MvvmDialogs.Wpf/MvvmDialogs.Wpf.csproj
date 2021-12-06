@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MvvmDialogs.Core\MvvmDialogs.Core.csproj" />
+    <ProjectReference Include="..\MvvmDialogs\MvvmDialogs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

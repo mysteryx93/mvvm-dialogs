@@ -1,7 +1,7 @@
 ﻿// using System.Threading;
 // using System.Windows;
 // using Moq;
-// using MvvmDialogs.Core.FrameworkDialogs;
+// using MvvmDialogs.FrameworkDialogs;
 // using NUnit.Framework;
 // using MessageBoxButton = System.Windows.MessageBoxButton;
 // using MessageBoxImage = System.Windows.MessageBoxImage;

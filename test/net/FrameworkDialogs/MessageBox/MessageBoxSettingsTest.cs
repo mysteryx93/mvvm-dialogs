@@ -1,5 +1,5 @@
 using System.Linq;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Utils;
 using NUnit.Framework;
 

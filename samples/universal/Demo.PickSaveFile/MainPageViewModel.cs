@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkPickers.FileSave;
 
 namespace Demo.PickSaveFile
 {

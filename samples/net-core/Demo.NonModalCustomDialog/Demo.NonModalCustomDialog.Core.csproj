@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\MvvmDialogs.Core\MvvmDialogs.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\MvvmDialogs\MvvmDialogs.csproj" />
     <ProjectReference Include="..\..\..\src\MvvmDialogs.Wpf\MvvmDialogs.Wpf.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Moq;
-using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs;
+using MvvmDialogs.FrameworkDialogs;
 using NUnit.Framework;
 
 namespace Demo.CustomFolderBrowserDialog

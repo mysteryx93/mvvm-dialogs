@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
-using MvvmDialogs.Core;
-using MvvmDialogs.Core.DialogTypeLocators;
+using MvvmDialogs.DialogTypeLocators;
 
 namespace MvvmDialogs.Avalonia
 {

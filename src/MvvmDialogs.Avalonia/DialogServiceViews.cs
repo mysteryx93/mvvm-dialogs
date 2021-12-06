@@ -2,7 +2,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
-using MvvmDialogs.Core;
 
 namespace MvvmDialogs.Avalonia
 {

@@ -1,6 +1,5 @@
 ﻿using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
-using MvvmDialogs;
 
 namespace Demo.CustomContentDialog
 {

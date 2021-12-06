@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using MvvmDialogs.Core;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace MvvmDialogs.Wpf

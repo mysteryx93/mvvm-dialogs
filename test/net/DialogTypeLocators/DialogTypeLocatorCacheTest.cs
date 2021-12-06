@@ -1,5 +1,4 @@
 ﻿using System;
-using MvvmDialogs.Core.DialogTypeLocators;
 using NUnit.Framework;
 
 namespace MvvmDialogs.DialogTypeLocators

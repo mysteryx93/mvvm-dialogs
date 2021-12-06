@@ -2,7 +2,7 @@ using System;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MvvmDialogs.Core;
+using MvvmDialogs;
 
 namespace Demo.NonModalDialog
 {

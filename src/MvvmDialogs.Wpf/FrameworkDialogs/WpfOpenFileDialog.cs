@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Forms;
-using MvvmDialogs.Core.FrameworkDialogs;
-using FileDialogCustomPlaces = MvvmDialogs.Core.FrameworkDialogs.FileDialogCustomPlaces;
+using MvvmDialogs.FrameworkDialogs;
+using FileDialogCustomPlaces = MvvmDialogs.FrameworkDialogs.FileDialogCustomPlaces;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
 using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
 

@@ -2,13 +2,13 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using MvvmDialogs.Core.DialogTypeLocators;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.DialogTypeLocators;
+using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using Application = System.Windows.Application;
 
-namespace MvvmDialogs.Core
+namespace MvvmDialogs
 {
     /// <summary>
     /// Class abstracting the interaction between view models and views when it comes to

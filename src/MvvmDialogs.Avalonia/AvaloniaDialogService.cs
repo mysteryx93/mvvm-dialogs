@@ -2,10 +2,9 @@
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
-using MvvmDialogs.Core;
-using MvvmDialogs.Core.DialogTypeLocators;
-using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf.FrameworkDialogs;
+using MvvmDialogs.Avalonia.FrameworkDialogs;
+using MvvmDialogs.DialogTypeLocators;
+using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Avalonia
 {
@@ -43,7 +42,7 @@ namespace MvvmDialogs.Avalonia
             IFrameworkDialogFactory? frameworkDialogFactory = null)
             : base(dialogFactory ?? new AvaloniaReflectionDialogFactory(),
                 dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
-                frameworkDialogFactory ?? new WpfFrameworkDialogFactory())
+                frameworkDialogFactory ?? new AvaloniaFrameworkDialogFactory())
         {
         }
 

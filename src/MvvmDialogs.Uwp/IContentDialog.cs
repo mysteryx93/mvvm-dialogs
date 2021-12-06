@@ -1,8 +1,4 @@
-﻿using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-namespace MvvmDialogs
+﻿namespace MvvmDialogs
 {
     /// <summary>
     /// Interface describing a content dialog.

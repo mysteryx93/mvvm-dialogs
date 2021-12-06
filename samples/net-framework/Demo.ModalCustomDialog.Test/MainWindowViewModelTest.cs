@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using Moq;
-using MvvmDialogs.Core;
+using MvvmDialogs;
 using NUnit.Framework;
 
 namespace Demo.ModalCustomDialog

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Windows.UI.Popups;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
 
 namespace Demo.MessageDialog
 {

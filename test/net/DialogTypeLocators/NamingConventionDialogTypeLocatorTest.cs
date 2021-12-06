@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
-using MvvmDialogs.Core.DialogTypeLocators;
 using NUnit.Framework;
 
 namespace MvvmDialogs.DialogTypeLocators

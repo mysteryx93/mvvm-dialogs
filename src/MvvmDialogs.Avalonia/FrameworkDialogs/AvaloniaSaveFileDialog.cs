@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using MvvmDialogs.Avalonia.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {

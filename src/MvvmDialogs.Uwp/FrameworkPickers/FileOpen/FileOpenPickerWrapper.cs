@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 
 namespace MvvmDialogs.FrameworkPickers.FileOpen
 {

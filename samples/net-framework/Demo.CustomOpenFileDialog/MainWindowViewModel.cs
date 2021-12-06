@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs;
+using MvvmDialogs.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
 namespace Demo.CustomOpenFileDialog

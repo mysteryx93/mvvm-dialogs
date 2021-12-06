@@ -1,5 +1,5 @@
 ﻿using System;
-using MvvmDialogs.Core;
+using MvvmDialogs;
 using MvvmDialogs.Wpf;
 
 namespace Demo.NonModalCustomDialog

@@ -1,4 +1,4 @@
-﻿using MvvmDialogs.Core.FrameworkDialogs;
+﻿using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomOpenFileDialog

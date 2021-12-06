@@ -1,6 +1,5 @@
 ﻿using System.Windows;
-using MvvmDialogs.Core;
-using MvvmDialogs.Core.DialogTypeLocators;
+using MvvmDialogs.DialogTypeLocators;
 
 namespace MvvmDialogs.Wpf
 {

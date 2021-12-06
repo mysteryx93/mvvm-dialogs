@@ -5,7 +5,6 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using MvvmDialogs;
 
 namespace Demo.CustomContentDialog
 {

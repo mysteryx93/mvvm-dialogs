@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Controls;
 using MvvmDialogs.FrameworkPickers.FileOpen;
 using MvvmDialogs.FrameworkPickers.FileSave;
 using MvvmDialogs.FrameworkPickers.Folder;

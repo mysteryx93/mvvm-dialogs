@@ -1,5 +1,5 @@
 ﻿using Moq;
-using MvvmDialogs.Core;
+using MvvmDialogs;
 using NUnit.Framework;
 
 namespace Demo.ActivateNonModalDialog

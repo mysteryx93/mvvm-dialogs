@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 
 namespace MvvmDialogs.FrameworkPickers.FileSave
 {

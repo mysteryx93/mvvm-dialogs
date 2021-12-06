@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using MvvmDialogs.Avalonia.FrameworkDialogs;
-using MvvmDialogs.Core.FrameworkDialogs;
-using FileDialogCustomPlaces = MvvmDialogs.Core.FrameworkDialogs.FileDialogCustomPlaces;
+using MvvmDialogs.FrameworkDialogs;
+using FileDialogCustomPlaces = MvvmDialogs.FrameworkDialogs.FileDialogCustomPlaces;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {

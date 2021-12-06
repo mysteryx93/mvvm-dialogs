@@ -1,7 +1,4 @@
 ﻿using System;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 
 namespace MvvmDialogs.FrameworkPickers.Folder
 {

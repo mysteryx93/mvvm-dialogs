@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using Ookii.Dialogs.Wpf;

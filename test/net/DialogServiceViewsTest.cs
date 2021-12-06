@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Windows;
 using Moq;
-using MvvmDialogs.Core;
 using MvvmDialogs.Wpf;
 using NUnit.Framework;
 

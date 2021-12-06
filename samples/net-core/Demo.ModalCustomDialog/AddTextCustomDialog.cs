@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmDialogs.Core;
+using MvvmDialogs;
 using MvvmDialogs.Wpf;
 
 namespace Demo.ModalCustomDialog

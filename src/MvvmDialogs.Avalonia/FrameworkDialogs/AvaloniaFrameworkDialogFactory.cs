@@ -1,5 +1,5 @@
 ﻿using System;
-using MvvmDialogs.Core.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {

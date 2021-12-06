@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using MvvmDialogs.Core;
 using MvvmDialogs.Wpf;
 
 namespace MvvmDialogs.Avalonia
