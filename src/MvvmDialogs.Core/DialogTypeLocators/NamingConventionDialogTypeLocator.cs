@@ -34,8 +34,10 @@ namespace MvvmDialogs.Core.DialogTypeLocators
         /// Gets or sets the suffix of View classes. Default is ''.
         /// </summary>
         public string ViewSuffix { get; set; } = "";
-
-        internal static readonly DialogTypeLocatorCache Cache = new DialogTypeLocatorCache();
+        /// <summary>
+        /// Internal cache.
+        /// </summary>
+        public static readonly DialogTypeLocatorCache Cache = new DialogTypeLocatorCache();
 
         /// <inheritdoc />
         public Type Locate(INotifyPropertyChanged viewModel)

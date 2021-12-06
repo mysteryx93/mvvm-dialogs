@@ -24,7 +24,7 @@ namespace MvvmDialogs.Wpf
         /// <summary>
         /// Occurs when the object is fully loaded.
         /// </summary>
-        public event EventHandler? Loaded;
+        public virtual event EventHandler? Loaded;
 
         /// <summary>
         /// Raises the Loaded event.
@@ -39,13 +39,13 @@ namespace MvvmDialogs.Wpf
         /// <summary>
         /// Returns whether the weak reference is still available.
         /// </summary>
-        public bool IsAlive => viewReference.IsAlive;
+        public virtual bool IsAlive => viewReference.IsAlive;
 
         /// <summary>
         /// Returns the original view reference if it is still alive.
         /// </summary>
         /// <exception cref="InvalidOperationException">View has been garbage collected.</exception>
-        public object SourceObj
+        public virtual object SourceObj
         {
             get
             {

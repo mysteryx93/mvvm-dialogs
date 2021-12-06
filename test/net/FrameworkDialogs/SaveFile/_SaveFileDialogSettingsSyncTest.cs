@@ -1,7 +1,9 @@
 // using System;
 // using System.Collections.Generic;
 // using Microsoft.Win32;
+// using MvvmDialogs.Core.FrameworkDialogs;
 // using NUnit.Framework;
+// using FileDialogCustomPlace = Microsoft.Win32.FileDialogCustomPlace;
 //
 // namespace MvvmDialogs.Wpf.FrameworkDialogs.SaveFile
 // {
