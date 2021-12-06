@@ -15,6 +15,26 @@ namespace MvvmDialogs.Core.DialogTypeLocators
     /// </summary>
     public class NamingConventionDialogTypeLocator : IDialogTypeLocator
     {
+        /// <summary>
+        /// Gets or sets the folder where View Models are stored. Default is 'ViewModels'.
+        /// </summary>
+        public string ViewModelFolder { get; set; } = "ViewModels";
+
+        /// <summary>
+        /// Gets or sets the suffix of View Model classes. Default is 'ViewModel'.
+        /// </summary>
+        public string ViewModelSuffix { get; set; } = "ViewModel";
+
+        /// <summary>
+        /// Gets or sets the folder where Views are stored. Default is 'Views'.
+        /// </summary>
+        public string ViewFolder { get; set; } = "Views";
+
+        /// <summary>
+        /// Gets or sets the suffix of View classes. Default is ''.
+        /// </summary>
+        public string ViewSuffix { get; set; } = "";
+
         internal static readonly DialogTypeLocatorCache Cache = new DialogTypeLocatorCache();
 
         /// <inheritdoc />
@@ -29,7 +49,7 @@ namespace MvvmDialogs.Core.DialogTypeLocators
                 return dialogType;
             }
 
-            string dialogName = GetDialogName(viewModelType);
+            string dialogName = GetDialogName(viewModelType) + ViewSuffix;
 
             dialogType = GetAssemblyFromType(viewModelType).GetType(dialogName);
             if (dialogType == null) throw new TypeLoadException(AppendInfoAboutDialogTypeLocators($"Dialog with name '{dialogName}' is missing."));
@@ -39,21 +59,22 @@ namespace MvvmDialogs.Core.DialogTypeLocators
             return dialogType;
         }
 
-        private static string GetDialogName(Type viewModelType)
+        private string GetDialogName(Type viewModelType)
         {
             if (viewModelType.FullName != null)
             {
-                string dialogName = viewModelType.FullName.Replace(".ViewModels.", ".Views.");
+                string dialogName = viewModelType.FullName.Replace($".{ViewModelFolder}.", $".{ViewFolder}.");
 
-                if (dialogName.EndsWith("ViewModel", StringComparison.Ordinal))
+                if (dialogName.EndsWith(ViewModelSuffix, StringComparison.Ordinal))
                 {
                     return dialogName.Substring(
                         0,
-                        dialogName.Length - "ViewModel".Length);
+                        dialogName.Length - ViewModelSuffix.Length);
                 }
             }
 
-            throw new TypeLoadException(AppendInfoAboutDialogTypeLocators($"View model of type '{viewModelType}' doesn't follow naming convention since it isn't suffixed with 'ViewModel'."));
+            throw new TypeLoadException(
+                AppendInfoAboutDialogTypeLocators($"View model of type '{viewModelType}' doesn't follow naming convention since it isn't suffixed with '{ViewModelSuffix}'."));
         }
 
         private static Assembly GetAssemblyFromType(Type type) => type.Assembly;
