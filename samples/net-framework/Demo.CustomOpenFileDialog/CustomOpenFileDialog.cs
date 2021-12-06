@@ -1,7 +1,7 @@
 ﻿using System;
 using MvvmDialogs.Core;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf;
 using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomOpenFileDialog

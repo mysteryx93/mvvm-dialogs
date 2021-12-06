@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvvmDialogs.Core;
-using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf;
 
 namespace Demo.ModalCustomDialog
 {
@@ -25,19 +26,14 @@ namespace Demo.ModalCustomDialog
             set => dialog.DataContext = value;
         }
 
-        bool? IWindow.DialogResult
-        {
-            get => dialog.DialogResult;
-            set => dialog.DialogResult = value;
-        }
-
         IWindow IWindow.Owner
         {
             get => new WpfWindow(dialog.Owner);
             set => dialog.Owner = ((WpfWindow)value).Ref;
         }
 
-        bool? IWindow.ShowDialog() => dialog.ShowDialog();
+        Task<bool?> IWindow.ShowDialogAsync() =>
+            Task.Run(() => dialog.ShowDialog());
 
         void IWindow.Show() => dialog.Show();
     }

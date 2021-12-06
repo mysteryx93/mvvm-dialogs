@@ -89,9 +89,9 @@ namespace MvvmDialogs.Core
 
             IWindow dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
 
-            PropertyChangedEventHandler handler = RegisterDialogResult(dialog, viewModel);
-            await dialog.ShowDialogAsync();
-            UnregisterDialogResult(viewModel, handler);
+            var result = await dialog.ShowDialogAsync();
+
+            DialogLogger.Write($"Dialog: {dialog.GetType()}; Result: {result}");
 
             return viewModel.DialogResult;
         }
@@ -104,25 +104,6 @@ namespace MvvmDialogs.Core
 
             return dialog;
         }
-
-        private static PropertyChangedEventHandler RegisterDialogResult(IWindow dialog, IModalDialogViewModel viewModel)
-        {
-            void Handler(object? sender, PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName != Reflection.DialogResultPropertyName || dialog.DialogResult == viewModel.DialogResult)
-                    return;
-
-                DialogLogger.Write($"Dialog: {dialog.GetType()}; Result: {viewModel.DialogResult}");
-                dialog.DialogResult = viewModel.DialogResult;
-            }
-
-            viewModel.PropertyChanged += Handler;
-
-            return Handler;
-        }
-
-        private static void UnregisterDialogResult(IModalDialogViewModel viewModel, PropertyChangedEventHandler handler) =>
-            viewModel.PropertyChanged -= handler;
 
         /// <inheritdoc />
         public abstract bool Activate(INotifyPropertyChanged viewModel);

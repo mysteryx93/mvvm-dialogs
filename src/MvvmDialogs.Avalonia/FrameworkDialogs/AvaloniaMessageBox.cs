@@ -1,25 +1,22 @@
 ﻿using System.Threading.Tasks;
+using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.Core.FrameworkDialogs;
-using Win32Button = System.Windows.MessageBoxButton;
-using Win32Image = System.Windows.MessageBoxImage;
-using Win32Result = System.Windows.MessageBoxResult;
-using Win32Options = System.Windows.MessageBoxOptions;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs
+namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
 {
     /// <summary>
     /// Class wrapping <see cref="System.Windows.MessageBox"/>.
     /// </summary>
-    public sealed class WpfMessageBox : WpfFrameworkDialogBase<MessageBoxSettings>
+    public sealed class AvaloniaMessageBox : AvaloniaFrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
-        public WpfMessageBox(MessageBoxSettings settings)
+        public AvaloniaMessageBox(MessageBoxSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
             Task.Run(
                 () =>
                 {

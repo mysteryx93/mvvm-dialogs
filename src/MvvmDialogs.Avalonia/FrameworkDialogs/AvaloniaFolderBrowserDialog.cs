@@ -1,22 +1,21 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
 using MvvmDialogs.Core.FrameworkDialogs;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs
+namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="FolderBrowserDialog"/>.
     /// </summary>
-    public class WpfFolderBrowserDialog : WpfFrameworkDialogBase<FolderBrowserDialogSettings>
+    public class AvaloniaFolderBrowserDialog : AvaloniaFrameworkDialogBase<FolderBrowserDialogSettings>
     {
         /// <inheritdoc />
-        public WpfFolderBrowserDialog(FolderBrowserDialogSettings settings)
+        public AvaloniaFolderBrowserDialog(FolderBrowserDialogSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
             Task.Run(
                 () =>
                 {

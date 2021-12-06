@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -29,7 +30,7 @@ namespace Demo.OpenFileDialog
 
         public ICommand OpenFileCommand { get; }
 
-        private void OpenFile()
+        private async Task OpenFile()
         {
             var settings = new OpenFileDialogSettings
             {
@@ -38,7 +39,7 @@ namespace Demo.OpenFileDialog
                 Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
             };
 
-            var success = dialogService.ShowOpenFileDialog(this, settings);
+            var success = await dialogService.ShowOpenFileDialogAsync(this, settings);
             if (success == true)
             {
                 Path = settings.FileName;

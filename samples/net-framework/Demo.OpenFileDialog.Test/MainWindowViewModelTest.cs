@@ -24,7 +24,7 @@ namespace Demo.OpenFileDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowOpenFileDialog(viewModel, It.IsAny<OpenFileDialogSettings>()))
+                .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
                 .Returns(true)
                 .Callback((INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings) =>
                     settings.FileName = @"C:\SomeFile.txt");
@@ -41,7 +41,7 @@ namespace Demo.OpenFileDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowOpenFileDialog(viewModel, It.IsAny<OpenFileDialogSettings>()))
+                .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
                 .Returns(false);
 
             // Act

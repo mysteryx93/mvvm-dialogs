@@ -38,7 +38,7 @@ namespace Demo.CustomOpenFileDialog
                 Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
             };
 
-            bool? success = dialogService.ShowOpenFileDialog(this, settings);
+            bool? success = dialogService.ShowOpenFileDialogAsync(this, settings);
             if (success == true)
             {
                 Path = settings.FileName;

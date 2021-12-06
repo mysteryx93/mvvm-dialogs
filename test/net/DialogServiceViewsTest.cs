@@ -3,7 +3,6 @@ using System.Windows;
 using Moq;
 using MvvmDialogs.Core;
 using MvvmDialogs.Wpf;
-using MvvmDialogs.Wpf.DialogFactories;
 using NUnit.Framework;
 
 namespace MvvmDialogs

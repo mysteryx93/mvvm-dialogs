@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using MvvmDialogs.Core;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
-namespace MvvmDialogs.Wpf.DialogFactories
+namespace MvvmDialogs.Wpf
 {
     /// <summary>
     /// Class wrapping an instance of WPF <see cref="Window"/> within <see cref="IWindow"/>.
@@ -36,17 +36,10 @@ namespace MvvmDialogs.Wpf.DialogFactories
         public WpfWindow(Window window) => this.Ref = window ?? throw new ArgumentNullException(nameof(window));
 
         /// <inheritdoc />
-        public object DataContext
+        public object? DataContext
         {
             get => Ref.DataContext;
             set => Ref.DataContext = value;
-        }
-
-        /// <inheritdoc />
-        public bool? DialogResult
-        {
-            get => Ref.DialogResult;
-            set => Ref.DialogResult = value;
         }
 
         /// <inheritdoc />

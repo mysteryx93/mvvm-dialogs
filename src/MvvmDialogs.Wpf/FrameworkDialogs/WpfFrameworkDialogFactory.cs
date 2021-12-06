@@ -1,6 +1,5 @@
 ﻿using System;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf.FrameworkDialogs.MessageBox;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {

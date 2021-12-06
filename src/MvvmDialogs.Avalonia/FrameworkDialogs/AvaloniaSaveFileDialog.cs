@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
+using Avalonia.Controls;
+using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.Core.FrameworkDialogs;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
@@ -7,10 +8,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="SaveFileDialog"/>.
     /// </summary>
-    internal sealed class WpfSaveFileDialog : WpfFrameworkDialogBase<SaveFileDialogSettings>
+    internal sealed class AvaloniaSaveFileDialog : AvaloniaFrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <inheritdoc />
-        public WpfSaveFileDialog(SaveFileDialogSettings settings)
+        public AvaloniaSaveFileDialog(SaveFileDialogSettings settings)
             : base(settings)
         {
         }
@@ -25,13 +26,13 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
 
                     var result = dialog.ShowDialog(owner.Win32Window);
 
-                    WpfOpenFileDialog.ToSettingsShared(dialog, Settings);
+                    AvaloniaOpenFileDialog.ToSettingsShared(dialog, Settings);
                     return result.AsBool();
                 });
 
         private void ToDialog(SaveFileDialog d)
         {
-            WpfOpenFileDialog.ToDialogShared(Settings, d);
+            AvaloniaOpenFileDialog.ToDialogShared(Settings, d);
             d.CheckFileExists = Settings.CheckFileExists;
             d.CreatePrompt = Settings.CreatePrompt;
             d.OverwritePrompt = Settings.OverwritePrompt;

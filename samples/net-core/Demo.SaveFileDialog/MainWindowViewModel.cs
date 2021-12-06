@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -29,7 +30,7 @@ namespace Demo.SaveFileDialog
 
         public ICommand SaveFileCommand { get; }
 
-        private void SaveFile()
+        private async Task SaveFileAsync()
         {
             var settings = new SaveFileDialogSettings
             {
@@ -39,7 +40,7 @@ namespace Demo.SaveFileDialog
                 CheckFileExists = false
             };
 
-            bool? success = dialogService.ShowSaveFileDialog(this, settings);
+            var success = await dialogService.ShowSaveFileDialogAsync(this, settings);
             if (success == true)
             {
                 Path = settings.FileName;

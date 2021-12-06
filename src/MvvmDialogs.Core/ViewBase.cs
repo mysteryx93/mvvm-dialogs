@@ -70,7 +70,7 @@ namespace MvvmDialogs.Wpf
         /// <summary>
         /// Returns the DataContext of referenced element.
         /// </summary>
-        public abstract object DataContext { get; }
+        public abstract object? DataContext { get; }
 
         /// <summary>Determines whether specified view references the same object as the current view.</summary>
         /// <param name="obj">The object to compare with the current object.</param>

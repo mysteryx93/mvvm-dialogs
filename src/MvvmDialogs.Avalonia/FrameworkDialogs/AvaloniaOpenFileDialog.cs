@@ -1,28 +1,27 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
+using Avalonia.Controls;
+using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.Core.FrameworkDialogs;
 using FileDialogCustomPlaces = MvvmDialogs.Core.FrameworkDialogs.FileDialogCustomPlaces;
-using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
-using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="OpenFileDialog"/>.
     /// </summary>
-    internal sealed class WpfOpenFileDialog : WpfFrameworkDialogBase<OpenFileDialogSettings>
+    internal sealed class AvaloniaOpenFileDialog : AvaloniaFrameworkDialogBase<OpenFileDialogSettings>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WpfOpenFileDialog"/> class.
+        /// Initializes a new instance of the <see cref="AvaloniaOpenFileDialog"/> class.
         /// </summary>
         /// <param name="settings">The settings for the open file dialog.</param>
-        public WpfOpenFileDialog(OpenFileDialogSettings settings)
+        public AvaloniaOpenFileDialog(OpenFileDialogSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
             Task.Run(
                 () =>
                 {

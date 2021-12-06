@@ -94,7 +94,7 @@ namespace MvvmDialogs.Core
         /// <param name="settings">The settings for the open file dialog.</param>
         /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowOpenFileDialog(this IDialogService service, INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings)
+        public static Task<bool?> ShowOpenFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));

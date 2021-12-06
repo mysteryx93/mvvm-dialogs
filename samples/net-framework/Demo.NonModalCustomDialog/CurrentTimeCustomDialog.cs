@@ -1,6 +1,6 @@
 ﻿using System;
 using MvvmDialogs.Core;
-using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf;
 
 namespace Demo.NonModalCustomDialog
 {
@@ -23,12 +23,6 @@ namespace Demo.NonModalCustomDialog
         {
             get => dialog.DataContext;
             set => dialog.DataContext = value;
-        }
-
-        bool? IWindow.DialogResult
-        {
-            get => dialog.DialogResult;
-            set => dialog.DialogResult = value;
         }
 
         IWindow IWindow.Owner

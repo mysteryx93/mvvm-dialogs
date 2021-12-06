@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvvmDialogs.Core.FrameworkDialogs;
-using MvvmDialogs.Wpf.DialogFactories;
+using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using Ookii.Dialogs.Wpf;
 
@@ -27,9 +28,9 @@ namespace Demo.CustomMessageBox
         /// A <see cref="System.Windows.MessageBoxResult"/> value that specifies which message box button is
         /// clicked by the user.
         /// </returns>
-        public override bool? ShowDialog(WpfWindow owner)
+        public override async Task<bool?> ShowDialogAsync(WpfWindow owner)
         {
-            var messageBox = new TaskDialog
+            using var messageBox = new TaskDialog
             {
                 Content = Settings.MessageBoxText
             };
@@ -40,7 +41,7 @@ namespace Demo.CustomMessageBox
 
             if (owner == null) throw new ArgumentNullException(nameof(owner));
 
-            var result = messageBox.ShowDialog(owner.Ref);
+            var result = await Task.Run(() => messageBox.ShowDialog(owner.Ref));
             return ToMessageBoxResult(result);
         }
 
