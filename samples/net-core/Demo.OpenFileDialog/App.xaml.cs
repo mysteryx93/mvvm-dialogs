@@ -8,7 +8,7 @@ namespace Demo.OpenFileDialog
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SimpleIoc.Default.Register<IDialogService>(() => new DialogServiceBase());
+            SimpleIoc.Default.Register<IDialogService>(() => new WpfDialogService());
         }
     }
 }

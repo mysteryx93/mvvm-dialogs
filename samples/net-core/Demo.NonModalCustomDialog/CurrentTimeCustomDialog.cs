@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System;
 using MvvmDialogs.Core;
+using MvvmDialogs.Wpf.DialogFactories;
 
 namespace Demo.NonModalCustomDialog
 {
@@ -11,6 +11,12 @@ namespace Demo.NonModalCustomDialog
         public CurrentTimeCustomDialog()
         {
             dialog = new CurrentTimeDialog();
+        }
+
+        event EventHandler IWindow.Closed
+        {
+            add => dialog.Closed += value;
+            remove => dialog.Closed += value;
         }
 
         object IWindow.DataContext
@@ -25,20 +31,14 @@ namespace Demo.NonModalCustomDialog
             set => dialog.DialogResult = value;
         }
 
-        ContentControl IWindow.Owner
+        IWindow IWindow.Owner
         {
-            get => dialog.Owner;
-            set => dialog.Owner = (Window)value;
+            get => new WpfWindow(dialog.Owner);
+            set => dialog.Owner = ((WpfWindow)value).Ref;
         }
 
-        bool? IWindow.ShowDialog()
-        {
-            return dialog.ShowDialog();
-        }
+        bool? IWindow.ShowDialog() => dialog.ShowDialog();
 
-        void IWindow.Show()
-        {
-            dialog.Show();
-        }
+        void IWindow.Show() => dialog.Show();
     }
 }

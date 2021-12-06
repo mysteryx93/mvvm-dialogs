@@ -56,16 +56,6 @@ namespace MvvmDialogs.Core
             ShowInternal(ownerViewModel, viewModel, typeof(T));
         }
 
-        /// <inheritdoc />
-        public void ShowCustom<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
-            where T : IWindow
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            ShowInternal(ownerViewModel, viewModel, typeof(T));
-        }
-
         /// <summary>
         /// Displays a non-modal dialog of specified type.
         /// </summary>
@@ -93,16 +83,6 @@ namespace MvvmDialogs.Core
 
         /// <inheritdoc />
         public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            return ShowDialogInternal(ownerViewModel, viewModel, typeof(T));
-        }
-
-        /// <inheritdoc />
-        public bool? ShowCustomDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel)
-            where T : IWindow
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));

@@ -15,14 +15,12 @@ namespace MvvmDialogs.Core.DialogTypeLocators
             if (dialogType == null) throw new ArgumentNullException(nameof(dialogType));
 
             var instance = Activator.CreateInstance(dialogType);
-            if (instance is T window)
+            return instance switch
             {
-                return CreateWrapper(window);
-            }
-            else
-            {
-                throw new ArgumentException($"Only dialogs of type {typeof(T)} are supported.");
-            }
+                IWindow w => w,
+                T w => CreateWrapper(w),
+                _ => throw new ArgumentException($"Only dialogs of type {typeof(T)} are supported.")
+            };
         }
 
         /// <summary>

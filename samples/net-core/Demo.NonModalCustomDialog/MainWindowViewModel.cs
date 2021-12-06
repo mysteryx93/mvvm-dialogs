@@ -29,7 +29,7 @@ namespace Demo.NonModalCustomDialog
 
         private void ExplicitShow()
         {
-            Show(viewModel => dialogService.ShowCustom<CurrentTimeCustomDialog>(this, viewModel));
+            Show(viewModel => dialogService.Show<CurrentTimeCustomDialog>(this, viewModel));
         }
 
         private static void Show(Action<CurrentTimeCustomDialogViewModel> show)

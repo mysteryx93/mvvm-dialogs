@@ -3,7 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MvvmDialogs.Core;
-using MvvmDialogs.Core.FrameworkDialogs.SaveFile;
+using MvvmDialogs.Core.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
 namespace Demo.SaveFileDialog
@@ -34,7 +34,7 @@ namespace Demo.SaveFileDialog
             var settings = new SaveFileDialogSettings
             {
                 Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
                 Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
                 CheckFileExists = false
             };
