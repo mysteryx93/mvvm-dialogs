@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace MvvmDialogs
+namespace MvvmDialogs.Private
 {
     /// <summary>
     /// Class containing methods for extracting member information using reflection.
     /// </summary>
+    // TODO: This class isn't used anymore, it was used by DialogService previously
     internal static class Reflection
     {
         internal static readonly string DialogResultPropertyName =
