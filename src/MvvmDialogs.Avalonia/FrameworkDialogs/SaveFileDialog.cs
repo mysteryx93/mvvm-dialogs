@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
+using AvaloniaSaveFileDialog = Avalonia.Controls.SaveFileDialog;
 
 namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
-    /// Class wrapping <see cref="Avalonia.Controls.SaveFileDialog"/>.
+    /// Class wrapping <see cref="AvaloniaSaveFileDialog"/>.
     /// </summary>
     internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
     {
@@ -17,7 +18,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         /// <inheritdoc />
         public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
-            var dialog = new global::Avalonia.Controls.SaveFileDialog();
+            var dialog = new AvaloniaSaveFileDialog();
             ToDialog(dialog);
 
             Settings.FileName = await dialog.ShowAsync(owner.Ref);
@@ -30,7 +31,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             OpenFileDialog.ToDialogShared(Settings, d);
             // d.CreatePrompt = Settings.CreatePrompt;
             // d.OverwritePrompt = Settings.OverwritePrompt;
-            d.DefaultExtension = s.DefaultExt;
+            d.DefaultExtension = Settings.DefaultExtension;
         }
     }
 }

@@ -4,19 +4,13 @@ namespace MvvmDialogs.FrameworkDialogs
     /// <summary>
     /// Settings for a MessageBox.
     /// </summary>
-    public class MessageBoxSettings
+    public class MessageBoxSettings : DialogSettingsBase
     {
         /// <summary>
         /// Gets or sets the <see cref="MessageBoxButton"/> value that specifies which button or
         /// buttons to display. Default value is <see cref="MessageBoxButton.Ok"/>.
         /// </summary>
         public MessageBoxButton Button { get; set; } = MessageBoxButton.Ok;
-
-        /// <summary>
-        /// Gets or sets the <see cref="string"/> that specifies the title bar caption to display.
-        /// Default value is an empty string.
-        /// </summary>
-        public string Caption { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the <see cref="MessageBoxResult"/> value that specifies the default result
@@ -33,6 +27,6 @@ namespace MvvmDialogs.FrameworkDialogs
         /// <summary>
         /// Gets or sets the <see cref="string"/> that specifies the text to display.
         /// </summary>
-        public string? MessageBoxText { get; set; }
+        public string? Text { get; set; }
     }
 }

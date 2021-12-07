@@ -14,6 +14,7 @@ namespace MvvmDialogs.FrameworkDialogs
         /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
         /// <typeparam name="T">The settings type used to determine the implementation of <see cref="IFrameworkDialog"/> to create.</typeparam>
         /// <returns>A framework dialog implementing <see cref="IFrameworkDialog"/>.</returns>
-        IFrameworkDialog Create<T>(T settings, AppDialogSettingsBase appSettings);
+        IFrameworkDialog Create<T>(T settings, AppDialogSettingsBase appSettings)
+            where T : DialogSettingsBase;
     }
 }

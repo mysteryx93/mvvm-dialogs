@@ -20,8 +20,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(
-                Settings.Caption,
-                Settings.MessageBoxText,
+                Settings.Title,
+                Settings.Text,
                 SyncButton(Settings.Button),
                 SyncIcon(Settings.Icon),
                 style: AppSettings.MessageBoxStyle);

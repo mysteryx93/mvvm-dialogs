@@ -24,12 +24,12 @@ namespace Demo.CustomOpenFileDialog
                 AddExtension = settings.AddExtension,
                 CheckFileExists = settings.CheckFileExists,
                 CheckPathExists = settings.CheckPathExists,
-                DefaultExt = settings.DefaultExt,
+                DefaultExt = settings.DefaultExtension,
                 FileName = settings.FileName,
                 Filter = settings.Filter,
                 FilterIndex = settings.FilterIndex,
                 InitialDirectory = settings.InitialDirectory,
-                Multiselect = settings.Multiselect,
+                Multiselect = settings.AllowMultiple,
                 Title = settings.Title
             };
         }

@@ -1,24 +1,17 @@
 ﻿
+using System.Collections.Generic;
+
 namespace MvvmDialogs.FrameworkDialogs
 {
     /// <summary>
     /// Settings for FileDialog.
     /// </summary>
-    public abstract class FileDialogSettings
+    public abstract class FileDialogSettings : DialogSettingsBase
     {
         /// <summary>
-        /// Gets or sets a value that specifies the default extension string to use to filter the
-        /// list of files that are displayed.
+        /// Gets or sets the default extension to be used to save the file (including the period ".").
         /// </summary>
-        /// <value>
-        /// The default extension string. The default is <see cref="string.Empty"/>.
-        /// </value>
-        /// <remarks>
-        /// The extension string must contain the leading period. For example, set the
-        /// <see cref="DefaultExt"/> property to ".txt" to select all text files.
-        /// <para/>
-        /// </remarks>
-        public string DefaultExt { get; set; } = string.Empty;
+        public string DefaultExtension { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether a file dialog displays a warning if the user
@@ -51,34 +44,15 @@ namespace MvvmDialogs.FrameworkDialogs
         public bool DereferenceLinks { get; set; } = true;
 
         /// <summary>
-        ///
+        /// Gets or sets a collection of filters which determine the types of files displayed in an
+        /// OpenFileDialog or SaveFileDialog.
         /// </summary>
-        public string Filter { get; set; } = string.Empty;
+        public List<FileFilter> Filters { get; set; } = new List<FileFilter>();
 
         /// <summary>
-        /// Gets or sets the initial directory that is displayed by a file dialog.
+        /// Gets or sets the initial path that is displayed by a file dialog.
+        /// It will set both the initial directory and initial file name.
         /// </summary>
-        /// <value>
-        /// A <see cref="string"/> that contains the initial directory. The default is
-        /// <see cref="string.Empty"/>.
-        /// </value>
-        /// <remarks>
-        /// If there is no initial directory set, this property will contain
-        /// <see cref="string.Empty"/> rather than a <c>null</c> string.
-        /// </remarks>
-        public string InitialDirectory { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the text that appears in the title bar of a file dialog.
-        /// </summary>
-        /// <value>
-        /// A <see cref="string"/> that is the text that appears in the title bar of a file dialog.
-        /// The default is <see cref="string.Empty"/>.
-        /// </value>
-        /// <remarks>
-        /// If <see cref="Title"/> is <c>null</c> or <see cref="string.Empty"/>, a default,
-        /// localized value is used, such as "Save As" or "Open".
-        /// </remarks>
-        public string Title { get; set; } = string.Empty;
+        public string InitialPath { get; set; } = string.Empty;
     }
 }

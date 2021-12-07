@@ -31,7 +31,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
 
         private void ToDialog(System.Windows.Forms.FolderBrowserDialog d)
         {
-            d.Description = Settings.Description;
+
+            d.Description = Settings.Title;
             d.RootFolder = Settings.RootFolder;
             d.SelectedPath = Settings.SelectedPath;
             d.ShowNewFolderButton = Settings.ShowNewFolderButton;

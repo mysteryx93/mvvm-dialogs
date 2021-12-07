@@ -25,8 +25,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 {
                     var result = System.Windows.MessageBox.Show(
                         owner.Ref,
-                        Settings.MessageBoxText,
-                        Settings.Caption,
+                        Settings.Text,
+                        Settings.Title,
                         SyncButton(Settings.Button),
                         SyncIcon(Settings.Icon),
                         SyncDefault(Settings.DefaultResult),

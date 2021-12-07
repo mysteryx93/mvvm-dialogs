@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
@@ -34,15 +35,15 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         private void ToDialog(System.Windows.Forms.OpenFileDialog d)
         {
             ToDialogShared(Settings, AppSettings, d);
-            d.Multiselect = Settings.Multiselect;
+            d.Multiselect = Settings.AllowMultiple;
             d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             d.ShowReadOnly = Settings.ShowReadOnly;
         }
 
         internal static void ToDialogShared(FileDialogSettings s, AppDialogSettings s2, FileDialog d)
         {
-            d.DefaultExt = s.DefaultExt;
-            d.AddExtension = !string.IsNullOrEmpty(s.DefaultExt);
+            d.DefaultExt = s.DefaultExtension;
+            d.AddExtension = !string.IsNullOrEmpty(s.DefaultExtension);
             d.CheckFileExists = s.CheckFileExists;
             d.CheckPathExists = s.CheckPathExists;
             foreach (var item in s2.CustomPlaces)
@@ -56,12 +57,13 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                     d.CustomPlaces.Add(item.KnownFolderGuid);
                 }
             }
+            var file = new FileInfo(s.InitialPath);
+            d.InitialDirectory = file.DirectoryName;
+            d.FileName = file.Name;
             d.DereferenceLinks = s.DereferenceLinks;
-            // d.FileName = s.FileName;
             d.Filter = s.Filter;
-            d.InitialDirectory = s.InitialDirectory;
-            d.ShowHelp = s2.FileShowHelp;
             d.Title = s.Title;
+            d.ShowHelp = s2.FileShowHelp;
         }
     }
 }

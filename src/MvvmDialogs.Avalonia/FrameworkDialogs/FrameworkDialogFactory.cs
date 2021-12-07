@@ -10,6 +10,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     {
         /// <inheritdoc />
         public IFrameworkDialog Create<T>(T settings, AppDialogSettingsBase appSettings)
+            where T : DialogSettingsBase
         {
             var s2 = (AppDialogSettings)appSettings;
             return settings switch

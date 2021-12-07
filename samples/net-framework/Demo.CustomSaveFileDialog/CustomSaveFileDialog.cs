@@ -26,7 +26,7 @@ namespace Demo.CustomSaveFileDialog
                 CheckFileExists = settings.CheckFileExists,
                 CheckPathExists = settings.CheckPathExists,
                 CreatePrompt = settings.CreatePrompt,
-                DefaultExt = settings.DefaultExt,
+                DefaultExt = settings.DefaultExtension,
                 FileName = settings.FileName,
                 Filter = settings.Filter,
                 FilterIndex = settings.FilterIndex,

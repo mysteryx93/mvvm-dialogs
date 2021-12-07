@@ -60,7 +60,7 @@ namespace MvvmDialogs
         {
             var settings = new MessageBoxSettings
             {
-                MessageBoxText = messageBoxText,
+                Text = messageBoxText,
                 Caption = caption,
                 Button = button,
                 Icon = icon,
@@ -85,7 +85,7 @@ namespace MvvmDialogs
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
-            DialogLogger.Write($"Caption: {settings.Caption}; Message: {settings.MessageBoxText}");
+            DialogLogger.Write($"Caption: {settings.Caption}; Message: {settings.Text}");
 
             return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));

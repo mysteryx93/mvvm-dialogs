@@ -32,7 +32,7 @@ namespace Demo.CustomMessageBox
         {
             using var messageBox = new TaskDialog
             {
-                Content = Settings.MessageBoxText
+                Content = Settings.Text
             };
 
             messageBox.WindowTitle = SyncTitle();
