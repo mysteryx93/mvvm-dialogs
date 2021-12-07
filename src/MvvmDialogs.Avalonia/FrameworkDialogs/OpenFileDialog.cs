@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using MvvmDialogs.FrameworkDialogs;
@@ -47,8 +49,15 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             var file = new FileInfo(s.InitialPath);
             d.Directory = file.DirectoryName;
             d.InitialFileName = file.Name;
-            d.Filters = s.Filter;
+            d.Filters = SyncFilters(s.Filters);
             d.Title = s.Title;
         }
+
+        private static List<FileDialogFilter> SyncFilters(List<FileFilter> filters) =>
+            filters.Select(
+                x => new FileDialogFilter()
+                {
+                    Name = x.NameToString(x.ExtensionsToString()), Extensions = x.Extensions
+                }).ToList();
     }
 }

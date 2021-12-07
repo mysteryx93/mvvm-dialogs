@@ -47,6 +47,11 @@ namespace MvvmDialogs.FrameworkDialogs
         /// Gets or sets a collection of filters which determine the types of files displayed in an
         /// OpenFileDialog or SaveFileDialog.
         /// </summary>
+        /// <remarks>
+        /// The '.' in extensions is optional. Extensions will automatically be added
+        /// to the descriptions unless it contains '('.
+        /// If you do not wish to display extensions, end the name with '()' and it will be trimmed away.
+        /// </remarks>
         public List<FileFilter> Filters { get; set; } = new List<FileFilter>();
 
         /// <summary>

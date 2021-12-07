@@ -37,8 +37,8 @@ namespace MvvmDialogs
         /// </summary>
         /// <param name="service">The IDialogService on which to attach the extension method.</param>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
-        /// <param name="messageBoxText">A <see cref="string"/> that specifies the text to display.</param>
-        /// <param name="caption">A <see cref="string"/> that specifies the title bar caption to display. Default value is an empty string.</param>
+        /// <param name="text">A <see cref="string"/> that specifies the text to display.</param>
+        /// <param name="title">A <see cref="string"/> that specifies the title bar caption to display. Default value is an empty string.</param>
         /// <param name="button">A <see cref="MessageBoxButton"/> value that specifies which button or buttons to display.
         /// Default value is <see cref="MessageBoxButton.Ok"/>.</param>
         /// <param name="icon">A <see cref="MessageBoxImage"/> value that specifies the icon to display.
@@ -51,8 +51,8 @@ namespace MvvmDialogs
         public static Task<bool?> ShowMessageBoxAsync(
             this IDialogService service,
             INotifyPropertyChanged ownerViewModel,
-            string? messageBoxText,
-            string caption = "",
+            string? text,
+            string title = "",
             MessageBoxButton button = MessageBoxButton.Ok,
             MessageBoxImage icon = MessageBoxImage.None,
             MessageBoxResult defaultResult = MessageBoxResult.None,
@@ -60,8 +60,8 @@ namespace MvvmDialogs
         {
             var settings = new MessageBoxSettings
             {
-                Text = messageBoxText,
-                Caption = caption,
+                Text = text,
+                Title = title,
                 Button = button,
                 Icon = icon,
                 DefaultResult = defaultResult
@@ -85,7 +85,7 @@ namespace MvvmDialogs
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
-            DialogLogger.Write($"Caption: {settings.Caption}; Message: {settings.Text}");
+            DialogLogger.Write($"Caption: {settings.Title}; Message: {settings.Text}");
 
             return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
@@ -61,9 +63,39 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             d.InitialDirectory = file.DirectoryName;
             d.FileName = file.Name;
             d.DereferenceLinks = s.DereferenceLinks;
-            d.Filter = s.Filter;
+            d.Filter = SyncFilters(s.Filters);
             d.Title = s.Title;
             d.ShowHelp = s2.FileShowHelp;
+        }
+
+        /// <summary>
+        /// Encodes the list of filters in the Win32 API format:
+        /// "Image Files (*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*"
+        /// </summary>
+        /// <param name="filters">The list of filters to encode.</param>
+        /// <returns>A string representation of the list compatible with Win32 API.</returns>
+        private static string SyncFilters(List<FileFilter> filters)
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (var item in filters)
+            {
+                // Add separator.
+                if (result.Length > 0)
+                {
+                    result.Append('|');
+                }
+
+                // Get all extensions as a string.
+                var extDesc = item.ExtensionsToString();
+                // Get name including extensions.
+                var name = item.NameToString(extDesc);
+                // Add name+extensions for display.
+                result.Append(name);
+                // Add extensions again for the API.
+                result.Append("|");
+                result.Append(extDesc);
+            }
+            return result.ToString();
         }
     }
 }
