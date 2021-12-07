@@ -11,16 +11,16 @@ namespace MvvmDialogs.Wpf
     internal static class Extensions
     {
         /// <summary>
-        /// Gets the owner of a <see cref="StyledElement"/> wrapped in a <see cref="AvaloniaWindow"/>.
+        /// Gets the owner of a <see cref="StyledElement"/> wrapped in a <see cref="WindowWrapper"/>.
         /// </summary>
         /// <param name="frameworkElement">
-        /// The <see cref="StyledElement"/> to find the <see cref="AvaloniaWindow"/> for.
+        /// The <see cref="StyledElement"/> to find the <see cref="WindowWrapper"/> for.
         /// </param>
-        /// <returns>The owning <see cref="AvaloniaWindow"/> if found; otherwise null.</returns>
-        internal static AvaloniaWindow? GetOwner(this StyledElement frameworkElement)
+        /// <returns>The owning <see cref="WindowWrapper"/> if found; otherwise null.</returns>
+        internal static WindowWrapper? GetOwner(this StyledElement frameworkElement)
         {
             var owner = frameworkElement as Window ?? frameworkElement.FindLogicalAncestorOfType<Window>();
-            return owner != null ? new AvaloniaWindow(owner) : null;
+            return owner != null ? new WindowWrapper(owner) : null;
         }
 
         // /// <summary>

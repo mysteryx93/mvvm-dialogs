@@ -13,7 +13,7 @@ namespace Demo.CustomDialogTypeLocator
 
         public MainWindowVM()
         {
-            dialogService = new WpfDialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
+            dialogService = new DialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
 
             ShowDialogCommand = new RelayCommand(ShowDialogAsync);
         }

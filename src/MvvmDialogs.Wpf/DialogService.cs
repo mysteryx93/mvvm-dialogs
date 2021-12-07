@@ -1,48 +1,50 @@
 ﻿using System;
 using System.ComponentModel;
-using Avalonia;
-using Avalonia.Controls;
-using MvvmDialogs.Avalonia.FrameworkDialogs;
+using System.Linq;
+using System.Windows;
 using MvvmDialogs.DialogTypeLocators;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf;
+using MvvmDialogs.Wpf.FrameworkDialogs;
+using Application = System.Windows.Application;
 
-namespace MvvmDialogs.Avalonia
+namespace MvvmDialogs
 {
     /// <summary>
     /// Class abstracting the interaction between view models and views when it comes to
     /// opening dialogs using the MVVM pattern in WPF.
     /// </summary>
-    public class AvaloniaDialogService : DialogServiceBase
+    public class DialogService : DialogServiceBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
         /// </summary>
         /// <remarks>
-        /// By default <see cref="AvaloniaReflectionDialogFactory"/> is used as dialog factory,
+        /// By default <see cref="ReflectionDialogFactory"/> is used as dialog factory,
         /// <see cref="NamingConventionDialogTypeLocator"/> is used as dialog type locator
-        /// and <see cref="WpfFrameworkDialogFactory"/> is used as framework dialog factory.
+        /// and <see cref="FrameworkDialogFactory"/> is used as framework dialog factory.
         /// </remarks>
-        public AvaloniaDialogService()
+        public DialogService()
             : this(null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AvaloniaDialogService"/> class.
+        /// Initializes a new instance of the <see cref="DialogService"/> class.
         /// </summary>
         /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
-        /// <see cref="AvaloniaReflectionDialogFactory"/>.</param>
+        /// <see cref="ReflectionDialogFactory"/>.</param>
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
         /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.</param>
         /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
-        /// <see cref="WpfFrameworkDialogFactory"/>.</param>
-        public AvaloniaDialogService(
+        /// <see cref="FrameworkDialogFactory"/>.</param>
+        public DialogService(
             IDialogFactory? dialogFactory = null,
             IDialogTypeLocator? dialogTypeLocator = null,
             IFrameworkDialogFactory? frameworkDialogFactory = null)
-            : base(dialogFactory ?? new AvaloniaReflectionDialogFactory(),
+            : base(dialogFactory ?? new ReflectionDialogFactory(),
                 dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
-                frameworkDialogFactory ?? new AvaloniaFrameworkDialogFactory())
+                frameworkDialogFactory ?? new FrameworkDialogFactory())
         {
         }
 
@@ -100,6 +102,6 @@ namespace MvvmDialogs.Avalonia
         }
 
         protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
-            (ViewLocator.FindView(ownerViewModel) as AvaloniaWindow)?.Ref;
+            (ViewLocator.FindView(ownerViewModel) as WindowWrapper)?.Ref;
     }
 }

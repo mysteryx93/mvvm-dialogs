@@ -5,7 +5,7 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomOpenFileDialog
 {
-    public class CustomOpenFileDialog : WpfFrameworkDialogBase<OpenFileDialogSettings>
+    public class CustomOpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomOpenFileDialog"/> class.
@@ -25,7 +25,7 @@ namespace Demo.CustomOpenFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public override bool? ShowDialogAsync(WpfWindow owner)
+        public override bool? ShowDialogAsync(WindowWrapper owner)
         {
             var openFileDialog = new VistaOpenFileDialog
             {

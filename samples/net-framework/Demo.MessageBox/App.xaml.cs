@@ -8,7 +8,7 @@ namespace Demo.MessageBox
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SimpleIoc.Default.Register<IDialogService>(() => new WpfDialogService());
+            SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
         }
     }
 }

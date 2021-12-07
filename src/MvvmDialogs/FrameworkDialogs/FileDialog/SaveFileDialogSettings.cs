@@ -1,5 +1,4 @@
-﻿
-namespace MvvmDialogs.FrameworkDialogs
+﻿namespace MvvmDialogs.FrameworkDialogs
 {
     /// <summary>
     /// Settings for SaveFileDialog.
@@ -25,5 +24,32 @@ namespace MvvmDialogs.FrameworkDialogs
         /// existed; otherwise, <c>false</c>. The default is <c>true</c>.
         /// </value>
         public bool OverwritePrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that specifies the default extension string to use to filter the
+        /// list of files that are displayed.
+        /// </summary>
+        /// <value>
+        /// The default extension string. The default is <see cref="string.Empty"/>.
+        /// </value>
+        /// <remarks>
+        /// The extension string must contain the leading period. For example, set the
+        /// <see cref="DefaultExt"/> property to ".txt" to select all text files.
+        /// <para/>
+        /// </remarks>
+        public string DefaultExt { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets a string containing the full path of the file selected in a file dialog.
+        /// </summary>
+        /// <value>
+        /// A <see cref="string"/> that is the full path of the file selected in the file dialog.
+        /// The default is <see cref="string.Empty"/>.
+        /// </value>
+        /// <remarks>
+        /// If no file name is selected, this property contains <see cref="string.Empty"/> rather than
+        /// <c>null</c>.
+        /// </remarks>
+        public string? FileName { get; set; }
     }
 }

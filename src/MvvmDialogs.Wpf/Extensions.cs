@@ -9,17 +9,17 @@ namespace MvvmDialogs.Wpf
     internal static class Extensions
     {
         /// <summary>
-        /// Gets the owner of a <see cref="FrameworkElement"/> wrapped in a <see cref="WpfWindow"/>.
+        /// Gets the owner of a <see cref="FrameworkElement"/> wrapped in a <see cref="WindowWrapper"/>.
         /// </summary>
         /// <param name="frameworkElement">
-        /// The <see cref="FrameworkElement"/> to find the <see cref="WpfWindow"/> for.
+        /// The <see cref="FrameworkElement"/> to find the <see cref="WindowWrapper"/> for.
         /// </param>
-        /// <returns>The owning <see cref="WpfWindow"/> if found; otherwise null.</returns>
+        /// <returns>The owning <see cref="WindowWrapper"/> if found; otherwise null.</returns>
         // TODO: Fix possible 'null' assignment to non-nullable entity by making the entity nullable
-        internal static WpfWindow? GetOwner(this FrameworkElement frameworkElement)
+        internal static WindowWrapper? GetOwner(this FrameworkElement frameworkElement)
         {
             var owner = frameworkElement as Window ?? Window.GetWindow(frameworkElement);
-            return owner != null ? new WpfWindow(owner) : null;
+            return owner != null ? new WindowWrapper(owner) : null;
         }
 
         /// <summary>

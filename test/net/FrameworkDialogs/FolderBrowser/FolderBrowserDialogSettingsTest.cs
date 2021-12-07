@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Utils;
 using NUnit.Framework;
@@ -19,7 +18,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.FolderBrowser
 
             var dialogPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(FolderBrowserDialog)).Except(DialogSettings.ExcludedPropertyNames));
+                DialogSettings.GetPropertyNames(typeof(System.Windows.Forms.FolderBrowserDialog)).Except(DialogSettings.ExcludedPropertyNames));
 
             // Assert
             Assert.That(settingsPropertyNames, Is.EqualTo(dialogPropertyNames));

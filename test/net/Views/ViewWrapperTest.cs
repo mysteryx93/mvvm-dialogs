@@ -18,7 +18,7 @@ namespace MvvmDialogs.Views
         public void Source()
         {
             // Arrange
-            var view = new WpfView(frameworkElement);
+            var view = new ViewWrapper(frameworkElement);
 
             // Assert
             Assert.That(view.Source, Is.EqualTo(frameworkElement));
@@ -28,8 +28,8 @@ namespace MvvmDialogs.Views
         public void GetHashCodeOverride()
         {
             // Arrange
-            var viewA = new WpfView(frameworkElement);
-            var viewB = new WpfView(frameworkElement);
+            var viewA = new ViewWrapper(frameworkElement);
+            var viewB = new ViewWrapper(frameworkElement);
 
             // Act
             var hashCodeA = viewA.GetHashCode();
@@ -43,8 +43,8 @@ namespace MvvmDialogs.Views
         public void EqualsOverride()
         {
             // Arrange
-            var viewA = new WpfView(frameworkElement);
-            var viewB = new WpfView(frameworkElement);
+            var viewA = new ViewWrapper(frameworkElement);
+            var viewB = new ViewWrapper(frameworkElement);
 
             // Act
             var equals = viewA.Equals(viewB);

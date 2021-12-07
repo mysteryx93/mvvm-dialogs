@@ -1,35 +1,36 @@
-﻿using System.Windows;
+﻿using Avalonia;
+using MvvmDialogs.Wpf;
 
-namespace MvvmDialogs.Wpf
+namespace MvvmDialogs.Avalonia
 {
     /// <summary>
     /// Holds a weak reference to a FrameworkElement.
     /// </summary>
-    public class WpfView : ViewBase
+    public class ViewWrapper : ViewBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WpfView"/> class and hold a weak reference to specified <see cref="FrameworkElement"/>.
+        /// Initializes a new instance of the <see cref="ViewWrapper"/> class and hold a weak reference to specified <see cref="StyledElement"/>.
         /// </summary>
         /// <param name="view">The object to hold a weak reference for.</param>
-        public WpfView(FrameworkElement view) : base(view)
+        public ViewWrapper(StyledElement view) : base(view)
         {
-            view.Loaded += (_, _) => RaiseLoaded();
+            view.Initialized += (_, _) => RaiseLoaded();
         }
 
         /// <summary>
-        /// Returns the referenced <see cref="FrameworkElement"/> if it is still alive.
+        /// Returns the referenced <see cref="StyledElement"/> if it is still alive.
         /// </summary>
-        public FrameworkElement Source => (FrameworkElement)base.SourceObj;
+        public StyledElement Source => (StyledElement)base.SourceObj;
 
         /// <summary>
         /// Returns the DataContext of referenced element.
         /// </summary>
-        public override object DataContext => Source.DataContext;
+        public override object? DataContext => Source.DataContext;
 
         /// <summary>
         /// Returns whether referenced element is loaded.
         /// </summary>
-        public override bool IsLoaded => Source.IsLoaded;
+        public override bool IsLoaded => Source.IsInitialized;
 
         /// <summary>
         /// Returns the owner of the element, within a <see cref="IWindow"/> wrapper.

@@ -28,8 +28,8 @@ namespace Demo.ModalCustomDialog
 
         public IWindow Owner
         {
-            get => new WpfWindow(dialog.Owner);
-            set => dialog.Owner = ((WpfWindow)value).Ref;
+            get => new WindowWrapper(dialog.Owner);
+            set => dialog.Owner = ((WindowWrapper)value).Ref;
         }
 
         Task<bool?> IWindow.ShowDialogAsync() =>

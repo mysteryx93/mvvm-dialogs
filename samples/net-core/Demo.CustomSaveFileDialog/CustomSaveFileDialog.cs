@@ -5,7 +5,7 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomSaveFileDialog
 {
-    public class CustomSaveFileDialog : WpfFrameworkDialogBase<SaveFileDialogSettings>
+    public class CustomSaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomSaveFileDialog"/> class.
@@ -25,7 +25,7 @@ namespace Demo.CustomSaveFileDialog
         /// <returns>
         /// true if user clicks the OK button; otherwise false.
         /// </returns>
-        public override bool? ShowDialogAsync(WpfWindow owner)
+        public override bool? ShowDialogAsync(WindowWrapper owner)
         {
             var saveFileDialog = new VistaSaveFileDialog
             {

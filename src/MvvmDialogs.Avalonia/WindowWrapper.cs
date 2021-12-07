@@ -8,7 +8,7 @@ namespace MvvmDialogs.Avalonia
     /// Class wrapping an instance of Avalonia <see cref="Window"/> within <see cref="IWindow"/>.
     /// </summary>
     /// <seealso cref="IWindow" />
-    public class AvaloniaWindow : IWindow
+    public class WindowWrapper : IWindow
     {
         /// <summary>
         /// Gets the Window reference held by this class.
@@ -25,13 +25,13 @@ namespace MvvmDialogs.Avalonia
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AvaloniaWindow"/> class.
+        /// Initializes a new instance of the <see cref="WindowWrapper"/> class.
         /// </summary>
         /// <param name="window">The window.</param>
-        public AvaloniaWindow(Window window)
+        public WindowWrapper(Window window)
         {
             Ref = window ?? throw new ArgumentNullException(nameof(window));
-            Owner = window.Owner is Window w ? new AvaloniaWindow(w) : null;
+            Owner = window.Owner is Window w ? new WindowWrapper(w) : null;
         }
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace MvvmDialogs.Avalonia
         /// <inheritdoc />
         public Task<bool?> ShowDialogAsync()
         {
-            if (Owner is not AvaloniaWindow w) throw new InvalidOperationException("{nameof(Owner)} must be set before calling {nameof(ShowDialogAsync)}");
+            if (Owner is not WindowWrapper w) throw new InvalidOperationException("{nameof(Owner)} must be set before calling {nameof(ShowDialogAsync)}");
 
             return Ref.ShowDialog<bool?>(w.Ref);
         }

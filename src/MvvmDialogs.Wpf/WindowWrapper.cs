@@ -10,7 +10,7 @@ namespace MvvmDialogs.Wpf
     /// Class wrapping an instance of WPF <see cref="Window"/> within <see cref="IWindow"/>.
     /// </summary>
     /// <seealso cref="IWindow" />
-    public class WpfWindow : IWindow
+    public class WindowWrapper : IWindow
     {
         /// <summary>
         /// Gets the Window reference held by this class.
@@ -29,10 +29,10 @@ namespace MvvmDialogs.Wpf
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WpfWindow"/> class.
+        /// Initializes a new instance of the <see cref="WindowWrapper"/> class.
         /// </summary>
         /// <param name="window">The window.</param>
-        public WpfWindow(Window window) => this.Ref = window ?? throw new ArgumentNullException(nameof(window));
+        public WindowWrapper(Window window) => this.Ref = window ?? throw new ArgumentNullException(nameof(window));
 
         /// <inheritdoc />
         public object? DataContext
@@ -44,13 +44,13 @@ namespace MvvmDialogs.Wpf
         /// <inheritdoc />
         public IWindow? Owner
         {
-            get => Ref.Owner != null ? new WpfWindow(Ref.Owner) : null;
+            get => Ref.Owner != null ? new WindowWrapper(Ref.Owner) : null;
             set =>
                 Ref.Owner = value switch
                 {
                     null => null,
-                    WpfWindow w => w.Ref,
-                    _ => throw new ArgumentException($"Owner must be of type {typeof(WpfWindow).FullName}")
+                    WindowWrapper w => w.Ref,
+                    _ => throw new ArgumentException($"Owner must be of type {typeof(WindowWrapper).FullName}")
                 };
         }
 

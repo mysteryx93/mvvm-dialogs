@@ -22,7 +22,7 @@ namespace MvvmDialogs
 
             var expected = new[]
             {
-                new WpfView(window)
+                new ViewWrapper(window)
             };
 
             // Act
@@ -59,7 +59,7 @@ namespace MvvmDialogs
 
             var expected = new[]
             {
-                new WpfView(frameworkElement)
+                new ViewWrapper(frameworkElement)
             };
 
             // Act
@@ -100,7 +100,7 @@ namespace MvvmDialogs
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new WpfWindow(new Window()));
+                .Returns(new WindowWrapper(new Window()));
 
             var expected = new[]
             {
@@ -124,7 +124,7 @@ namespace MvvmDialogs
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new WpfWindow(new Window()));
+                .Returns(new WindowWrapper(new Window()));
 
             DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, true);
 
@@ -166,7 +166,7 @@ namespace MvvmDialogs
             // After register we can simulate that the view gets loaded
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new WpfWindow(new Window()));
+                .Returns(new WindowWrapper(new Window()));
 
             var expected = new[]
             {
@@ -192,7 +192,7 @@ namespace MvvmDialogs
                 .Returns(true);
             view
                 .Setup(mock => mock.GetOwner())
-                .Returns(new WpfWindow(window));
+                .Returns(new WindowWrapper(window));
 
             ViewLocator.Register(view.Object);
 

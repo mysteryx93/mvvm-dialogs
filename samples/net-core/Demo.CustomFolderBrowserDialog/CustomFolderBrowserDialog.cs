@@ -5,7 +5,7 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomFolderBrowserDialog
 {
-    public class CustomFolderBrowserDialog : WpfFrameworkDialogBase<FolderBrowserDialogSettings>
+    public class CustomFolderBrowserDialog : FrameworkDialogBase<FolderBrowserDialogSettings>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FolderBrowserDialogWrapper"/> class.
@@ -25,7 +25,7 @@ namespace Demo.CustomFolderBrowserDialog
         /// <returns>
         /// true if user clicks the OK or YES button; otherwise false.
         /// </returns>
-        public override bool? ShowDialogAsync(WpfWindow owner)
+        public override bool? ShowDialogAsync(WindowWrapper owner)
         {
             var folderBrowserDialog = new VistaFolderBrowserDialog
             {

@@ -10,16 +10,16 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="System.Windows.MessageBox"/>.
     /// </summary>
-    public sealed class WpfMessageBox : WpfFrameworkDialogBase<MessageBoxSettings>
+    public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
-        public WpfMessageBox(MessageBoxSettings settings)
+        public MessageBox(MessageBoxSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {

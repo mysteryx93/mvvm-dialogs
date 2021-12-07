@@ -1,25 +1,25 @@
 ﻿using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
 
-namespace MvvmDialogs.Avalonia.FrameworkDialogs
+namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
-    /// Class wrapping <see cref="FolderBrowserDialog"/>.
+    /// Class wrapping <see cref="System.Windows.Forms.FolderBrowserDialog"/>.
     /// </summary>
-    public class AvaloniaFolderBrowserDialog : AvaloniaFrameworkDialogBase<FolderBrowserDialogSettings>
+    public class FolderBrowserDialog : FrameworkDialogBase<FolderBrowserDialogSettings>
     {
         /// <inheritdoc />
-        public AvaloniaFolderBrowserDialog(FolderBrowserDialogSettings settings)
+        public FolderBrowserDialog(FolderBrowserDialogSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    using var dialog = new FolderBrowserDialog();
+                    using var dialog = new System.Windows.Forms.FolderBrowserDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
@@ -29,7 +29,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 });
 
 
-        private void ToDialog(FolderBrowserDialog d)
+        private void ToDialog(System.Windows.Forms.FolderBrowserDialog d)
         {
             d.Description = Settings.Description;
             d.RootFolder = Settings.RootFolder;
@@ -37,6 +37,6 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             d.ShowNewFolderButton = Settings.ShowNewFolderButton;
         }
 
-        private void ToSettings(FolderBrowserDialog d) => Settings.SelectedPath = d.SelectedPath;
+        private void ToSettings(System.Windows.Forms.FolderBrowserDialog d) => Settings.SelectedPath = d.SelectedPath;
     }
 }

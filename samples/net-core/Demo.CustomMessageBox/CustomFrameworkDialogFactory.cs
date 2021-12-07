@@ -3,7 +3,7 @@ using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace Demo.CustomMessageBox
 {
-    public class CustomFrameworkDialogFactory : WpfFrameworkDialogFactory
+    public class CustomFrameworkDialogFactory : FrameworkDialogFactory
     {
         public override IFrameworkDialog Create<T>(T settings) =>
             settings switch

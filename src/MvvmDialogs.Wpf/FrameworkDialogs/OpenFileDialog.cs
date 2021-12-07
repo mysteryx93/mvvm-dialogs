@@ -8,44 +8,39 @@ using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
-    /// Class wrapping <see cref="OpenFileDialog"/>.
+    /// Class wrapping <see cref="System.Windows.Forms.OpenFileDialog"/>.
     /// </summary>
-    internal sealed class WpfOpenFileDialog : WpfFrameworkDialogBase<OpenFileDialogSettings>
+    internal sealed class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WpfOpenFileDialog"/> class.
+        /// Initializes a new instance of the <see cref="OpenFileDialog"/> class.
         /// </summary>
         /// <param name="settings">The settings for the open file dialog.</param>
-        public WpfOpenFileDialog(OpenFileDialogSettings settings)
+        public OpenFileDialog(OpenFileDialogSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    var dialog = new OpenFileDialog();
+                    var dialog = new System.Windows.Forms.OpenFileDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
 
-                    ToSettings(dialog);
+                    Settings.FileNames = dialog.FileNames;
                     return result.AsBool();
                 });
 
-        private void ToDialog(OpenFileDialog d)
+        private void ToDialog(System.Windows.Forms.OpenFileDialog d)
         {
             ToDialogShared(Settings, d);
             d.Multiselect = Settings.Multiselect;
             d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             d.ShowReadOnly = Settings.ShowReadOnly;
-        }
-
-        private void ToSettings(OpenFileDialog d)
-        {
-            ToSettingsShared(d, Settings);
         }
 
         internal static void ToDialogShared(FileDialogSettings s, FileDialog d)
@@ -64,17 +59,12 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                     d.CustomPlaces.Add(item.Path);
                 }
             }
-            d.DefaultExt = s.DefaultExt;
             d.DereferenceLinks = s.DereferenceLinks;
-            d.FileName = s.FileName;
+            // d.FileName = s.FileName;
             d.Filter = s.Filter;
-            d.FilterIndex = s.FilterIndex;
             d.InitialDirectory = s.InitialDirectory;
-            d.RestoreDirectory = s.RestoreDirectory;
             d.ShowHelp = s.ShowHelp;
-            d.SupportMultiDottedExtensions = s.SupportMultiDottedExtensions;
             d.Title = s.Title;
-            d.ValidateNames = s.ValidateNames;
         }
 
         private static Win32CustomPlace? SyncCustomPlace(FileDialogCustomPlaces value)
@@ -101,13 +91,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 _ => null
             };
             return result != null ? new Win32CustomPlace(result.KnownFolder) : null;
-        }
-
-        internal static void ToSettingsShared(FileDialog d, FileDialogSettings s)
-        {
-            s.FileName = d.FileName;
-            s.FileNames = d.FileNames;
-            s.FilterIndex = d.FilterIndex;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Demo.CustomSaveFileDialog
         public async Task<bool?> ShowDialogAsync(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
-            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WpfWindow)}");
+            if (owner is not WindowWrapper w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WindowWrapper)}");
 
             var result = await Task.Run(() => saveFileDialog.ShowDialog(w.Ref));
 

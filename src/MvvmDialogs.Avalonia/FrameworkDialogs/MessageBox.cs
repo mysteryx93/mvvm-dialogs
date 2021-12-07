@@ -3,21 +3,21 @@ using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using MvvmDialogs.FrameworkDialogs;
 
-namespace MvvmDialogs.Avalonia.FrameworkDialogs.MessageBox
+namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="MessageBoxManager"/>.
     /// </summary>
-    public sealed class AvaloniaMessageBox : AvaloniaFrameworkDialogBase<MessageBoxSettings>
+    public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
-        public AvaloniaMessageBox(MessageBoxSettings settings)
+        public MessageBox(MessageBoxSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override async Task<bool?> ShowDialogAsync(AvaloniaWindow owner)
+        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(
                 Settings.Caption,

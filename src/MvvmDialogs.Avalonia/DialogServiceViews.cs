@@ -8,7 +8,7 @@ namespace MvvmDialogs.Avalonia
     /// <summary>
     /// Class containing means to register a FrameworkElement as a view for a view
     /// model when using the MVVM pattern. The view will then be used by the
-    /// <see cref="AvaloniaDialogService"/> when opening dialogs.
+    /// <see cref="DialogService"/> when opening dialogs.
     /// </summary>
     public class DialogServiceViews : AvaloniaObject
     {
@@ -54,11 +54,11 @@ namespace MvvmDialogs.Avalonia
             {
                 if (e.NewValue.Value)
                 {
-                    ViewLocator.Register(new AvaloniaView(view));
+                    ViewLocator.Register(new ViewWrapper(view));
                 }
                 else
                 {
-                    ViewLocator.Unregister(new AvaloniaView(view));
+                    ViewLocator.Unregister(new ViewWrapper(view));
                 }
             }
         }

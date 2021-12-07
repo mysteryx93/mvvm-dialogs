@@ -46,7 +46,7 @@ namespace Demo.CustomOpenFileDialog
         public bool? ShowDialog(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
-            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WpfWindow)}");
+            if (owner is not WindowWrapper w) throw new ArgumentException($"{nameof(owner)} must be of type {typeof(WindowWrapper)}");
 
             var result = openFileDialog.ShowDialog(w.Ref);
 

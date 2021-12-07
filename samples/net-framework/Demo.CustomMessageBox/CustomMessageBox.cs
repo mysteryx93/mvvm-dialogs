@@ -7,7 +7,7 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomMessageBox
 {
-    public class CustomMessageBox : WpfFrameworkDialogBase<MessageBoxSettings>
+    public class CustomMessageBox : FrameworkDialogBase<MessageBoxSettings>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomMessageBox"/> class.
@@ -28,7 +28,7 @@ namespace Demo.CustomMessageBox
         /// A <see cref="System.Windows.MessageBoxResult"/> value that specifies which message box button is
         /// clicked by the user.
         /// </returns>
-        public override async Task<bool?> ShowDialogAsync(WpfWindow owner)
+        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             using var messageBox = new TaskDialog
             {

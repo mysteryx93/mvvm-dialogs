@@ -7,7 +7,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Interface representing a framework dialog.
     /// </summary>
-    public abstract class WpfFrameworkDialogBase<TSettings> : IFrameworkDialog
+    public abstract class FrameworkDialogBase<TSettings> : IFrameworkDialog
     {
         /// <summary>
         /// Gets the settings for the framework dialog.
@@ -18,14 +18,14 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
         /// <param name="settings">The settings for the framework dialog.</param>
-        protected WpfFrameworkDialogBase(TSettings settings) =>
+        protected FrameworkDialogBase(TSettings settings) =>
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
         /// <inheritdoc />
         public Task<bool?> ShowDialogAsync(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
-            if (owner is not WpfWindow window) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WpfWindow)}");
+            if (owner is not WindowWrapper window) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WindowWrapper)}");
             return ShowDialogAsync(window);
         }
 
@@ -34,6 +34,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// </summary>
         /// <param name="owner">Handle to the window that owns the dialog.</param>
         /// <returns>true if user clicks the OK button; otherwise false.</returns>
-        public abstract Task<bool?> ShowDialogAsync(WpfWindow owner);
+        public abstract Task<bool?> ShowDialogAsync(WindowWrapper owner);
     }
 }

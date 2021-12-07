@@ -1,37 +1,38 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
-    /// Class wrapping <see cref="SaveFileDialog"/>.
+    /// Class wrapping <see cref="System.Windows.Forms.SaveFileDialog"/>.
     /// </summary>
-    internal sealed class WpfSaveFileDialog : WpfFrameworkDialogBase<SaveFileDialogSettings>
+    internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <inheritdoc />
-        public WpfSaveFileDialog(SaveFileDialogSettings settings)
+        public SaveFileDialog(SaveFileDialogSettings settings)
             : base(settings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WpfWindow owner) =>
+        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    var dialog = new SaveFileDialog();
+                    var dialog = new System.Windows.Forms.SaveFileDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
 
-                    WpfOpenFileDialog.ToSettingsShared(dialog, Settings);
+                    Settings.FileName = dialog.FileName;
                     return result.AsBool();
                 });
 
-        private void ToDialog(SaveFileDialog d)
+        private void ToDialog(System.Windows.Forms.SaveFileDialog d)
         {
-            WpfOpenFileDialog.ToDialogShared(Settings, d);
+            OpenFileDialog.ToDialogShared(Settings, d);
+            // d.AddExtension
+            d.DefaultExt = Settings.DefaultExt;
             d.CheckFileExists = Settings.CheckFileExists;
             d.CreatePrompt = Settings.CreatePrompt;
             d.OverwritePrompt = Settings.OverwritePrompt;

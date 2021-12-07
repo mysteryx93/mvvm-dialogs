@@ -39,7 +39,7 @@ namespace Demo.CustomFolderBrowserDialog
         public bool? ShowDialog(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
-            if (owner is not WpfWindow w) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WpfWindow)}");
+            if (owner is not WindowWrapper w) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WindowWrapper)}");
 
             var result = folderBrowserDialog.ShowDialog(w.Ref);
 

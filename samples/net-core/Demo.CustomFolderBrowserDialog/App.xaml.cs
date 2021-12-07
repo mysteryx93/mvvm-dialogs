@@ -10,7 +10,7 @@ namespace Demo.CustomFolderBrowserDialog
         protected override void OnStartup(StartupEventArgs e)
         {
             SimpleIoc.Default.Register<IDialogService>(
-                () => new WpfDialogService(frameworkDialogFactory: new WpfFrameworkDialogFactory()));
+                () => new DialogService(frameworkDialogFactory: new FrameworkDialogFactory()));
         }
     }
 }

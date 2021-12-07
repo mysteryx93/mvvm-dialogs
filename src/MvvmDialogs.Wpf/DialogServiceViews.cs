@@ -6,7 +6,7 @@ namespace MvvmDialogs.Wpf
     /// <summary>
     /// Class containing means to register a FrameworkElement as a view for a view
     /// model when using the MVVM pattern. The view will then be used by the
-    /// <see cref="WpfDialogService"/> when opening dialogs.
+    /// <see cref="DialogService"/> when opening dialogs.
     /// </summary>
     public static class DialogServiceViews
     {
@@ -52,11 +52,11 @@ namespace MvvmDialogs.Wpf
             {
                 if ((bool)e.NewValue)
                 {
-                    ViewLocator.Register(new WpfView(view));
+                    ViewLocator.Register(new ViewWrapper(view));
                 }
                 else
                 {
-                    ViewLocator.Unregister(new WpfView(view));
+                    ViewLocator.Unregister(new ViewWrapper(view));
                 }
             }
         }
