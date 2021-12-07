@@ -13,6 +13,10 @@ namespace MvvmDialogs
     public abstract class DialogServiceBase : IDialogService
     {
         /// <summary>
+        /// Set application-wide settings.
+        /// </summary>
+        public AppDialogSettingsBase AppSettings { get; }
+        /// <summary>
         /// Factory responsible for creating framework dialogs.
         /// </summary>
         public IFrameworkDialogFactory FrameworkDialogFactory { get; }
@@ -28,11 +32,13 @@ namespace MvvmDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
         /// </summary>
+        /// <param name="appSettings">Set application-wide settings.</param>
         /// <param name="dialogFactory">Factory responsible for creating dialogs.</param>
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model.</param>
         /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs.</param>
-        protected DialogServiceBase(IDialogFactory dialogFactory, IDialogTypeLocator dialogTypeLocator, IFrameworkDialogFactory frameworkDialogFactory)
+        protected DialogServiceBase(AppDialogSettingsBase appSettings, IDialogFactory dialogFactory, IDialogTypeLocator dialogTypeLocator, IFrameworkDialogFactory frameworkDialogFactory)
         {
+            AppSettings = appSettings;
             DialogFactory = dialogFactory;
             DialogTypeLocator = dialogTypeLocator;
             FrameworkDialogFactory = frameworkDialogFactory;

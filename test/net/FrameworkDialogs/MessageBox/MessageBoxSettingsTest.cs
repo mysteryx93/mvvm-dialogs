@@ -14,11 +14,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
             // Arrange
             var messageBoxSettingsPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(MessageBoxSettings)));
+                AppDialogSettings.GetPropertyNames(typeof(MessageBoxSettings)));
 
             var messageBoxPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetMessageBoxParameters().Except(DialogSettings.ExcludedMessageBoxPropertyNames));
+                AppDialogSettings.GetMessageBoxParameters().Except(AppDialogSettings.ExcludedMessageBoxPropertyNames));
 
             // Assert
             Assert.That(messageBoxSettingsPropertyNames, Is.EqualTo(messageBoxPropertyNames));

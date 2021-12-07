@@ -9,8 +9,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <inheritdoc />
-        public SaveFileDialog(SaveFileDialogSettings settings)
-            : base(settings)
+        public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 

@@ -15,11 +15,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.SaveFile
             // Arrange
             var settingsPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(SaveFileDialogSettings)));
+                AppDialogSettings.GetPropertyNames(typeof(SaveFileDialogSettings)));
 
             var dialogPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(SaveFileDialog)).Except(DialogSettings.ExcludedPropertyNames));
+                AppDialogSettings.GetPropertyNames(typeof(SaveFileDialog)).Except(AppDialogSettings.ExcludedPropertyNames));
 
             // Assert
             Assert.That(settingsPropertyNames, Is.EqualTo(dialogPropertyNames));

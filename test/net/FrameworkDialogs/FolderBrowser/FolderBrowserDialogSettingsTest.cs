@@ -14,11 +14,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.FolderBrowser
             // Arrange
             var settingsPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(FolderBrowserDialogSettings)));
+                AppDialogSettings.GetPropertyNames(typeof(FolderBrowserDialogSettings)));
 
             var dialogPropertyNames = string.Join(
                 ", ",
-                DialogSettings.GetPropertyNames(typeof(System.Windows.Forms.FolderBrowserDialog)).Except(DialogSettings.ExcludedPropertyNames));
+                AppDialogSettings.GetPropertyNames(typeof(System.Windows.Forms.FolderBrowserDialog)).Except(AppDialogSettings.ExcludedPropertyNames));
 
             // Assert
             Assert.That(settingsPropertyNames, Is.EqualTo(dialogPropertyNames));

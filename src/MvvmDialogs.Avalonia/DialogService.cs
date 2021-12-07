@@ -32,6 +32,7 @@ namespace MvvmDialogs.Avalonia
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogService"/> class.
         /// </summary>
+        /// <param name="settings">Set application-wide settings.</param>
         /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
         /// <see cref="ReflectionDialogFactory"/>.</param>
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
@@ -39,19 +40,17 @@ namespace MvvmDialogs.Avalonia
         /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
         /// <see cref="FrameworkDialogFactory"/>.</param>
         public DialogService(
+            AppDialogSettings? settings = null,
             IDialogFactory? dialogFactory = null,
             IDialogTypeLocator? dialogTypeLocator = null,
             IFrameworkDialogFactory? frameworkDialogFactory = null)
-            : base(
+            : base(settings ?? new AppDialogSettings(),
                 dialogFactory ?? new ReflectionDialogFactory(),
                 dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
                 frameworkDialogFactory ?? new FrameworkDialogFactory())
         {
         }
 
-        /// <summary>
-        /// Returns the list of windows in the application.
-        /// </summary>
         private static IEnumerable<Window> Windows =>
             ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).Windows;
 

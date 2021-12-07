@@ -26,20 +26,6 @@
         public bool OverwritePrompt { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies the default extension string to use to filter the
-        /// list of files that are displayed.
-        /// </summary>
-        /// <value>
-        /// The default extension string. The default is <see cref="string.Empty"/>.
-        /// </value>
-        /// <remarks>
-        /// The extension string must contain the leading period. For example, set the
-        /// <see cref="DefaultExt"/> property to ".txt" to select all text files.
-        /// <para/>
-        /// </remarks>
-        public string DefaultExt { get; set; } = string.Empty;
-
-        /// <summary>
         /// Gets or sets a string containing the full path of the file selected in a file dialog.
         /// </summary>
         /// <value>

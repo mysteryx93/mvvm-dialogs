@@ -9,8 +9,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     public class FolderBrowserDialog : FrameworkDialogBase<FolderBrowserDialogSettings>
     {
         /// <inheritdoc />
-        public FolderBrowserDialog(FolderBrowserDialogSettings settings)
-            : base(settings)
+        public FolderBrowserDialog(FolderBrowserDialogSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 

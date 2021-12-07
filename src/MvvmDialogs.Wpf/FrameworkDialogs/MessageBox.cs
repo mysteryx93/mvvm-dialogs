@@ -13,8 +13,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
-        public MessageBox(MessageBoxSettings settings)
-            : base(settings)
+        public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 

@@ -8,14 +8,18 @@ namespace MvvmDialogs.FrameworkDialogs
     public abstract class FileDialogSettings
     {
         /// <summary>
-        /// Gets or sets a value indicating whether a file dialog automatically adds an extension
-        /// to a file name if the user omits an extension.
+        /// Gets or sets a value that specifies the default extension string to use to filter the
+        /// list of files that are displayed.
         /// </summary>
         /// <value>
-        /// <c>true</c> if extensions are added; otherwise, <c>false</c>. The default is
-        /// <c>true</c>.
+        /// The default extension string. The default is <see cref="string.Empty"/>.
         /// </value>
-        public bool AddExtension { get; set; } = true;
+        /// <remarks>
+        /// The extension string must contain the leading period. For example, set the
+        /// <see cref="DefaultExt"/> property to ".txt" to select all text files.
+        /// <para/>
+        /// </remarks>
+        public string DefaultExt { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether a file dialog displays a warning if the user
@@ -51,8 +55,6 @@ namespace MvvmDialogs.FrameworkDialogs
          /// </remarks>
          public IList<FileDialogCustomPlace> CustomPlaces { get; set; } = new List<FileDialogCustomPlace>();
 
-
-
         /// <summary>
         /// Gets or sets a value indicating whether a file dialog returns either the location of
         /// the file referenced by a shortcut or the location of the shortcut file (.lnk).
@@ -80,11 +82,6 @@ namespace MvvmDialogs.FrameworkDialogs
         /// <see cref="string.Empty"/> rather than a <c>null</c> string.
         /// </remarks>
         public string InitialDirectory { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether whether the Help button is displayed in the file dialog.
-        /// </summary>
-        public bool ShowHelp { get; set; }
 
         /// <summary>
         /// Gets or sets the text that appears in the title bar of a file dialog.

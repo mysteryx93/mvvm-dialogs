@@ -2,27 +2,25 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using MvvmDialogs.FrameworkDialogs;
+using AvaloniaOpenFileDialog = Avalonia.Controls.OpenFileDialog;
 
 namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
-    /// Class wrapping <see cref="Avalonia.Controls.OpenFileDialog"/>.
+    /// Class wrapping <see cref="AvaloniaOpenFileDialog"/>.
     /// </summary>
     internal sealed class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenFileDialog"/> class.
-        /// </summary>
-        /// <param name="settings">The settings for the open file dialog.</param>
-        public OpenFileDialog(OpenFileDialogSettings settings)
-            : base(settings)
+        /// <inheritdoc />
+        public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 
         /// <inheritdoc />
         public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
-            var dialog = new global::Avalonia.Controls.OpenFileDialog();
+            var dialog = new AvaloniaOpenFileDialog();
             ToDialog(dialog);
 
             Settings.FileNames = await dialog.ShowAsync(owner.Ref) ?? Array.Empty<string>();
@@ -46,9 +44,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             // d.CheckPathExists = s.CheckPathExists;
             d.InitialFileName = s.FileName;
             d.Filter = s.Filter;
-            d.FilterIndex = s.FilterIndex;
             d.Directory = s.InitialDirectory;
-            // d.ShowHelp = s.ShowHelp;
             d.Title = s.Title;
         }
     }

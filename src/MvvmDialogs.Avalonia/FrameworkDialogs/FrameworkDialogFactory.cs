@@ -9,14 +9,17 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     public class FrameworkDialogFactory : IFrameworkDialogFactory
     {
         /// <inheritdoc />
-        public virtual IFrameworkDialog Create<T>(T settings) =>
-            settings switch
+        public IFrameworkDialog Create<T>(T settings, AppDialogSettingsBase appSettings)
+        {
+            var s2 = (AppDialogSettings)appSettings;
+            return settings switch
             {
-                MessageBoxSettings s => new MessageBox(s),
-                OpenFileDialogSettings s => new OpenFileDialog(s),
-                SaveFileDialogSettings s => new SaveFileDialog(s),
-                FolderBrowserDialogSettings s => new FolderBrowserDialog(s),
+                MessageBoxSettings s => new MessageBox(s, s2),
+                OpenFileDialogSettings s => new OpenFileDialog(s, s2),
+                SaveFileDialogSettings s => new SaveFileDialog(s, s2),
+                FolderBrowserDialogSettings s => new FolderBrowserDialog(s, s2),
                 _ => throw new NotSupportedException()
             };
+        }
     }
 }

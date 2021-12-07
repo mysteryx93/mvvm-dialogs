@@ -13,13 +13,21 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         /// Gets the settings for the framework dialog.
         /// </summary>
         protected TSettings Settings { get; }
+        /// <summary>
+        /// Gets application-wide settings.
+        /// </summary>
+        protected AppDialogSettings AppSettings { get; }
 
         /// <summary>
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
         /// <param name="settings">The settings for the framework dialog.</param>
-        protected FrameworkDialogBase(TSettings settings) =>
+        /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
+        protected FrameworkDialogBase(TSettings settings, AppDialogSettings appSettings)
+        {
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            AppSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
+        }
 
         /// <inheritdoc />
         public Task<bool?> ShowDialogAsync(IWindow owner)

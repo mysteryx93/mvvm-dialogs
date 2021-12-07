@@ -9,8 +9,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
     {
         /// <inheritdoc />
-        public SaveFileDialog(SaveFileDialogSettings settings)
-            : base(settings)
+        public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 
@@ -30,9 +30,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
 
         private void ToDialog(System.Windows.Forms.SaveFileDialog d)
         {
-            OpenFileDialog.ToDialogShared(Settings, d);
-            // d.AddExtension
-            d.DefaultExt = Settings.DefaultExt;
+            OpenFileDialog.ToDialogShared(Settings, AppSettings, d);
             d.CheckFileExists = Settings.CheckFileExists;
             d.CreatePrompt = Settings.CreatePrompt;
             d.OverwritePrompt = Settings.OverwritePrompt;

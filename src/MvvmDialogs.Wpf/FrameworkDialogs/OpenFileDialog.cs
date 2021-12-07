@@ -16,8 +16,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// Initializes a new instance of the <see cref="OpenFileDialog"/> class.
         /// </summary>
         /// <param name="settings">The settings for the open file dialog.</param>
-        public OpenFileDialog(OpenFileDialogSettings settings)
-            : base(settings)
+        public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 
@@ -37,15 +37,16 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
 
         private void ToDialog(System.Windows.Forms.OpenFileDialog d)
         {
-            ToDialogShared(Settings, d);
+            ToDialogShared(Settings, AppSettings, d);
             d.Multiselect = Settings.Multiselect;
             d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             d.ShowReadOnly = Settings.ShowReadOnly;
         }
 
-        internal static void ToDialogShared(FileDialogSettings s, FileDialog d)
+        internal static void ToDialogShared(FileDialogSettings s, AppDialogSettings s2, FileDialog d)
         {
-            d.AddExtension = s.AddExtension;
+            d.DefaultExt = s.DefaultExt;
+            d.AddExtension = !string.IsNullOrEmpty(s.DefaultExt);
             d.CheckFileExists = s.CheckFileExists;
             d.CheckPathExists = s.CheckPathExists;
             foreach (var item in s.CustomPlaces)
@@ -63,7 +64,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             // d.FileName = s.FileName;
             d.Filter = s.Filter;
             d.InitialDirectory = s.InitialDirectory;
-            d.ShowHelp = s.ShowHelp;
+            d.ShowHelp = s2.FileShowHelp;
             d.Title = s.Title;
         }
 

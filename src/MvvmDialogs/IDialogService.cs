@@ -16,6 +16,11 @@ namespace MvvmDialogs
         IFrameworkDialogFactory FrameworkDialogFactory { get; }
 
         /// <summary>
+        /// Set application-wide settings.
+        /// </summary>
+        AppDialogSettingsBase AppSettings { get; }
+
+        /// <summary>
         /// Displays a non-modal dialog of a type that is determined by the dialog type locator.
         /// </summary>
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>

@@ -11,8 +11,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
     {
         /// <inheritdoc />
-        public MessageBox(MessageBoxSettings settings)
-            : base(settings)
+        public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 
@@ -23,7 +23,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 Settings.Caption,
                 Settings.MessageBoxText,
                 SyncButton(Settings.Button),
-                SyncIcon(Settings.Icon));
+                SyncIcon(Settings.Icon),
+                style: AppSettings.MessageBoxStyle);
             // SyncDefault(Settings.DefaultResult),
             // SyncOptions());
 
