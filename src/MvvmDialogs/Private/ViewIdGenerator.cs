@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace MvvmDialogs
+namespace MvvmDialogs.Private
 {
     internal static class ViewIdGenerator
     {

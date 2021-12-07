@@ -1,4 +1,5 @@
 ﻿using System;
+using MvvmDialogs.Private;
 
 namespace MvvmDialogs.Wpf
 {
