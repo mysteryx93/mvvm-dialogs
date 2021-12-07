@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.DialogTypeLocators;
 using MvvmDialogs.FrameworkDialogs;
@@ -46,6 +49,9 @@ namespace MvvmDialogs.Avalonia
         {
         }
 
+        private IReadOnlyList<Window> Windows =>
+            ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).Windows;
+
         /// <summary>
         /// Attempts to bring the window to the foreground and activates it.
         /// </summary>
@@ -55,16 +61,9 @@ namespace MvvmDialogs.Avalonia
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            var windowToActivate =
-                (
-                    from Window? window in Application.Current.Windows
-                    where window != null
-                    where viewModel.Equals(window.DataContext)
-                    select window
-                )
-                .FirstOrDefault();
-
-            return windowToActivate?.Activate() ?? false;
+            var window = Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext));
+            window?.Activate();
+            return window != null;
         }
 
         /// <summary>
@@ -77,26 +76,9 @@ namespace MvvmDialogs.Avalonia
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            foreach (Window? window in Application.Current.Windows)
-            {
-                if (window == null || !viewModel.Equals(window.DataContext))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    window.Close();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    DialogLogger.Write($"Failed to close dialog: {e}");
-                    break;
-                }
-            }
-
-            return false;
+            var window = Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext));
+            window?.Close();
+            return window != null;
         }
 
         protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
