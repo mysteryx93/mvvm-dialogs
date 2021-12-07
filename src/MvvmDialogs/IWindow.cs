@@ -22,13 +22,6 @@ namespace MvvmDialogs
         /// </summary>
         object? DataContext { get; set; }
 
-        // /// <summary>
-        // /// Gets or sets the dialog result value, which is the value that is returned from the
-        // /// <see cref="ShowDialogAsync" /> method.
-        // /// </summary>
-        // /// <value>The default is false.</value>
-        // bool? DialogResult { get; set; }
-
         /// <summary>
         /// Gets or sets the <see cref="IWindow"/> that owns this <see cref="IWindow"/>.
         /// </summary>
@@ -45,5 +38,15 @@ namespace MvvmDialogs
         /// <returns>
         /// A <see cref="Nullable{Boolean}"/> value that specifies whether the activity was accepted (true) or canceled (false).</returns>
         Task<bool?> ShowDialogAsync();
+
+        /// <summary>
+        /// Tries to activate the Window.
+        /// </summary>
+        void Activate();
+
+        /// <summary>
+        /// Tries to close the Window.
+        /// </summary>
+        void Close();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Avalonia;
@@ -38,48 +37,27 @@ namespace MvvmDialogs.Avalonia
         /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
         /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.</param>
         /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
-        /// <see cref="WpfFrameworkDialogFactory"/>.</param>
+        /// <see cref="FrameworkDialogFactory"/>.</param>
         public DialogService(
             IDialogFactory? dialogFactory = null,
             IDialogTypeLocator? dialogTypeLocator = null,
             IFrameworkDialogFactory? frameworkDialogFactory = null)
-            : base(dialogFactory ?? new ReflectionDialogFactory(),
+            : base(
+                dialogFactory ?? new ReflectionDialogFactory(),
                 dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
                 frameworkDialogFactory ?? new FrameworkDialogFactory())
         {
         }
 
-        private IReadOnlyList<Window> Windows =>
+        /// <summary>
+        /// Returns the list of windows in the application.
+        /// </summary>
+        private static IEnumerable<Window> Windows =>
             ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).Windows;
 
-        /// <summary>
-        /// Attempts to bring the window to the foreground and activates it.
-        /// </summary>
-        /// <param name="viewModel">The view model of the window.</param>
-        /// <returns>true if the <see cref="Window"/> was successfully activated; otherwise, false.</returns>
-        public override bool Activate(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            var window = Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext));
-            window?.Activate();
-            return window != null;
-        }
-
-        /// <summary>
-        /// Closes a non-modal dialog that previously was opened using <see cref="DialogServiceBase.Show"/>,
-        /// <see cref="DialogServiceBase.Show{T}"/>.
-        /// </summary>
-        /// <param name="viewModel">The view model of the dialog to close.</param>
-        /// <returns>true if the <see cref="Window"/> was successfully closed; otherwise, false.</returns>
-        public override bool Close(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            var window = Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext));
-            window?.Close();
-            return window != null;
-        }
+        /// <inheritdoc />
+        protected override IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel) =>
+            Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext)).AsWrapper();
 
         protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
             (ViewLocator.FindView(ownerViewModel) as WindowWrapper)?.Ref;

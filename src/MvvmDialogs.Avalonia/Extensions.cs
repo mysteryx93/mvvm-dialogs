@@ -1,9 +1,9 @@
-﻿using Avalonia;
+﻿using System.Diagnostics.CodeAnalysis;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.LogicalTree;
-using MvvmDialogs.Avalonia;
 
-namespace MvvmDialogs.Wpf
+namespace MvvmDialogs.Avalonia
 {
     /// <summary>
     /// Extension methods.
@@ -20,8 +20,26 @@ namespace MvvmDialogs.Wpf
         internal static WindowWrapper? GetOwner(this StyledElement frameworkElement)
         {
             var owner = frameworkElement as Window ?? frameworkElement.FindLogicalAncestorOfType<Window>();
-            return owner != null ? new WindowWrapper(owner) : null;
+            return owner.AsWrapper();
         }
+
+        /// <summary>
+        /// Creates a WindowWrapper around specified window.
+        /// </summary>
+        /// <param name="window">The Window to get a wrapper for.</param>
+        /// <returns>A WindowWrapper referencing the window.</returns>
+        [return: NotNullIfNotNull("window")]
+        internal static WindowWrapper? AsWrapper(this Window? window) =>
+            window != null ? new WindowWrapper(window) : null;
+
+        /// <summary>
+        /// Converts an IWindow into a WindowWrapper.
+        /// </summary>
+        /// <param name="window">The IWindow to convert.</param>
+        /// <returns>A WindowWrapper referencing the window.</returns>
+        [return: System.Diagnostics.CodeAnalysis.NotNullIfNotNull("window")]
+        public static WindowWrapper? AsWrapper(this IWindow? window) =>
+            (WindowWrapper?)window;
 
         // /// <summary>
         // /// Returns true if DialogResult is Yes or OK; false if No or Abort; otherwise null.

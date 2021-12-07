@@ -31,7 +31,7 @@ namespace MvvmDialogs.Avalonia
         public WindowWrapper(Window window)
         {
             Ref = window ?? throw new ArgumentNullException(nameof(window));
-            Owner = window.Owner is Window w ? new WindowWrapper(w) : null;
+            Owner = window.Owner is Window w ? w.AsWrapper() : null;
         }
 
         /// <inheritdoc />
@@ -51,5 +51,11 @@ namespace MvvmDialogs.Avalonia
 
         /// <inheritdoc />
         public void Show() => Ref.Show();
+
+        /// <inheritdoc />
+        public void Activate() => Ref.Activate();
+
+        /// <inheritdoc />
+        public void Close() => Ref.Close();
     }
 }

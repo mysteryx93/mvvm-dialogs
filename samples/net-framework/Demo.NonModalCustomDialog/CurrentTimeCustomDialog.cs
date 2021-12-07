@@ -27,8 +27,8 @@ namespace Demo.NonModalCustomDialog
 
         IWindow IWindow.Owner
         {
-            get => new WindowWrapper(dialog.Owner);
-            set => dialog.Owner = value is WindowWrapper w ? w.Ref : null;
+            get => dialog.Owner.AsWrapper();
+            set => dialog.Owner = value.AsWrapper()?.Ref;
         }
 
         bool? IWindow.ShowDialog() => dialog.ShowDialog();

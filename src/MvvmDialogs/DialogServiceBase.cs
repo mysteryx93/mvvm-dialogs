@@ -105,10 +105,51 @@ namespace MvvmDialogs
             return dialog;
         }
 
-        /// <inheritdoc />
-        public abstract bool Activate(INotifyPropertyChanged viewModel);
+        /// <summary>
+        /// Returns the window with a DataContext equal to specified ViewModel.
+        /// </summary>
+        /// <param name="viewModel">The ViewModel to search for.</param>
+        /// <returns>A Window, or null.</returns>
+        protected abstract IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel);
 
-        /// <inheritdoc />
-        public abstract bool Close(INotifyPropertyChanged viewModel);
+        /// <summary>
+        /// Attempts to bring the window to the foreground and activates it.
+        /// </summary>
+        /// <param name="viewModel">The view model of the window.</param>
+        /// <returns>true if the Window was successfully activated; otherwise, false.</returns>
+        public bool Activate(INotifyPropertyChanged viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+            var window = FindWindowByViewModel(viewModel);
+            window?.Activate();
+            return window != null;
+        }
+
+        /// <summary>
+        /// Closes a non-modal dialog that previously was opened using <see cref="DialogServiceBase.Show"/>,
+        /// <see cref="DialogServiceBase.Show{T}"/>.
+        /// </summary>
+        /// <param name="viewModel">The view model of the dialog to close.</param>
+        /// <returns>true if the Window was successfully closed; otherwise, false.</returns>
+        public bool Close(INotifyPropertyChanged viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+            var window = FindWindowByViewModel(viewModel);
+            if (window != null)
+            {
+                try
+                {
+                    window.Close();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    DialogLogger.Write($"Failed to close dialog: {e}");
+                }
+            }
+            return false;
+        }
     }
 }

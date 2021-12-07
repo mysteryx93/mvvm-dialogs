@@ -7,6 +7,6 @@ namespace MvvmDialogs.Wpf
     public class ReflectionDialogFactory : ReflectionDialogFactoryBase<Window>
     {
         /// <inheritdoc />
-        protected override IWindow CreateWrapper(Window window) => new WindowWrapper(window);
+        protected override IWindow CreateWrapper(Window window) => window.AsWrapper();
     }
 }

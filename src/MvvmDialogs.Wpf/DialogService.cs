@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -49,57 +49,14 @@ namespace MvvmDialogs
         }
 
         /// <summary>
-        /// Attempts to bring the window to the foreground and activates it.
+        /// Returns the list of windows in the application.
         /// </summary>
-        /// <param name="viewModel">The view model of the window.</param>
-        /// <returns>true if the <see cref="Window"/> was successfully activated; otherwise, false.</returns>
-        public override bool Activate(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        private static IEnumerable<Window> Windows =>
+            Application.Current.Windows.Cast<Window>();
 
-            var windowToActivate =
-                (
-                    from Window? window in Application.Current.Windows
-                    where window != null
-                    where viewModel.Equals(window.DataContext)
-                    select window
-                )
-                .FirstOrDefault();
-
-            return windowToActivate?.Activate() ?? false;
-        }
-
-        /// <summary>
-        /// Closes a non-modal dialog that previously was opened using <see cref="DialogServiceBase.Show"/>,
-        /// <see cref="DialogServiceBase.Show{T}"/>.
-        /// </summary>
-        /// <param name="viewModel">The view model of the dialog to close.</param>
-        /// <returns>true if the <see cref="Window"/> was successfully closed; otherwise, false.</returns>
-        public override bool Close(INotifyPropertyChanged viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            foreach (Window? window in Application.Current.Windows)
-            {
-                if (window == null || !viewModel.Equals(window.DataContext))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    window.Close();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    DialogLogger.Write($"Failed to close dialog: {e}");
-                    break;
-                }
-            }
-
-            return false;
-        }
+        /// <inheritdoc />
+        protected override IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel) =>
+            Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext)).AsWrapper();
 
         protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
             (ViewLocator.FindView(ownerViewModel) as WindowWrapper)?.Ref;

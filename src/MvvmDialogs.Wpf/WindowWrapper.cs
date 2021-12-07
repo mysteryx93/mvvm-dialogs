@@ -32,7 +32,8 @@ namespace MvvmDialogs.Wpf
         /// Initializes a new instance of the <see cref="WindowWrapper"/> class.
         /// </summary>
         /// <param name="window">The window.</param>
-        public WindowWrapper(Window window) => this.Ref = window ?? throw new ArgumentNullException(nameof(window));
+        public WindowWrapper(Window window) =>
+            this.Ref = window ?? throw new ArgumentNullException(nameof(window));
 
         /// <inheritdoc />
         public object? DataContext
@@ -44,7 +45,7 @@ namespace MvvmDialogs.Wpf
         /// <inheritdoc />
         public IWindow? Owner
         {
-            get => Ref.Owner != null ? new WindowWrapper(Ref.Owner) : null;
+            get => Ref.Owner.AsWrapper();
             set =>
                 Ref.Owner = value switch
                 {
@@ -60,5 +61,11 @@ namespace MvvmDialogs.Wpf
 
         /// <inheritdoc />
         public void Show() => Ref.Show();
+
+        /// <inheritdoc />
+        public void Activate() => Ref.Activate();
+
+        /// <inheritdoc />
+        public void Close() => Ref.Close();
     }
 }
