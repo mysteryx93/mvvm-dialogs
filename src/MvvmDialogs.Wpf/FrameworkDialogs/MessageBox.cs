@@ -80,10 +80,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             };
 
         private Win32Options SyncOptions() =>
-            EvalOption(Settings.DefaultDesktopOnly, Win32Options.DefaultDesktopOnly) |
-            EvalOption(Settings.RightAlign, Win32Options.RightAlign) |
-            EvalOption(Settings.RtlReading, Win32Options.RtlReading) |
-            EvalOption(Settings.ServiceNotification, Win32Options.ServiceNotification);
+            EvalOption(AppSettings.MessageBoxDefaultDesktopOnly, Win32Options.DefaultDesktopOnly) |
+            EvalOption(AppSettings.MessageBoxRightToLeft, Win32Options.RightAlign) |
+            EvalOption(AppSettings.MessageBoxRightToLeft, Win32Options.RtlReading) |
+            EvalOption(AppSettings.MessageBoxServiceNotification, Win32Options.ServiceNotification);
 
         private static Win32Options EvalOption(bool cond, Win32Options option) =>
             cond ? option : Win32Options.None;

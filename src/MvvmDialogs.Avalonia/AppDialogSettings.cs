@@ -12,5 +12,11 @@ namespace MvvmDialogs.Avalonia
         /// Gets or sets a value indicating whether whether the Help button is displayed in the file dialog.
         /// </summary>
         public Style MessageBoxStyle { get; set; }
+
+        /// <summary>
+        /// Creates a copy of this class. Useful to customize settings for specific calls.
+        /// </summary>
+        /// <returns>A copy of this class.</returns>
+        public AppDialogSettings Clone() => (AppDialogSettings)this.MemberwiseClone();
     }
 }
