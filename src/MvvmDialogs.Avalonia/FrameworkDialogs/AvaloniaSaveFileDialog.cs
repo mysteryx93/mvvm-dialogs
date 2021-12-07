@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.FrameworkDialogs;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs
+namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="SaveFileDialog"/>.

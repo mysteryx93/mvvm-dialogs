@@ -28,7 +28,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                         Settings.MessageBoxText,
                         Settings.Caption,
                         SyncButton(Settings.Button),
-                        SyncImage(Settings.Icon),
+                        SyncIcon(Settings.Icon),
                         SyncDefault(Settings.DefaultResult),
                         SyncOptions());
 
@@ -47,14 +47,14 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         private static Win32Button SyncButton(MessageBoxButton value) =>
             (value) switch
             {
-                MessageBoxButton.OK => Win32Button.OK,
+                MessageBoxButton.Ok => Win32Button.OK,
                 MessageBoxButton.YesNo => Win32Button.YesNo,
-                MessageBoxButton.OKCancel => Win32Button.OKCancel,
+                MessageBoxButton.OkCancel => Win32Button.OKCancel,
                 MessageBoxButton.YesNoCancel => Win32Button.YesNoCancel,
                 _ => Win32Button.OK
             };
 
-        private static Win32Image SyncImage(MessageBoxImage value) =>
+        private static Win32Image SyncIcon(MessageBoxImage value) =>
             (value) switch
             {
                 MessageBoxImage.None => Win32Image.None,
@@ -63,7 +63,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 MessageBoxImage.Exclamation => Win32Image.Exclamation,
                 MessageBoxImage.Hand => Win32Image.Hand,
                 MessageBoxImage.Information => Win32Image.Information,
-                MessageBoxImage.Question => Win32Image.Question,
                 MessageBoxImage.Stop => Win32Image.Stop,
                 MessageBoxImage.Warning => Win32Image.Warning,
                 _ => Win32Image.None

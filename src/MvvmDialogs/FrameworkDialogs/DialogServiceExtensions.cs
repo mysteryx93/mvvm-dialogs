@@ -38,7 +38,7 @@ namespace MvvmDialogs
         /// <param name="messageBoxText">A <see cref="string"/> that specifies the text to display.</param>
         /// <param name="caption">A <see cref="string"/> that specifies the title bar caption to display. Default value is an empty string.</param>
         /// <param name="button">A <see cref="MessageBoxButton"/> value that specifies which button or buttons to display.
-        /// Default value is <see cref="MessageBoxButton.OK"/>.</param>
+        /// Default value is <see cref="MessageBoxButton.Ok"/>.</param>
         /// <param name="icon">A <see cref="MessageBoxImage"/> value that specifies the icon to display.
         /// Default value is <see cref="MessageBoxImage.None"/>.</param>
         /// <param name="defaultResult">A <see cref="MessageBoxResult"/> value that specifies the default result of the message box.
@@ -50,7 +50,7 @@ namespace MvvmDialogs
             INotifyPropertyChanged ownerViewModel,
             string? messageBoxText,
             string caption = "",
-            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxButton button = MessageBoxButton.Ok,
             MessageBoxImage icon = MessageBoxImage.None,
             MessageBoxResult defaultResult = MessageBoxResult.None)
         {

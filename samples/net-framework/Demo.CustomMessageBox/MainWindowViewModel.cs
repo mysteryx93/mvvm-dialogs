@@ -64,7 +64,7 @@ namespace Demo.CustomMessageBox
                 this,
                 "This is the text.",
                 "This Is The Caption",
-                MessageBoxButton.OKCancel);
+                MessageBoxButton.OkCancel);
 
             UpdateResult(result);
         }
@@ -75,7 +75,7 @@ namespace Demo.CustomMessageBox
                 this,
                 "This is the text.",
                 "This Is The Caption",
-                MessageBoxButton.OKCancel,
+                MessageBoxButton.OkCancel,
                 MessageBoxImage.Information);
 
             UpdateResult(result);
@@ -87,7 +87,7 @@ namespace Demo.CustomMessageBox
                 this,
                 "This is the text.",
                 "This Is The Caption",
-                MessageBoxButton.OKCancel,
+                MessageBoxButton.OkCancel,
                 MessageBoxImage.Information,
                 MessageBoxResult.Cancel);
 

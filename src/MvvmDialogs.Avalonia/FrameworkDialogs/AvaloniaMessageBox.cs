@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
-using MvvmDialogs.Avalonia.FrameworkDialogs;
+using MessageBox.Avalonia;
+using MessageBox.Avalonia.Enums;
 using MvvmDialogs.FrameworkDialogs;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
+namespace MvvmDialogs.Avalonia.FrameworkDialogs.MessageBox
 {
     /// <summary>
-    /// Class wrapping <see cref="System.Windows.MessageBox"/>.
+    /// Class wrapping <see cref="MessageBoxManager"/>.
     /// </summary>
     public sealed class AvaloniaMessageBox : AvaloniaFrameworkDialogBase<MessageBoxSettings>
     {
@@ -16,74 +17,69 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
-            Task.Run(
-                () =>
-                {
-                    var result = System.Windows.MessageBox.Show(
-                        owner.Ref,
-                        Settings.MessageBoxText,
-                        Settings.Caption,
-                        SyncButton(Settings.Button),
-                        SyncImage(Settings.Icon),
-                        SyncDefault(Settings.DefaultResult),
-                        SyncOptions());
+        public override async Task<bool?> ShowDialogAsync(AvaloniaWindow owner)
+        {
+            var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(
+                Settings.Caption,
+                Settings.MessageBoxText,
+                SyncButton(Settings.Button),
+                SyncIcon(Settings.Icon));
+            // SyncDefault(Settings.DefaultResult),
+            // SyncOptions());
 
-                    return result switch
-                    {
-                        Win32Result.Yes => true,
-                        Win32Result.OK => true,
-                        Win32Result.No => false,
-                        Win32Result.Cancel => null,
-                        _ => (bool?)null
-                    };
-                });
+            var result = await messageBox.ShowDialog(owner.Ref);
+
+            return result switch
+            {
+                ButtonResult.Yes => true,
+                ButtonResult.Ok => true,
+                ButtonResult.No => false,
+                ButtonResult.Cancel => null,
+                _ => null
+            };
+        }
 
         // Convert platform-agnostic types into Win32 types.
 
-        private static Win32Button SyncButton(MessageBoxButton value) =>
+        private static ButtonEnum SyncButton(MessageBoxButton value) =>
             (value) switch
             {
-                MessageBoxButton.OK => Win32Button.OK,
-                MessageBoxButton.YesNo => Win32Button.YesNo,
-                MessageBoxButton.OKCancel => Win32Button.OKCancel,
-                MessageBoxButton.YesNoCancel => Win32Button.YesNoCancel,
-                _ => Win32Button.OK
+                MessageBoxButton.Ok => ButtonEnum.Ok,
+                MessageBoxButton.YesNo => ButtonEnum.YesNo,
+                MessageBoxButton.OkCancel => ButtonEnum.OkCancel,
+                MessageBoxButton.YesNoCancel => ButtonEnum.YesNoCancel,
+                _ => ButtonEnum.Ok
             };
 
-        private static Win32Image SyncImage(MessageBoxImage value) =>
+        private static Icon SyncIcon(MessageBoxImage value) =>
             (value) switch
             {
-                MessageBoxImage.None => Win32Image.None,
-                MessageBoxImage.Asterisk => Win32Image.Asterisk,
-                MessageBoxImage.Error => Win32Image.Error,
-                MessageBoxImage.Exclamation => Win32Image.Exclamation,
-                MessageBoxImage.Hand => Win32Image.Hand,
-                MessageBoxImage.Information => Win32Image.Information,
-                MessageBoxImage.Question => Win32Image.Question,
-                MessageBoxImage.Stop => Win32Image.Stop,
-                MessageBoxImage.Warning => Win32Image.Warning,
-                _ => Win32Image.None
+                MessageBoxImage.None => Icon.None,
+                // MessageBoxImage.Asterisk => Icon.Asterisk,
+                MessageBoxImage.Error => Icon.Error,
+                // MessageBoxImage.Exclamation => Icon.Exclamation,
+                // MessageBoxImage.Hand => Icon.Hand,
+                // MessageBoxImage.Information => Icon.Information,
+                MessageBoxImage.Stop => Icon.Stop,
+                MessageBoxImage.Warning => Icon.Warning,
+                _ => Icon.None
             };
 
-        private static Win32Result SyncDefault(MessageBoxResult value) =>
-            (value) switch
-            {
-                MessageBoxResult.None => Win32Result.None,
-                MessageBoxResult.Ok => Win32Result.OK,
-                MessageBoxResult.Cancel => Win32Result.Cancel,
-                MessageBoxResult.Yes => Win32Result.Yes,
-                MessageBoxResult.No => Win32Result.No,
-                _ => Win32Result.None
-            };
+        // private static Win32Result SyncDefault(MessageBoxResult value) =>
+        //     (value) switch
+        //     {
+        //         MessageBoxResult.None => Win32Result.None,
+        //         MessageBoxResult.Ok => Win32Result.OK,
+        //         MessageBoxResult.Cancel => Win32Result.Cancel,
+        //         MessageBoxResult.Yes => Win32Result.Yes,
+        //         MessageBoxResult.No => Win32Result.No,
+        //         _ => Win32Result.None
+        //     };
 
-        private Win32Options SyncOptions() =>
-            EvalOption(Settings.DefaultDesktopOnly, Win32Options.DefaultDesktopOnly) |
-            EvalOption(Settings.RightAlign, Win32Options.RightAlign) |
-            EvalOption(Settings.RtlReading, Win32Options.RtlReading) |
-            EvalOption(Settings.ServiceNotification, Win32Options.ServiceNotification);
-
-        private static Win32Options EvalOption(bool cond, Win32Options option) =>
-            cond ? option : Win32Options.None;
+        // private Win32Options SyncOptions() =>
+        //     EvalOption(Settings.DefaultDesktopOnly, Win32Options.DefaultDesktopOnly) |
+        //     EvalOption(Settings.RightAlign, Win32Options.RightAlign) |
+        //     EvalOption(Settings.RtlReading, Win32Options.RtlReading) |
+        //     EvalOption(Settings.ServiceNotification, Win32Options.ServiceNotification);
     }
 }

@@ -28,7 +28,7 @@ namespace Demo.MessageBox
                         viewModel,
                         It.IsAny<string>(),
                         "",
-                        MessageBoxButton.OK,
+                        MessageBoxButton.Ok,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
                 .Returns(true);
@@ -50,7 +50,7 @@ namespace Demo.MessageBox
                         viewModel,
                         It.IsAny<string>(),
                         It.IsAny<string>(),
-                        MessageBoxButton.OK,
+                        MessageBoxButton.Ok,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
                 .Returns(true);
@@ -72,7 +72,7 @@ namespace Demo.MessageBox
                         viewModel,
                         It.IsAny<string>(),
                         It.IsAny<string>(),
-                        MessageBoxButton.OKCancel,
+                        MessageBoxButton.OkCancel,
                         MessageBoxImage.None,
                         MessageBoxResult.None))
                 .Returns(true); ;
@@ -94,7 +94,7 @@ namespace Demo.MessageBox
                         viewModel,
                         It.IsAny<string>(),
                         It.IsAny<string>(),
-                        MessageBoxButton.OKCancel,
+                        MessageBoxButton.OkCancel,
                         MessageBoxImage.Information,
                         MessageBoxResult.None))
                 .Returns(true); ;
@@ -116,7 +116,7 @@ namespace Demo.MessageBox
                         viewModel,
                         It.IsAny<string>(),
                         It.IsAny<string>(),
-                        MessageBoxButton.OKCancel,
+                        MessageBoxButton.OkCancel,
                         MessageBoxImage.Information,
                         MessageBoxResult.Cancel))
                 .Returns(true); ;

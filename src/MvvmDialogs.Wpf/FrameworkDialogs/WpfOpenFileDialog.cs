@@ -38,7 +38,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         private void ToDialog(OpenFileDialog d)
         {
             ToDialogShared(Settings, d);
-            d.CheckFileExists = Settings.CheckFileExists;
             d.Multiselect = Settings.Multiselect;
             d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             d.ShowReadOnly = Settings.ShowReadOnly;
@@ -47,8 +46,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         private void ToSettings(OpenFileDialog d)
         {
             ToSettingsShared(d, Settings);
-            Settings.SafeFileName = d.SafeFileName;
-            Settings.SafeFileNames = d.SafeFileNames;
         }
 
         internal static void ToDialogShared(FileDialogSettings s, FileDialog d)

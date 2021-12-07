@@ -8,11 +8,11 @@
         /// <summary>
         /// The message box displays an OK button.
         /// </summary>
-        OK,
+        Ok,
         /// <summary>
         /// The message box displays OK and Cancel buttons.
         /// </summary>
-        OKCancel,
+        OkCancel,
         /// <summary>
         /// The message box displays Yes and No buttons.
         /// </summary>

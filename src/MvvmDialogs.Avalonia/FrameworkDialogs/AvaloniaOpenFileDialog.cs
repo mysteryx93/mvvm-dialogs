@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
-using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using FileDialogCustomPlaces = MvvmDialogs.FrameworkDialogs.FileDialogCustomPlaces;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs
+namespace MvvmDialogs.Avalonia.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="OpenFileDialog"/>.
@@ -21,40 +20,30 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(AvaloniaWindow owner) =>
-            Task.Run(
-                () =>
-                {
-                    var dialog = new OpenFileDialog();
-                    ToDialog(dialog);
+        public override async Task<bool?> ShowDialogAsync(AvaloniaWindow owner)
+        {
+            var dialog = new OpenFileDialog();
+            ToDialog(dialog);
 
-                    var result = dialog.ShowDialog(owner.Win32Window);
+            var result = await dialog.ShowAsync(owner.Ref);
 
-                    ToSettings(dialog);
-                    return result.AsBool();
-                });
+            ToSettingsShared(dialog, Settings);
+            return result?.Length > 0;
+        }
 
         private void ToDialog(OpenFileDialog d)
         {
             ToDialogShared(Settings, d);
-            d.CheckFileExists = Settings.CheckFileExists;
-            d.Multiselect = Settings.Multiselect;
-            d.ReadOnlyChecked = Settings.ReadOnlyChecked;
-            d.ShowReadOnly = Settings.ShowReadOnly;
-        }
-
-        private void ToSettings(OpenFileDialog d)
-        {
-            ToSettingsShared(d, Settings);
-            Settings.SafeFileName = d.SafeFileName;
-            Settings.SafeFileNames = d.SafeFileNames;
+            d.AllowMultiple = Settings.Multiselect;
+            // d.ShowReadOnly = Settings.ShowReadOnly;
+            // d.ReadOnlyChecked = Settings.ReadOnlyChecked;
         }
 
         internal static void ToDialogShared(FileDialogSettings s, FileDialog d)
         {
             d.AddExtension = s.AddExtension;
-            d.CheckFileExists = s.CheckFileExists;
-            d.CheckPathExists = s.CheckPathExists;
+            // d.CheckFileExists = s.CheckFileExists;
+            // d.CheckPathExists = s.CheckPathExists;
             foreach (var item in s.CustomPlaces)
             {
                 if (item.KnownFolder.HasValue)

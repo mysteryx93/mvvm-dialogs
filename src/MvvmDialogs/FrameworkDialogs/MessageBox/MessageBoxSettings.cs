@@ -8,9 +8,9 @@ namespace MvvmDialogs.FrameworkDialogs
     {
         /// <summary>
         /// Gets or sets the <see cref="MessageBoxButton"/> value that specifies which button or
-        /// buttons to display. Default value is <see cref="MessageBoxButton.OK"/>.
+        /// buttons to display. Default value is <see cref="MessageBoxButton.Ok"/>.
         /// </summary>
-        public MessageBoxButton Button { get; set; } = MessageBoxButton.OK;
+        public MessageBoxButton Button { get; set; } = MessageBoxButton.Ok;
 
         /// <summary>
         /// Gets or sets the <see cref="string"/> that specifies the title bar caption to display.

@@ -51,7 +51,7 @@ namespace Demo.CustomMessageBox
         {
             switch (Settings.Button)
             {
-                case MessageBoxButton.OKCancel:
+                case MessageBoxButton.OkCancel:
                     messageBox.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
                     messageBox.Buttons.Add(new TaskDialogButton(ButtonType.Cancel));
                     break;
