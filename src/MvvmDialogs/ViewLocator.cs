@@ -58,16 +58,6 @@ namespace MvvmDialogs
         }
 
         /// <summary>
-        /// Clears the registered views.
-        /// </summary>
-        public static void Clear()
-        {
-            DialogLogger.Write("Clearing views");
-            InternalViews.Clear();
-            DialogLogger.Write("Cleared views");
-        }
-
-        /// <summary>
         /// Unregisters specified view.
         /// </summary>
         /// <param name="view">The view to unregister.</param>
@@ -78,8 +68,42 @@ namespace MvvmDialogs
             PruneInternalViews();
 
             DialogLogger.Write($"Unregister view {view.Id}");
-            InternalViews.RemoveAll(v =>  ReferenceEquals(v.SourceObj, view.SourceObj));
+            InternalViews.RemoveAll(v => ReferenceEquals(v.SourceObj, view.SourceObj));
             DialogLogger.Write($"Unregistered view {view.Id} ({InternalViews.Count} registered)");
+        }
+
+        /// <summary>
+        /// Clears the registered views.
+        /// </summary>
+        public static void Clear()
+        {
+            DialogLogger.Write("Clearing views");
+            InternalViews.Clear();
+            DialogLogger.Write("Cleared views");
+        }
+
+        /// <summary>
+        /// Find the view corresponding to specified view model.
+        /// </summary>
+        /// <exception cref="ViewNotRegisteredException">View model is not present as data context on any registered view.</exception>
+        public static IWindow FindView(INotifyPropertyChanged viewModel)
+        {
+            var view = Views.SingleOrDefault(
+                registeredView =>
+                    registeredView.IsLoaded &&
+                    ReferenceEquals(registeredView.DataContext, viewModel));
+
+            var owner = view?.GetOwner();
+
+            if (view == null || owner == null)
+            {
+                string message =
+                    $"View model of type '{viewModel.GetType()}' is not present as data context on any registered view. Please register the view by setting DialogServiceViews.IsRegistered=\"True\" in your XAML.";
+
+                throw new ViewNotRegisteredException(message);
+            }
+
+            return owner;
         }
 
         /// <summary>
@@ -124,30 +148,6 @@ namespace MvvmDialogs
             DialogLogger.Write($"Before pruning ({InternalViews.Count} registered)");
             InternalViews.RemoveAll(reference => !reference.IsAlive);
             DialogLogger.Write($"After pruning ({InternalViews.Count} registered)");
-        }
-
-        /// <summary>
-        /// Find the view corresponding to specified view model.
-        /// </summary>
-        /// <exception cref="ViewNotRegisteredException">View model is not present as data context on any registered view.</exception>
-        public static IWindow FindView(INotifyPropertyChanged viewModel)
-        {
-            var view = Views.SingleOrDefault(
-                registeredView =>
-                    registeredView.IsLoaded &&
-                    ReferenceEquals(registeredView.DataContext, viewModel));
-
-            var owner = view?.GetOwner();
-
-            if (view == null || owner == null)
-            {
-                string message =
-                    $"View model of type '{viewModel.GetType()}' is not present as data context on any registered view. Please register the view by setting DialogServiceViews.IsRegistered=\"True\" in your XAML.";
-
-                throw new ViewNotRegisteredException(message);
-            }
-
-            return owner;
         }
     }
 }

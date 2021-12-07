@@ -27,11 +27,6 @@ namespace MvvmDialogs.Wpf
         public virtual event EventHandler? Loaded;
 
         /// <summary>
-        /// Raises the Loaded event.
-        /// </summary>
-        protected void RaiseLoaded() => Loaded?.Invoke(this, EventArgs.Empty);
-
-        /// <summary>
         /// Returns an auto-generated unique ID for the view.
         /// </summary>
         public int Id { get; } = ViewIdGenerator.Generate();
@@ -81,5 +76,10 @@ namespace MvvmDialogs.Wpf
         /// <summary>Returns the hash code of referenced object.</summary>
         /// <returns>A hash code.</returns>
         public override int GetHashCode() => SourceObj.GetHashCode();
+
+        /// <summary>
+        /// Raises the Loaded event.
+        /// </summary>
+        protected void RaiseLoaded() => Loaded?.Invoke(this, EventArgs.Empty);
     }
 }
