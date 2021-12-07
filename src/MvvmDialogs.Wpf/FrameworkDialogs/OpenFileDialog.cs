@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
-using FileDialogCustomPlaces = MvvmDialogs.FrameworkDialogs.FileDialogCustomPlaces;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
 using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
 
@@ -12,10 +11,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// </summary>
     internal sealed class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenFileDialog"/> class.
-        /// </summary>
-        /// <param name="settings">The settings for the open file dialog.</param>
+        /// <inheritdoc />
         public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
             : base(settings, appSettings)
         {
@@ -49,15 +45,15 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             d.AddExtension = !string.IsNullOrEmpty(s.DefaultExt);
             d.CheckFileExists = s.CheckFileExists;
             d.CheckPathExists = s.CheckPathExists;
-            foreach (var item in s.CustomPlaces)
+            foreach (var item in s2.CustomPlaces)
             {
-                if (item.KnownFolder.HasValue)
-                {
-                    d.CustomPlaces.Add(SyncCustomPlace(item.KnownFolder.Value));
-                }
-                else if (!string.IsNullOrWhiteSpace(item.Path))
+                if (!string.IsNullOrWhiteSpace(item.Path))
                 {
                     d.CustomPlaces.Add(item.Path);
+                }
+                else
+                {
+                    d.CustomPlaces.Add(item.KnownFolderGuid);
                 }
             }
             d.DereferenceLinks = s.DereferenceLinks;
@@ -66,32 +62,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             d.InitialDirectory = s.InitialDirectory;
             d.ShowHelp = s2.FileShowHelp;
             d.Title = s.Title;
-        }
-
-        private static Win32CustomPlace? SyncCustomPlace(FileDialogCustomPlaces value)
-        {
-            var result = value switch
-            {
-                FileDialogCustomPlaces.Contacts => Win32CustomPlaces.Contacts,
-                FileDialogCustomPlaces.Cookies => Win32CustomPlaces.Cookies,
-                FileDialogCustomPlaces.Desktop => Win32CustomPlaces.Desktop,
-                FileDialogCustomPlaces.Documents => Win32CustomPlaces.Documents,
-                FileDialogCustomPlaces.Favorites => Win32CustomPlaces.Favorites,
-                FileDialogCustomPlaces.LocalApplicationData => Win32CustomPlaces.LocalApplicationData,
-                FileDialogCustomPlaces.Music => Win32CustomPlaces.Music,
-                FileDialogCustomPlaces.Pictures => Win32CustomPlaces.Pictures,
-                FileDialogCustomPlaces.ProgramFiles => Win32CustomPlaces.ProgramFiles,
-                FileDialogCustomPlaces.ProgramFilesCommon => Win32CustomPlaces.ProgramFilesCommon,
-                FileDialogCustomPlaces.Programs => Win32CustomPlaces.Programs,
-                FileDialogCustomPlaces.RoamingApplicationData => Win32CustomPlaces.RoamingApplicationData,
-                FileDialogCustomPlaces.SendTo => Win32CustomPlaces.SendTo,
-                FileDialogCustomPlaces.StartMenu => Win32CustomPlaces.StartMenu,
-                FileDialogCustomPlaces.Startup => Win32CustomPlaces.Startup,
-                FileDialogCustomPlaces.System => Win32CustomPlaces.System,
-                FileDialogCustomPlaces.Templates => Win32CustomPlaces.Templates,
-                _ => null
-            };
-            return result != null ? new Win32CustomPlace(result.KnownFolder) : null;
         }
     }
 }
