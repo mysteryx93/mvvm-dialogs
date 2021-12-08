@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
+using Win32FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="System.Windows.Forms.FolderBrowserDialog"/>.
     /// </summary>
-    public class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings>
+    internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
     {
         /// <inheritdoc />
         public OpenFolderDialog(OpenFolderDialogSettings settings, AppDialogSettings appSettings)
@@ -15,17 +17,16 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
+        public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                    using var dialog = new Win32FolderBrowserDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
 
-                    ToSettings(dialog);
-                    return result.AsBool();
+                    return result == DialogResult.OK ? dialog.SelectedPath : null;
                 });
 
 

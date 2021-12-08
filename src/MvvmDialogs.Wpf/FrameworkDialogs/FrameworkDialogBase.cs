@@ -7,7 +7,9 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Interface representing a framework dialog.
     /// </summary>
-    public abstract class FrameworkDialogBase<TSettings> : IFrameworkDialog
+    /// <typeparam name="TSettings">The type of settings to use for this dialog.</typeparam>
+    /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
+    public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
     {
         /// <summary>
         /// Gets the settings for the framework dialog.
@@ -30,7 +32,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public Task<bool?> ShowDialogAsync(IWindow owner)
+        public Task<TResult> ShowDialogAsync(IWindow owner)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
             if (owner is not WindowWrapper window) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WindowWrapper)}");
@@ -42,6 +44,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// </summary>
         /// <param name="owner">Handle to the window that owns the dialog.</param>
         /// <returns>true if user clicks the OK button; otherwise false.</returns>
-        public abstract Task<bool?> ShowDialogAsync(WindowWrapper owner);
+        public abstract Task<TResult> ShowDialogAsync(WindowWrapper owner);
     }
 }

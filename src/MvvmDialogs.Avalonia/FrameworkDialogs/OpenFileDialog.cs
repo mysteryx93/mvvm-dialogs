@@ -12,7 +12,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="AvaloniaOpenFileDialog"/>.
     /// </summary>
-    internal sealed class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
+    internal class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
         public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
@@ -21,14 +21,13 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<string[]> ShowDialogAsync(WindowWrapper owner)
         {
             var dialog = new AvaloniaOpenFileDialog();
             ToDialog(dialog);
 
-            Settings.FileNames = await dialog.ShowAsync(owner.Ref) ?? Array.Empty<string>();
-
-            return Settings.FileNames.Length > 0;
+            var result = await dialog.ShowAsync(owner.Ref) ?? Array.Empty<string>();
+            return result;
         }
 
         private void ToDialog(global::Avalonia.Controls.OpenFileDialog d)
@@ -41,8 +40,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
 
         internal static void ToDialogShared(FileDialogSettings s, FileDialog d)
         {
-            // s.DefaultExt
-            // d.AddExtension = s.AddExtension;
+            // s.DefaultExtension
             // d.DereferenceLinks = s.DereferenceLinks;
             // d.CheckFileExists = s.CheckFileExists;
             // d.CheckPathExists = s.CheckPathExists;

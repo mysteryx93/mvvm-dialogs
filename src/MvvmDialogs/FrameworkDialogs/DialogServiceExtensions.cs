@@ -27,7 +27,7 @@ namespace MvvmDialogs
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
         /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowMessageBoxAsync(
+        public static Task<MessageBoxResult> ShowMessageBoxAsync(
             this IDialogService service,
             INotifyPropertyChanged ownerViewModel,
             string? text,
@@ -59,14 +59,14 @@ namespace MvvmDialogs
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
         /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
+        public static Task<MessageBoxResult> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             DialogLogger.Write($"Caption: {settings.Title}; Message: {settings.Text}");
 
-            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
+            return service.FrameworkDialogFactory.Create<MessageBoxSettings, MessageBoxResult>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
         }
 
@@ -77,16 +77,16 @@ namespace MvvmDialogs
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the open file dialog.</param>
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
+        /// <returns>The list of files selected by the user, or null if the user cancelled.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowOpenFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
+        public static Task<string[]> ShowOpenFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             DialogLogger.Write($"Title: {settings.Title}");
 
-            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
+            return service.FrameworkDialogFactory.Create<OpenFileDialogSettings, string[]>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
         }
 
@@ -97,16 +97,16 @@ namespace MvvmDialogs
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the save file dialog.</param>
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
+        /// <returns>The path to the file selected by the user, or null if the user cancelled.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowSaveFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
+        public static Task<string?> ShowSaveFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             DialogLogger.Write($"Title: {settings.Title}");
 
-            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
+            return service.FrameworkDialogFactory.Create<SaveFileDialogSettings, string?>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
         }
 
@@ -117,9 +117,9 @@ namespace MvvmDialogs
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the folder browser dialog.</param>
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
+        /// <returns>The path of the folder selected by the user, or null if the user cancelled.</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowOpenFolderDialogAsync(this IDialogService service,
+        public static Task<string?> ShowOpenFolderDialogAsync(this IDialogService service,
             INotifyPropertyChanged ownerViewModel, OpenFolderDialogSettings settings, AppDialogSettingsBase? appSettings = null)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
@@ -127,7 +127,7 @@ namespace MvvmDialogs
 
             DialogLogger.Write($"Description: {settings.Description}");
 
-            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
+            return service.FrameworkDialogFactory.Create<OpenFolderDialogSettings, string?>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
         }
     }

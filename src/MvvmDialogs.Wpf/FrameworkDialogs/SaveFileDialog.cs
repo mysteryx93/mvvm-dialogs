@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
+using Win32SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="System.Windows.Forms.SaveFileDialog"/>.
     /// </summary>
-    internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
+    internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
         public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
@@ -15,17 +17,16 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
+        public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    var dialog = new System.Windows.Forms.SaveFileDialog();
+                    var dialog = new Win32SaveFileDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
 
-                    Settings.FileName = dialog.FileName;
-                    return result.AsBool();
+                    return result == DialogResult.OK ? dialog.FileName : null;
                 });
 
         private void ToDialog(System.Windows.Forms.SaveFileDialog d)

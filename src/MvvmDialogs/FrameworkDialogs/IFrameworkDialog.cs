@@ -5,13 +5,14 @@ namespace MvvmDialogs.FrameworkDialogs
     /// <summary>
     /// Interface representing a framework dialog.
     /// </summary>
-    public interface IFrameworkDialog
+    /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
+    public interface IFrameworkDialog<TResult>
     {
         /// <summary>
         /// Opens a framework dialog with specified owner.
         /// </summary>
         /// <param name="owner">Handle to the window that owns the dialog.</param>
-        /// <returns>true if user clicks Yes or OK; false if user clicks No; null if user cancels.</returns>
-        Task<bool?> ShowDialogAsync(IWindow owner);
+        /// <returns>Return data specific to the dialog.</returns>
+        Task<TResult> ShowDialogAsync(IWindow owner);
     }
 }

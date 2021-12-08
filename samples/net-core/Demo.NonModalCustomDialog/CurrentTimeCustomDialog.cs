@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvvmDialogs;
 using MvvmDialogs.Wpf;
 
@@ -25,20 +26,15 @@ namespace Demo.NonModalCustomDialog
             set => dialog.DataContext = value;
         }
 
-        bool? IWindow.DialogResult
-        {
-            get => dialog.DialogResult;
-            set => dialog.DialogResult = value;
-        }
-
         IWindow IWindow.Owner
         {
             get => dialog.Owner.AsWrapper();
             set => dialog.Owner = value.AsWrapper()?.Ref;
         }
 
-        bool? IWindow.ShowDialog() => dialog.ShowDialog();
-
+        Task<bool?> IWindow.ShowDialogAsync() => Task.Run(() => dialog.ShowDialog());
+        public void Activate() => dialog.Activate();
+        public void Close() => dialog.Close();
         void IWindow.Show() => dialog.Show();
     }
 }

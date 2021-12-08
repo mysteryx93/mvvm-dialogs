@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,13 +7,14 @@ using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
 using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
+using Win32OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="System.Windows.Forms.OpenFileDialog"/>.
     /// </summary>
-    internal sealed class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings>
+    internal class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
         public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
@@ -21,17 +23,15 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
+        public override Task<string[]> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    var dialog = new System.Windows.Forms.OpenFileDialog();
+                    var dialog = new Win32OpenFileDialog();
                     ToDialog(dialog);
 
                     var result = dialog.ShowDialog(owner.Win32Window);
-
-                    Settings.FileNames = dialog.FileNames;
-                    return result.AsBool();
+                    return result == DialogResult.OK ? dialog.FileNames : Array.Empty<string>();
                 });
 
         private void ToDialog(System.Windows.Forms.OpenFileDialog d)

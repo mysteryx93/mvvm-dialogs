@@ -4,13 +4,14 @@ using Win32Button = System.Windows.MessageBoxButton;
 using Win32Image = System.Windows.MessageBoxImage;
 using Win32Result = System.Windows.MessageBoxResult;
 using Win32Options = System.Windows.MessageBoxOptions;
+using Win32MessageBox = System.Windows.MessageBox;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
     /// <summary>
     /// Class wrapping <see cref="System.Windows.MessageBox"/>.
     /// </summary>
-    public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
+    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <inheritdoc />
         public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
@@ -19,11 +20,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
+        public override Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner) =>
             Task.Run(
                 () =>
                 {
-                    var result = System.Windows.MessageBox.Show(
+                    var result = Win32MessageBox.Show(
                         owner.Ref,
                         Settings.Text,
                         Settings.Title,
@@ -34,11 +35,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
 
                     return result switch
                     {
-                        Win32Result.Yes => true,
-                        Win32Result.OK => true,
-                        Win32Result.No => false,
-                        Win32Result.Cancel => null,
-                        _ => (bool?)null
+                        Win32Result.Yes => MessageBoxResult.Yes,
+                        Win32Result.OK => MessageBoxResult.Ok,
+                        Win32Result.No => MessageBoxResult.No,
+                        Win32Result.Cancel => MessageBoxResult.Cancel,
+                        _ => MessageBoxResult.None
                     };
                 });
 

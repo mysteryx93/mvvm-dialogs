@@ -7,7 +7,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="OpenFolderDialog"/>.
     /// </summary>
-    public class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings>
+    public class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
     {
         /// <inheritdoc />
         public OpenFolderDialog(OpenFolderDialogSettings settings, AppDialogSettings appSettings)
@@ -16,15 +16,13 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
         {
             var dialog = new AvaloniaOpenFolderDialog();
             ToDialog(dialog);
 
             var result = await dialog.ShowAsync(owner.Ref);
-
-            Settings.SelectedPath = result ?? string.Empty;
-            return !string.IsNullOrEmpty(result);
+            return result;
         }
 
         private void ToDialog(AvaloniaOpenFolderDialog d)

@@ -8,7 +8,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="MessageBoxManager"/>.
     /// </summary>
-    public sealed class MessageBox : FrameworkDialogBase<MessageBoxSettings>
+    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <inheritdoc />
         public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
@@ -17,7 +17,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
         {
             var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(
                 Settings.Title,
@@ -32,11 +32,11 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
 
             return result switch
             {
-                ButtonResult.Yes => true,
-                ButtonResult.Ok => true,
-                ButtonResult.No => false,
-                ButtonResult.Cancel => null,
-                _ => null
+                ButtonResult.Yes => MessageBoxResult.Yes,
+                ButtonResult.Ok => MessageBoxResult.Ok,
+                ButtonResult.No => MessageBoxResult.No,
+                ButtonResult.Cancel => MessageBoxResult.Cancel,
+                _ => MessageBoxResult.None
             };
         }
 

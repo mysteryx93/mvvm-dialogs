@@ -24,18 +24,5 @@
         /// existed; otherwise, <c>false</c>. The default is <c>true</c>.
         /// </value>
         public bool OverwritePrompt { get; set; }
-
-        /// <summary>
-        /// Gets or sets a string containing the full path of the file selected in a file dialog.
-        /// </summary>
-        /// <value>
-        /// A <see cref="string"/> that is the full path of the file selected in the file dialog.
-        /// The default is <see cref="string.Empty"/>.
-        /// </value>
-        /// <remarks>
-        /// If no file name is selected, this property contains <see cref="string.Empty"/> rather than
-        /// <c>null</c>.
-        /// </remarks>
-        public string? FileName { get; set; }
     }
 }

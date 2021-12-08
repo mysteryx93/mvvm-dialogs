@@ -7,7 +7,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="AvaloniaSaveFileDialog"/>.
     /// </summary>
-    internal sealed class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings>
+    internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
         public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
@@ -16,14 +16,13 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
         {
             var dialog = new AvaloniaSaveFileDialog();
             ToDialog(dialog);
 
-            Settings.FileName = await dialog.ShowAsync(owner.Ref);
-
-            return !string.IsNullOrEmpty(Settings.FileName);
+            var result = await dialog.ShowAsync(owner.Ref);
+            return result;
         }
 
         private void ToDialog(global::Avalonia.Controls.SaveFileDialog d)
