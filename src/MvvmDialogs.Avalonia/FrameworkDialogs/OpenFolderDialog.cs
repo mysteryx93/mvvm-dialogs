@@ -16,28 +16,24 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
-            Task.Run(
-                () =>
-                {
-                    using var dialog = new OpenFolderDialog();
-                    ToDialog(dialog);
-
-                    var result = dialog.ShowDialog(owner.Win32Window);
-
-                    ToSettings(dialog);
-                    return result.AsBool();
-                });
-
-
-        private void ToDialog(OpenFolderDialog d)
+        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
-            d.Description = Settings.Description;
-            d.RootFolder = Settings.RootFolder;
-            d.SelectedPath = Settings.SelectedPath;
-            d.ShowNewFolderButton = Settings.ShowNewFolderButton;
+            var dialog = new AvaloniaOpenFolderDialog();
+            ToDialog(dialog);
+
+            var result = await dialog.ShowAsync(owner.Ref);
+
+            Settings.SelectedPath = result ?? string.Empty;
+            return !string.IsNullOrEmpty(result);
         }
 
-        private void ToSettings(OpenFolderDialog d) => Settings.SelectedPath = d.SelectedPath;
+        private void ToDialog(AvaloniaOpenFolderDialog d)
+        {
+            d.Title = Settings.Title;
+            d.Directory = Settings.SelectedPath;
+            // d.Description = Settings.Description;
+            // d.RootFolder = Settings.RootFolder;
+            // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace MvvmDialogs.FrameworkDialogs
         /// physical path (for example, My Computer), the <c>OK</c> button on the dialog box will
         /// be disabled.
         /// </remarks>
-        public string SelectedPath { get; set; } = string.Empty;
+        public string? SelectedPath { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>New Folder</b> button appears in the
