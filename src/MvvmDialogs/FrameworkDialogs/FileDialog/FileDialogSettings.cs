@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace MvvmDialogs.FrameworkDialogs
@@ -59,5 +60,10 @@ namespace MvvmDialogs.FrameworkDialogs
         /// It will set both the initial directory and initial file name.
         /// </summary>
         public string InitialPath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Callback to invoke when the user clicks the help button. Setting this will display a help button.
+        /// </summary>
+        public EventHandler? HelpRequest { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
 {
@@ -9,8 +10,12 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// </summary>
     /// <typeparam name="TSettings">The type of settings to use for this dialog.</typeparam>
     /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
-    public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
+    internal abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
     {
+        /// <summary>
+        /// Gets the Win32 dialogs API interface.
+        /// </summary>
+        protected IFrameworkDialogsApi Api { get; }
         /// <summary>
         /// Gets the settings for the framework dialog.
         /// </summary>
@@ -23,10 +28,12 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// <summary>
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
+        /// <param name="api">An interface exposing Win32 framework dialogs.</param>
         /// <param name="settings">The settings for the framework dialog.</param>
         /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
-        protected FrameworkDialogBase(TSettings settings, AppDialogSettings appSettings)
+        protected FrameworkDialogBase(IFrameworkDialogsApi api, TSettings settings, AppDialogSettings appSettings)
         {
+            Api = api ?? throw new ArgumentNullException(nameof(api));
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             AppSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }

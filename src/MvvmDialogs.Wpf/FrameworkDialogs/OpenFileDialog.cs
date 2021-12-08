@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
 using Win32CustomPlaces = Microsoft.Win32.FileDialogCustomPlaces;
 using Win32OpenFileDialog = System.Windows.Forms.OpenFileDialog;
@@ -17,8 +18,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
-        public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public OpenFileDialog (IFrameworkDialogsApi api, OpenFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
@@ -27,22 +28,22 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             Task.Run(
                 () =>
                 {
-                    var dialog = new Win32OpenFileDialog();
-                    ToDialog(dialog);
-
-                    var result = dialog.ShowDialog(owner.Win32Window);
-                    return result == DialogResult.OK ? dialog.FileNames : Array.Empty<string>();
+                    var apiSettings = GetApiSettings();
+                    var result = Api.ShowOpenFileDialog(owner.Ref, apiSettings);
+                    return result == DialogResult.OK ? apiSettings.FileNames : Array.Empty<string>();
                 });
 
-        private void ToDialog(System.Windows.Forms.OpenFileDialog d)
+        private OpenFileApiSettings GetApiSettings()
         {
-            ToDialogShared(Settings, AppSettings, d);
+            var d = new OpenFileApiSettings();
+            GetApiSettingsShared(Settings, AppSettings, d);
             d.Multiselect = Settings.AllowMultiple;
             d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             d.ShowReadOnly = Settings.ShowReadOnly;
+            return d;
         }
 
-        internal static void ToDialogShared(FileDialogSettings s, AppDialogSettings s2, FileDialog d)
+        internal static void GetApiSettingsShared(FileDialogSettings s, AppDialogSettings s2, FileApiSettings d)
         {
             d.DefaultExt = s.DefaultExtension;
             d.AddExtension = !string.IsNullOrEmpty(s.DefaultExtension);
@@ -60,12 +61,13 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 }
             }
             var file = new FileInfo(s.InitialPath);
-            d.InitialDirectory = file.DirectoryName;
+            d.InitialDirectory = file.DirectoryName ?? string.Empty;
             d.FileName = file.Name;
             d.DereferenceLinks = s.DereferenceLinks;
             d.Filter = SyncFilters(s.Filters);
             d.Title = s.Title;
-            d.ShowHelp = s2.FileShowHelp;
+            d.ShowHelp = s.HelpRequest != null;
+            d.HelpRequest = s.HelpRequest;
         }
 
         /// <summary>

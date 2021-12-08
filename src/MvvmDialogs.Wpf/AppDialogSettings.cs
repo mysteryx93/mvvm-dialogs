@@ -10,12 +10,6 @@ namespace MvvmDialogs.Wpf
     public class AppDialogSettings : AppDialogSettingsBase
     {
         /// <summary>
-        /// Gets or sets a value indicating whether whether the Help button is displayed in the file dialog.
-        /// </summary>
-        public bool FileShowHelp { get; set; }
-
-
-        /// <summary>
         /// Gets or sets the list of custom places for file dialog boxes.
         /// </summary>
         /// <value>

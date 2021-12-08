@@ -27,6 +27,6 @@ namespace MvvmDialogs.FrameworkDialogs
         /// <summary>
         /// Gets or sets the <see cref="string"/> that specifies the text to display.
         /// </summary>
-        public string? Text { get; set; }
+        public string Text { get; set; } = string.Empty;
     }
 }

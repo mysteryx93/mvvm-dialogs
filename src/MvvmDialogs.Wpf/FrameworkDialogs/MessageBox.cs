@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32Button = System.Windows.MessageBoxButton;
 using Win32Image = System.Windows.MessageBoxImage;
 using Win32Result = System.Windows.MessageBoxResult;
@@ -14,8 +15,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <inheritdoc />
-        public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public MessageBox(IFrameworkDialogsApi api, MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
@@ -24,14 +25,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             Task.Run(
                 () =>
                 {
-                    var result = Win32MessageBox.Show(
-                        owner.Ref,
-                        Settings.Text,
-                        Settings.Title,
-                        SyncButton(Settings.Button),
-                        SyncIcon(Settings.Icon),
-                        SyncDefault(Settings.DefaultResult),
-                        SyncOptions());
+                    var apiSettings = GetApiSettings();
+                    var result = Api.ShowMessageBox(owner.Ref, apiSettings);
 
                     return result switch
                     {
@@ -44,6 +39,17 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 });
 
         // Convert platform-agnostic types into Win32 types.
+
+        private MessageBoxApiSettings GetApiSettings() =>
+            new MessageBoxApiSettings()
+            {
+                MessageBoxText = Settings.Text,
+                Caption = Settings.Title,
+                Buttons = SyncButton(Settings.Button),
+                Icon = SyncIcon(Settings.Icon),
+                DefaultButton = SyncDefault(Settings.DefaultResult),
+                Options = SyncOptions()
+            };
 
         private static Win32Button SyncButton(MessageBoxButton value) =>
             (value) switch

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs
@@ -11,8 +12,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
-        public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public SaveFileDialog(IFrameworkDialogsApi api, SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
@@ -21,20 +22,19 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             Task.Run(
                 () =>
                 {
-                    var dialog = new Win32SaveFileDialog();
-                    ToDialog(dialog);
-
-                    var result = dialog.ShowDialog(owner.Win32Window);
-
-                    return result == DialogResult.OK ? dialog.FileName : null;
+                    var apiSettings = GetApiSettings();
+                    var result = Api.ShowSaveFileDialog(owner.Ref, apiSettings);
+                    return result == DialogResult.OK ? apiSettings.FileName : null;
                 });
 
-        private void ToDialog(System.Windows.Forms.SaveFileDialog d)
+        private SaveFileApiSettings GetApiSettings()
         {
-            OpenFileDialog.ToDialogShared(Settings, AppSettings, d);
+            var d = new SaveFileApiSettings();
+            OpenFileDialog.GetApiSettingsShared(Settings, AppSettings, d);
             d.CheckFileExists = Settings.CheckFileExists;
             d.CreatePrompt = Settings.CreatePrompt;
             d.OverwritePrompt = Settings.OverwritePrompt;
+            return d;
         }
     }
 }

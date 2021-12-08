@@ -30,7 +30,7 @@ namespace MvvmDialogs
         public static Task<MessageBoxResult> ShowMessageBoxAsync(
             this IDialogService service,
             INotifyPropertyChanged ownerViewModel,
-            string? text,
+            string text,
             string title = "",
             MessageBoxButton button = MessageBoxButton.Ok,
             MessageBoxImage icon = MessageBoxImage.None,
