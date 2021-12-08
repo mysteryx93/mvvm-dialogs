@@ -11,27 +11,6 @@ namespace MvvmDialogs
     public static class FrameworkDialogsExtensions
     {
         /// <summary>
-        /// Displays the FolderBrowserDialog.
-        /// </summary>
-        /// <param name="service">The IDialogService on which to attach the extension method.</param>
-        /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
-        /// <param name="settings">The settings for the folder browser dialog.</param>
-        /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
-        /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<bool?> ShowFolderBrowserDialogAsync(this IDialogService service,
-            INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings, AppDialogSettingsBase? appSettings = null)
-        {
-            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            DialogLogger.Write($"Description: {settings.Description}");
-
-            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
-                .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
-        }
-
-        /// <summary>
         /// Displays a message box that has a message, title bar caption, button, and icon; and
         /// that accepts a default message box result and returns a result.
         /// </summary>
@@ -126,6 +105,27 @@ namespace MvvmDialogs
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             DialogLogger.Write($"Title: {settings.Title}");
+
+            return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
+                .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        }
+
+        /// <summary>
+        /// Displays the FolderBrowserDialog.
+        /// </summary>
+        /// <param name="service">The IDialogService on which to attach the extension method.</param>
+        /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
+        /// <param name="settings">The settings for the folder browser dialog.</param>
+        /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
+        /// <returns>If the user clicks the OK button of the dialog that is displayed, true is returned; otherwise false.</returns>
+        /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
+        public static Task<bool?> ShowOpenFolderDialogAsync(this IDialogService service,
+            INotifyPropertyChanged ownerViewModel, OpenFolderDialogSettings settings, AppDialogSettingsBase? appSettings = null)
+        {
+            if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+
+            DialogLogger.Write($"Description: {settings.Description}");
 
             return service.FrameworkDialogFactory.Create(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));

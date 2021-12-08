@@ -8,14 +8,14 @@ namespace Demo.CustomFolderBrowserDialog
 {
     public class CustomFolderBrowserDialog : IFrameworkDialog
     {
-        private readonly FolderBrowserDialogSettings settings;
+        private readonly OpenFolderDialogSettings settings;
         private readonly VistaFolderBrowserDialog folderBrowserDialog;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FolderBrowserDialogWrapper"/> class.
         /// </summary>
         /// <param name="settings">The settings for the folder browser dialog.</param>
-        public CustomFolderBrowserDialog(FolderBrowserDialogSettings settings)
+        public CustomFolderBrowserDialog(OpenFolderDialogSettings settings)
         {
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
 

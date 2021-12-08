@@ -18,7 +18,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 MessageBoxSettings s => new MessageBox(s, s2),
                 OpenFileDialogSettings s => new OpenFileDialog(s, s2),
                 SaveFileDialogSettings s => new SaveFileDialog(s, s2),
-                FolderBrowserDialogSettings s => new FolderBrowserDialog(s, s2),
+                OpenFolderDialogSettings s => new OpenFolderDialog(s, s2),
                 _ => throw new NotSupportedException()
             };
         }

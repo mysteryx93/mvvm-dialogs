@@ -5,13 +5,13 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomFolderBrowserDialog
 {
-    public class CustomFolderBrowserDialog : FrameworkDialogBase<FolderBrowserDialogSettings>
+    public class CustomFolderBrowserDialog : FrameworkDialogBase<OpenFolderDialogSettings>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FolderBrowserDialogWrapper"/> class.
         /// </summary>
         /// <param name="settings">The settings for the folder browser dialog.</param>
-        public CustomFolderBrowserDialog(FolderBrowserDialogSettings settings)
+        public CustomFolderBrowserDialog(OpenFolderDialogSettings settings)
             : base(settings)
         {
         }

@@ -5,7 +5,7 @@ namespace MvvmDialogs.FrameworkDialogs
     /// <summary>
     /// Settings for FolderBrowserDialog.
     /// </summary>
-    public class FolderBrowserDialogSettings : DialogSettingsBase
+    public class OpenFolderDialogSettings : DialogSettingsBase
     {
         /// <summary>Gets or sets the descriptive text displayed above the tree view control in the dialog box.</summary>
         /// <value>The description to display. The default is an empty string ("").</value>

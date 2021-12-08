@@ -31,7 +31,7 @@ namespace Demo.FolderBrowserDialog
 
         private void BrowseFolder()
         {
-            var settings = new FolderBrowserDialogSettings
+            var settings = new OpenFolderDialogSettings
             {
                 Description = "This is a description",
                 SelectedPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!

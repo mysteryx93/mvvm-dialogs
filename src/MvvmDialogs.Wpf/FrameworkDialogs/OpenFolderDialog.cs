@@ -6,10 +6,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="System.Windows.Forms.FolderBrowserDialog"/>.
     /// </summary>
-    public class FolderBrowserDialog : FrameworkDialogBase<FolderBrowserDialogSettings>
+    public class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings>
     {
         /// <inheritdoc />
-        public FolderBrowserDialog(FolderBrowserDialogSettings settings, AppDialogSettings appSettings)
+        public OpenFolderDialog(OpenFolderDialogSettings settings, AppDialogSettings appSettings)
             : base(settings, appSettings)
         {
         }

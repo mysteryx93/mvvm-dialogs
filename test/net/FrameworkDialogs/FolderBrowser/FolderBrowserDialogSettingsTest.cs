@@ -14,7 +14,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.FolderBrowser
             // Arrange
             var settingsPropertyNames = string.Join(
                 ", ",
-                AppDialogSettings.GetPropertyNames(typeof(FolderBrowserDialogSettings)));
+                AppDialogSettings.GetPropertyNames(typeof(OpenFolderDialogSettings)));
 
             var dialogPropertyNames = string.Join(
                 ", ",

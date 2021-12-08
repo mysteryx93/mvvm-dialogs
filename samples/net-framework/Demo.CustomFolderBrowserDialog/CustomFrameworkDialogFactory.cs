@@ -8,7 +8,7 @@ namespace Demo.CustomFolderBrowserDialog
         public override IFrameworkDialog Create<T>(T settings) =>
             settings switch
             {
-                FolderBrowserDialogSettings s => new CustomFolderBrowserDialog(s),
+                OpenFolderDialogSettings s => new CustomFolderBrowserDialog(s),
                 _ => base.Create(settings)
             };
     }

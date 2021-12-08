@@ -24,9 +24,9 @@ namespace Demo.CustomFolderBrowserDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<FolderBrowserDialogSettings>()))
+                .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<OpenFolderDialogSettings>()))
                 .Returns(true)
-                .Callback((INotifyPropertyChanged ownerViewModel, FolderBrowserDialogSettings settings) =>
+                .Callback((INotifyPropertyChanged ownerViewModel, OpenFolderDialogSettings settings) =>
                     settings.SelectedPath = @"C:\SomeFolder");
 
             // Act
@@ -41,7 +41,7 @@ namespace Demo.CustomFolderBrowserDialog
         {
             // Arrange
             dialogService
-                .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<FolderBrowserDialogSettings>()))
+                .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<OpenFolderDialogSettings>()))
                 .Returns(false);
 
             // Act
