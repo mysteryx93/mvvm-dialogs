@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 using AvaloniaOpenFileDialog = Avalonia.Controls.OpenFileDialog;
@@ -13,11 +9,11 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="AvaloniaOpenFileDialog"/>.
     /// </summary>
-    internal class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings, string[]>
+    internal class OpenFileDialog : FileDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
-        public OpenFileDialog(IFrameworkDialogsApi api, OpenFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, settings, appSettings)
+        public OpenFileDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, pathInfo, settings, appSettings)
         {
         }
 
@@ -37,28 +33,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 // d.ShowReadOnly = Settings.ShowReadOnly;
                 // d.ReadOnlyChecked = Settings.ReadOnlyChecked;
             };
-            ToDialogShared(Settings, d);
+            AddSharedSettings(d);
             return d;
         }
-
-        internal static void ToDialogShared(FileDialogSettings s, FileApiSettings d)
-        {
-            // s.DefaultExtension
-            // d.DereferenceLinks = s.DereferenceLinks;
-            // d.CheckFileExists = s.CheckFileExists;
-            // d.CheckPathExists = s.CheckPathExists;
-            var file = new FileInfo(s.InitialPath);
-            d.Directory = file.DirectoryName;
-            d.InitialFileName = file.Name;
-            d.Filters = SyncFilters(s.Filters);
-            d.Title = s.Title;
-        }
-
-        private static List<FileDialogFilter> SyncFilters(List<FileFilter> filters) =>
-            filters.Select(
-                x => new FileDialogFilter()
-                {
-                    Name = x.NameToString(x.ExtensionsToString()), Extensions = x.Extensions
-                }).ToList();
     }
 }

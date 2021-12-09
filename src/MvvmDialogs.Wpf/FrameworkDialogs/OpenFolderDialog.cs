@@ -11,8 +11,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
     {
         /// <inheritdoc />
-        public OpenFolderDialog(IFrameworkDialogsApi api, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, settings, appSettings)
+        public OpenFolderDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, pathInfo, settings, appSettings)
         {
         }
 

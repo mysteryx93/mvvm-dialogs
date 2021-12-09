@@ -12,8 +12,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <inheritdoc />
-        public MessageBox(IFrameworkDialogsApi api, MessageBoxSettings settings, AppDialogSettings appSettings)
-            : base(api, settings, appSettings)
+        public MessageBox(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(api, pathInfo, settings, appSettings)
         {
         }
 

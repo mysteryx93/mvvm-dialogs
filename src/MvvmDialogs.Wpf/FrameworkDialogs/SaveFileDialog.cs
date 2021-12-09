@@ -8,11 +8,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="System.Windows.Forms.SaveFileDialog"/>.
     /// </summary>
-    internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
+    internal class SaveFileDialog : FileDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
-        public SaveFileDialog(IFrameworkDialogsApi api, SaveFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, settings, appSettings)
+        public SaveFileDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, pathInfo, settings, appSettings)
         {
         }
 
@@ -33,7 +33,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 CreatePrompt = Settings.CreatePrompt,
                 OverwritePrompt = Settings.OverwritePrompt
             };
-            OpenFileDialog.GetApiSettingsShared(Settings, AppSettings, d);
+            AddSharedSettings(d);
             return d;
         }
     }

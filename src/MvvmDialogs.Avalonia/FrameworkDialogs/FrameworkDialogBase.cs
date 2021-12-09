@@ -17,6 +17,10 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         /// </summary>
         protected IFrameworkDialogsApi Api { get; }
         /// <summary>
+        /// Provides information about files and directories
+        /// </summary>
+        protected IPathInfoFactory PathInfo { get; }
+        /// <summary>
         /// Gets the settings for the framework dialog.
         /// </summary>
         protected TSettings Settings { get; }
@@ -29,11 +33,13 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
         /// <param name="api">An interface exposing Avalonia framework dialogs.</param>
+        /// <param name="pathInfo">Provides information about files and directories.</param>
         /// <param name="settings">The settings for the framework dialog.</param>
         /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
-        protected FrameworkDialogBase(IFrameworkDialogsApi api, TSettings settings, AppDialogSettings appSettings)
+        protected FrameworkDialogBase(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, TSettings settings, AppDialogSettings appSettings)
         {
             Api = api ?? throw new ArgumentNullException(nameof(api));
+            PathInfo = pathInfo ?? throw new ArgumentNullException(nameof(pathInfo));
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             AppSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }

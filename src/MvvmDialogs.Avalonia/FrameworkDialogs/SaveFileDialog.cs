@@ -8,11 +8,11 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="AvaloniaSaveFileDialog"/>.
     /// </summary>
-    internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
+    internal class SaveFileDialog : FileDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
-        public SaveFileDialog(IFrameworkDialogsApi api, SaveFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, settings, appSettings)
+        public SaveFileDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, pathInfo, settings, appSettings)
         {
         }
 
@@ -24,12 +24,16 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             return result;
         }
 
-        private SaveFileApiSettings GetApiSettings() =>
-            new()
+        private SaveFileApiSettings GetApiSettings()
+        {
+            var d = new SaveFileApiSettings()
             {
                 DefaultExtension = Settings.DefaultExtension
                 // d.CreatePrompt = Settings.CreatePrompt;
                 // d.OverwritePrompt = Settings.OverwritePrompt;
             };
+            AddSharedSettings(d);
+            return d;
+        }
     }
 }
