@@ -1,7 +1,7 @@
 ﻿
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
-    public class SaveFileApiSettings : FileApiSettings
+    internal class SaveFileApiSettings : FileApiSettings
     {
         public bool CreatePrompt { get; set; }
         public bool OverwritePrompt { get; set; }
@@ -12,7 +12,5 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
             d.CreatePrompt = CreatePrompt;
             d.OverwritePrompt = OverwritePrompt;
         }
-
-        internal void ResultsFrom(System.Windows.Forms.SaveFileDialog d) => FileName = d.FileName;
     }
 }

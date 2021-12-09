@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
@@ -29,17 +28,18 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 () =>
                 {
                     var apiSettings = GetApiSettings();
-                    var result = Api.ShowOpenFileDialog(owner.Ref, apiSettings);
-                    return result == DialogResult.OK ? apiSettings.FileNames : Array.Empty<string>();
+                    return Api.ShowOpenFileDialog(owner.Ref, apiSettings) ?? Array.Empty<string>();
                 });
 
         private OpenFileApiSettings GetApiSettings()
         {
-            var d = new OpenFileApiSettings();
+            var d = new OpenFileApiSettings()
+            {
+                Multiselect = Settings.AllowMultiple,
+                ReadOnlyChecked = Settings.ReadOnlyChecked,
+                ShowReadOnly = Settings.ShowReadOnly
+            };
             GetApiSettingsShared(Settings, AppSettings, d);
-            d.Multiselect = Settings.AllowMultiple;
-            d.ReadOnlyChecked = Settings.ReadOnlyChecked;
-            d.ShowReadOnly = Settings.ShowReadOnly;
             return d;
         }
 

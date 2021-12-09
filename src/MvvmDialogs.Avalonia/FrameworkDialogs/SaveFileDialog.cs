@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 using AvaloniaSaveFileDialog = Avalonia.Controls.SaveFileDialog;
 
@@ -10,27 +11,25 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     internal class SaveFileDialog : FrameworkDialogBase<SaveFileDialogSettings, string?>
     {
         /// <inheritdoc />
-        public SaveFileDialog(SaveFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public SaveFileDialog(IFrameworkDialogsApi api, SaveFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
         /// <inheritdoc />
         public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
         {
-            var dialog = new AvaloniaSaveFileDialog();
-            ToDialog(dialog);
-
-            var result = await dialog.ShowAsync(owner.Ref);
+            var apiSettings = GetApiSettings();
+            var result = await Api.ShowSaveFileDialog(owner.Ref, apiSettings).ConfigureAwait(false);
             return result;
         }
 
-        private void ToDialog(global::Avalonia.Controls.SaveFileDialog d)
-        {
-            OpenFileDialog.ToDialogShared(Settings, d);
-            // d.CreatePrompt = Settings.CreatePrompt;
-            // d.OverwritePrompt = Settings.OverwritePrompt;
-            d.DefaultExtension = Settings.DefaultExtension;
-        }
+        private SaveFileApiSettings GetApiSettings() =>
+            new()
+            {
+                DefaultExtension = Settings.DefaultExtension
+                // d.CreatePrompt = Settings.CreatePrompt;
+                // d.OverwritePrompt = Settings.OverwritePrompt;
+            };
     }
 }

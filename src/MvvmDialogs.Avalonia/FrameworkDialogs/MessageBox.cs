@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
+using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Avalonia.FrameworkDialogs
@@ -11,24 +12,16 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <inheritdoc />
-        public MessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public MessageBox(IFrameworkDialogsApi api, MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
         /// <inheritdoc />
         public override async Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
         {
-            var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(
-                Settings.Title,
-                Settings.Text,
-                SyncButton(Settings.Button),
-                SyncIcon(Settings.Icon),
-                style: AppSettings.MessageBoxStyle);
-            // SyncDefault(Settings.DefaultResult),
-            // SyncOptions());
-
-            var result = await messageBox.ShowDialog(owner.Ref);
+            var apiSettings = GetApiSettings();
+            var result = await Api.ShowMessageBox(owner.Ref, apiSettings).ConfigureAwait(false);
 
             return result switch
             {
@@ -39,6 +32,18 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 _ => MessageBoxResult.None
             };
         }
+
+        private MessageBoxApiSettings GetApiSettings() =>
+            new()
+            {
+                Title = Settings.Title,
+                Text = Settings.Text,
+                Buttons = SyncButton(Settings.Button),
+                Icon = SyncIcon(Settings.Icon),
+                Style = AppSettings.MessageBoxStyle
+                // SyncDefault(Settings.DefaultResult),
+                // SyncOptions());
+            };
 
         // Convert platform-agnostic types into Win32 types.
 
@@ -76,11 +81,5 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         //         MessageBoxResult.No => Win32Result.No,
         //         _ => Win32Result.None
         //     };
-
-        // private Win32Options SyncOptions() =>
-        //     EvalOption(Settings.DefaultDesktopOnly, Win32Options.DefaultDesktopOnly) |
-        //     EvalOption(Settings.RightAlign, Win32Options.RightAlign) |
-        //     EvalOption(Settings.RtlReading, Win32Options.RtlReading) |
-        //     EvalOption(Settings.ServiceNotification, Win32Options.ServiceNotification);
     }
 }

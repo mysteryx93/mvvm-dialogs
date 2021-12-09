@@ -41,7 +41,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         // Convert platform-agnostic types into Win32 types.
 
         private MessageBoxApiSettings GetApiSettings() =>
-            new MessageBoxApiSettings()
+            new()
             {
                 MessageBoxText = Settings.Text,
                 Caption = Settings.Title,

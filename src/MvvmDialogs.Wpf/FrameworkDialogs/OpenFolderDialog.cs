@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
@@ -23,12 +22,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 () =>
                 {
                     var apiSettings = GetApiSettings();
-                    var result = Api.ShowFolderBrowserDialog(owner.Ref, apiSettings);
-                    return result == DialogResult.OK ? apiSettings.SelectedPath : null;
+                    return Api.ShowOpenFolderDialog(owner.Ref, apiSettings);
                 });
 
-        private FolderBrowserApiSettings GetApiSettings() =>
-            new FolderBrowserApiSettings
+        private OpenFolderApiSettings GetApiSettings() =>
+            new()
             {
                 Description = Settings.Title,
                 SelectedPath = Settings.SelectedPath,

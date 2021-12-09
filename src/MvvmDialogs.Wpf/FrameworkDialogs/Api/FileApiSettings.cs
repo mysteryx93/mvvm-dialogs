@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
-    public class FileApiSettings
+    internal class FileApiSettings
     {
         public string DefaultExt { get; set; } = string.Empty;
         public bool AddExtension { get; set; } = true;

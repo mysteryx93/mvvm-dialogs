@@ -15,31 +15,28 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
                 settings.Icon,
                 settings.DefaultButton);
 
-        public DialogResult ShowOpenFileDialog(Window owner, OpenFileApiSettings settings)
+        public string[]? ShowOpenFileDialog(Window owner, OpenFileApiSettings settings)
         {
             var dialog = new System.Windows.Forms.OpenFileDialog();
             settings.ApplyTo(dialog);
             var result = dialog.ShowDialog();
-            settings.ResultsFrom(dialog);
-            return result;
+            return result == DialogResult.OK ? dialog.FileNames : null;
         }
 
-        public DialogResult ShowSaveFileDialog(Window owner, SaveFileApiSettings settings)
+        public string? ShowSaveFileDialog(Window owner, SaveFileApiSettings settings)
         {
             var dialog = new System.Windows.Forms.SaveFileDialog();
             settings.ApplyTo(dialog);
             var result = dialog.ShowDialog();
-            settings.ResultsFrom(dialog);
-            return result;
+            return result == DialogResult.OK ? dialog.FileName : null;
         }
 
-        public DialogResult ShowFolderBrowserDialog(Window owner, FolderBrowserApiSettings settings)
+        public string? ShowOpenFolderDialog(Window owner, OpenFolderApiSettings settings)
         {
             var dialog = new FolderBrowserDialog();
             settings.ApplyTo(dialog);
             var result = dialog.ShowDialog();
-            settings.ResultsFrom(dialog);
-            return result;
+            return result == DialogResult.OK ? dialog.SelectedPath : null;
         }
     }
 }

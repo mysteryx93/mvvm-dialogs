@@ -1,7 +1,7 @@
 ﻿
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
-    public class OpenFileApiSettings : FileApiSettings
+    internal class OpenFileApiSettings : FileApiSettings
     {
         public bool Multiselect { get; set; }
         public bool ReadOnlyChecked { get; set; }
@@ -14,7 +14,5 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
             d.ReadOnlyChecked = ReadOnlyChecked;
             d.ShowReadOnly = ShowReadOnly;
         }
-
-        internal void ResultsFrom(System.Windows.Forms.OpenFileDialog d) => FileNames = d.FileNames;
     }
 }

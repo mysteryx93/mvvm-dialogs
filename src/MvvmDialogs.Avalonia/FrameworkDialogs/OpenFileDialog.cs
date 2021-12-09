@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 using AvaloniaOpenFileDialog = Avalonia.Controls.OpenFileDialog;
 
@@ -15,30 +16,32 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     internal class OpenFileDialog : FrameworkDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
-        public OpenFileDialog(OpenFileDialogSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public OpenFileDialog(IFrameworkDialogsApi api, OpenFileDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
         /// <inheritdoc />
         public override async Task<string[]> ShowDialogAsync(WindowWrapper owner)
         {
-            var dialog = new AvaloniaOpenFileDialog();
-            ToDialog(dialog);
-
-            var result = await dialog.ShowAsync(owner.Ref) ?? Array.Empty<string>();
-            return result;
+            var apiSettings = GetApiSettings();
+            var result = await Api.ShowOpenFileDialog(owner.Ref, apiSettings).ConfigureAwait(false);
+            return result ?? Array.Empty<string>();
         }
 
-        private void ToDialog(global::Avalonia.Controls.OpenFileDialog d)
+        private OpenFileApiSettings GetApiSettings()
         {
+            var d = new OpenFileApiSettings()
+            {
+                AllowMultiple = Settings.AllowMultiple
+                // d.ShowReadOnly = Settings.ShowReadOnly;
+                // d.ReadOnlyChecked = Settings.ReadOnlyChecked;
+            };
             ToDialogShared(Settings, d);
-            d.AllowMultiple = Settings.AllowMultiple;
-            // d.ShowReadOnly = Settings.ShowReadOnly;
-            // d.ReadOnlyChecked = Settings.ReadOnlyChecked;
+            return d;
         }
 
-        internal static void ToDialogShared(FileDialogSettings s, FileDialog d)
+        internal static void ToDialogShared(FileDialogSettings s, FileApiSettings d)
         {
             // s.DefaultExtension
             // d.DereferenceLinks = s.DereferenceLinks;

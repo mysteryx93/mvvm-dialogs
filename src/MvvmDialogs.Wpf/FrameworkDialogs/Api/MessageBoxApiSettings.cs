@@ -2,9 +2,8 @@
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
-    public class MessageBoxApiSettings
+    internal class MessageBoxApiSettings
     {
-        public System.Windows.Window? Owner { get; set; }
         public string MessageBoxText { get; set; } = string.Empty;
         public string Caption { get; set; } = string.Empty;
         public MessageBoxButton Buttons { get; set; }

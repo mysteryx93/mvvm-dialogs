@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 using AvaloniaOpenFolderDialog = Avalonia.Controls.OpenFolderDialog;
 
@@ -7,31 +8,30 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="OpenFolderDialog"/>.
     /// </summary>
-    public class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
+    internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
     {
         /// <inheritdoc />
-        public OpenFolderDialog(OpenFolderDialogSettings settings, AppDialogSettings appSettings)
-            : base(settings, appSettings)
+        public OpenFolderDialog(IFrameworkDialogsApi api, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
+            : base(api, settings, appSettings)
         {
         }
 
         /// <inheritdoc />
         public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
         {
-            var dialog = new AvaloniaOpenFolderDialog();
-            ToDialog(dialog);
-
-            var result = await dialog.ShowAsync(owner.Ref);
+            var apiSettings = GetApiSettings();
+            var result = await Api.ShowOpenFolderDialog(owner.Ref, apiSettings).ConfigureAwait(false);
             return result;
         }
 
-        private void ToDialog(AvaloniaOpenFolderDialog d)
-        {
-            d.Title = Settings.Title;
-            d.Directory = Settings.SelectedPath;
-            // d.Description = Settings.Description;
-            // d.RootFolder = Settings.RootFolder;
-            // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
-        }
+        private OpenFolderApiSettings GetApiSettings() =>
+            new()
+            {
+                Title = Settings.Title,
+                Directory = Settings.SelectedPath
+                // d.Description = Settings.Description;
+                // d.RootFolder = Settings.RootFolder;
+                // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
+            };
     }
 }

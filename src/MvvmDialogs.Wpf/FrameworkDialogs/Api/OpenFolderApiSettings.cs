@@ -1,7 +1,7 @@
 ﻿
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
-    public class FolderBrowserApiSettings
+    internal class OpenFolderApiSettings
     {
         public string Description { get; set; } = string.Empty;
         public string? SelectedPath { get; set; } = string.Empty;
@@ -13,7 +13,5 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
             d.SelectedPath = SelectedPath;
             d.ShowNewFolderButton = ShowNewFolderButton;
         }
-
-        internal void ResultsFrom(System.Windows.Forms.FolderBrowserDialog d) => SelectedPath = d.SelectedPath;
     }
 }

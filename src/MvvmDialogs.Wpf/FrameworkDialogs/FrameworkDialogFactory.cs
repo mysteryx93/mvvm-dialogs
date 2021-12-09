@@ -11,14 +11,15 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     {
         private readonly IFrameworkDialogsApi api;
 
+        public FrameworkDialogFactory() : this(null)
+        {}
+
         /// <summary>
         /// Initializes the FrameworkDialogFactory.
         /// </summary>
         /// <param name="api">Optional. An interface exposing Win32 framework dialog API calls. Can be replaced with a mock for testing.</param>
-        public FrameworkDialogFactory(IFrameworkDialogsApi? api = null)
-        {
+        internal FrameworkDialogFactory(IFrameworkDialogsApi? api = null) =>
             this.api = api ?? new FrameworkDialogsApi();
-        }
 
         /// <inheritdoc />
         public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)

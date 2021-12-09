@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32SaveFileDialog = System.Windows.Forms.SaveFileDialog;
@@ -23,17 +22,18 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 () =>
                 {
                     var apiSettings = GetApiSettings();
-                    var result = Api.ShowSaveFileDialog(owner.Ref, apiSettings);
-                    return result == DialogResult.OK ? apiSettings.FileName : null;
+                    return Api.ShowSaveFileDialog(owner.Ref, apiSettings);
                 });
 
         private SaveFileApiSettings GetApiSettings()
         {
-            var d = new SaveFileApiSettings();
+            var d = new SaveFileApiSettings()
+            {
+                CheckFileExists = Settings.CheckFileExists,
+                CreatePrompt = Settings.CreatePrompt,
+                OverwritePrompt = Settings.OverwritePrompt
+            };
             OpenFileDialog.GetApiSettingsShared(Settings, AppSettings, d);
-            d.CheckFileExists = Settings.CheckFileExists;
-            d.CreatePrompt = Settings.CreatePrompt;
-            d.OverwritePrompt = Settings.OverwritePrompt;
             return d;
         }
     }
