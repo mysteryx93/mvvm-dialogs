@@ -14,19 +14,17 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     internal class OpenFileDialog : FileDialogBase<OpenFileDialogSettings, string[]>
     {
         /// <inheritdoc />
-        public OpenFileDialog (IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFileDialogSettings settings, AppDialogSettings appSettings)
+        public OpenFileDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFileDialogSettings settings, AppDialogSettings appSettings)
             : base(api, pathInfo, settings, appSettings)
         {
         }
 
         /// <inheritdoc />
-        public override Task<string[]> ShowDialogAsync(WindowWrapper owner) =>
-            Task.Run(
-                () =>
-                {
-                    var apiSettings = GetApiSettings();
-                    return Api.ShowOpenFileDialog(owner.Ref, apiSettings) ?? Array.Empty<string>();
-                });
+        public override Task<string[]> ShowDialogAsync(WindowWrapper owner)
+        {
+            var apiSettings = GetApiSettings();
+            return Task.FromResult(Api.ShowOpenFileDialog(owner.Ref, apiSettings) ?? Array.Empty<string>());
+        }
 
         private OpenFileApiSettings GetApiSettings()
         {

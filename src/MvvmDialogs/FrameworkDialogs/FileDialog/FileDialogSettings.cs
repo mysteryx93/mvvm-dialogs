@@ -10,7 +10,8 @@ namespace MvvmDialogs.FrameworkDialogs
     public abstract class FileDialogSettings : DialogSettingsBase
     {
         /// <summary>
-        /// Gets or sets the default extension to be used to save the file (including the period ".").
+        /// Gets or sets the default extension to be used (including the period ".")
+        /// if not set by the user or by a filter
         /// </summary>
         public string DefaultExtension { get; set; } = string.Empty;
 
@@ -18,30 +19,18 @@ namespace MvvmDialogs.FrameworkDialogs
         /// Gets or sets a value indicating whether a file dialog displays a warning if the user
         /// specifies a file name that does not exist.
         /// </summary>
-        /// <value>
-        /// <c>true</c> if warnings are displayed; otherwise, <c>false</c>. The default in this
-        /// class is <c>true</c>.
-        /// </value>
         public bool CheckFileExists { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value that specifies whether warnings are displayed if the user types
         /// invalid paths and file names.
         /// </summary>
-        /// <value>
-        /// <c>true</c> if warnings are displayed; otherwise, <c>false</c>. The default is
-        /// <c>true</c>.
-        /// </value>
         public bool CheckPathExists { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a file dialog returns either the location of
         /// the file referenced by a shortcut or the location of the shortcut file (.lnk).
         /// </summary>
-        /// <value>
-        /// <c>true</c> to return the location referenced; <c>false</c> to return the shortcut
-        /// location. The default is <c>true</c>.
-        /// </value>
         public bool DereferenceLinks { get; set; } = true;
 
         /// <summary>

@@ -41,60 +41,60 @@ namespace Demo.MessageBox
 
         private void ShowMessageBoxWithMessage()
         {
-            var result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBoxAsync(
                 this,
-                "This is the text.");
+                "This is the text.").Result;
 
             UpdateResult(result);
         }
 
         private void ShowMessageBoxWithCaption()
         {
-            var result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
-                "This Is The Caption");
+                "This Is The Caption").Result;
 
             UpdateResult(result);
         }
 
         private void ShowMessageBoxWithButton()
         {
-            var result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
-                MessageBoxButton.OkCancel);
+                MessageBoxButton.OkCancel).Result;
 
             UpdateResult(result);
         }
 
         private void ShowMessageBoxWithIcon()
         {
-            var result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
                 MessageBoxButton.OkCancel,
-                MessageBoxImage.Information);
+                MessageBoxImage.Information).Result;
 
             UpdateResult(result);
         }
 
         private void ShowMessageBoxWithDefaultResult()
         {
-            var result = dialogService.ShowMessageBox(
+            var result = dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
                 MessageBoxButton.OkCancel,
                 MessageBoxImage.Information,
-                MessageBoxResult.Cancel);
+                MessageBoxResult.Cancel).Result;
 
             UpdateResult(result);
         }
 
-        private void UpdateResult(bool? result) =>
-            Confirmation = result == true ? "We got confirmation to continue!" : string.Empty;
+        private void UpdateResult(MessageBoxResult result) =>
+            Confirmation = result == MessageBoxResult.Ok ? "We got confirmation to continue!" : string.Empty;
     }
 }

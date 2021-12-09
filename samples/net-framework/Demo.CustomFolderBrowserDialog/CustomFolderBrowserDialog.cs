@@ -22,7 +22,7 @@ namespace Demo.CustomFolderBrowserDialog
             folderBrowserDialog = new VistaFolderBrowserDialog
             {
                 Description = settings.Description,
-                SelectedPath = settings.SelectedPath,
+                SelectedPath = settings.InitialPath,
                 ShowNewFolderButton = settings.ShowNewFolderButton
             };
         }
@@ -44,7 +44,7 @@ namespace Demo.CustomFolderBrowserDialog
             var result = folderBrowserDialog.ShowDialog(w.Ref);
 
             // Update settings
-            settings.SelectedPath = folderBrowserDialog.SelectedPath;
+            settings.InitialPath = folderBrowserDialog.SelectedPath;
 
             return result;
         }

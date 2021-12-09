@@ -27,7 +27,7 @@ namespace Demo.FolderBrowserDialog
                 .Setup(mock => mock.ShowFolderBrowserDialog(viewModel, It.IsAny<OpenFolderDialogSettings>()))
                 .Returns(true)
                 .Callback((INotifyPropertyChanged _, OpenFolderDialogSettings settings) =>
-                    settings.SelectedPath = @"C:\SomeFolder");
+                    settings.InitialPath = @"C:\SomeFolder");
 
             // Act
             viewModel.BrowseFolderCommand.Execute(null);

@@ -9,7 +9,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         where TSettings : FileDialogSettings
     {
         internal FileDialogBase(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, TSettings settings, AppDialogSettings appSettings)
-            : base(api, pathInfo, settings, appSettings)
+            : base(settings, appSettings, pathInfo, api)
         {
         }
 
@@ -35,9 +35,12 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                     d.CustomPlaces.Add(item.KnownFolderGuid);
                 }
             }
-            var file = PathInfo.GetFileInfo(s.InitialPath);
-            d.InitialDirectory = file.DirectoryName ?? string.Empty;
-            d.FileName = file.FileName;
+            if (!string.IsNullOrEmpty(s.InitialPath))
+            {
+                var file = PathInfo.GetFileInfo(s.InitialPath);
+                d.InitialDirectory = file.DirectoryName ?? string.Empty;
+                d.FileName = file.FileName;
+            }
             d.DereferenceLinks = s.DereferenceLinks;
             d.Filter = SyncFilters(s.Filters);
             d.Title = s.Title;

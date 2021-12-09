@@ -12,23 +12,14 @@ namespace MvvmDialogs.FrameworkDialogs
         public bool AllowMultiple { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the read-only check box displayed by the open
-        /// file dialog is selected.
+        /// Gets or sets a value indicating whether the open file dialog contains a read-only check box.
+        /// Only supported in WPF.
         /// </summary>
-        /// <value>
-        /// <c>true</c> if the checkbox is selected; otherwise, <c>false</c>. The default is
-        /// <c>false</c>.
-        /// </value>
-        public bool ReadOnlyChecked { get; set; }
+        public bool ShowReadOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the open file dialog contains a read-only check
-        /// box.
+        /// Gets or sets a value indicating whether the read-only check box displayed by the open file dialog is selected.
         /// </summary>
-        /// <value>
-        /// <c>true</c> if the checkbox is displayed; otherwise, <c>false</c>. The default is
-        /// <c>false</c>.
-        /// </value>
-        public bool ShowReadOnly { get; set; }
+        public bool ReadOnlyChecked { get; set; }
     }
 }

@@ -17,13 +17,11 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
-            Task.Run(
-                () =>
-                {
-                    var apiSettings = GetApiSettings();
-                    return Api.ShowSaveFileDialog(owner.Ref, apiSettings);
-                });
+        public override Task<string?> ShowDialogAsync(WindowWrapper owner)
+        {
+            var apiSettings = GetApiSettings();
+            return Task.FromResult(Api.ShowSaveFileDialog(owner.Ref, apiSettings));
+        }
 
         private SaveFileApiSettings GetApiSettings()
         {

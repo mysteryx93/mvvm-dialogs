@@ -125,7 +125,7 @@ namespace MvvmDialogs
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
-            DialogLogger.Write($"Description: {settings.Description}");
+            DialogLogger.Write($"Title: {settings.Title}");
 
             return service.FrameworkDialogFactory.Create<OpenFolderDialogSettings, string?>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));

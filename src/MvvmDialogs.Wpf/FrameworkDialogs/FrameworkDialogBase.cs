@@ -10,12 +10,12 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// </summary>
     /// <typeparam name="TSettings">The type of settings to use for this dialog.</typeparam>
     /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
-    internal abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
+    public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
     {
         /// <summary>
         /// Gets the Win32 dialogs API interface.
         /// </summary>
-        protected IFrameworkDialogsApi Api { get; }
+        internal IFrameworkDialogsApi Api { get; }
         /// <summary>
         /// Provides information about files and directories
         /// </summary>
@@ -32,16 +32,26 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         /// <summary>
         /// Initializes a new instance of a FrameworkDialog.
         /// </summary>
-        /// <param name="api">An interface exposing Win32 framework dialogs.</param>
-        /// <param name="pathInfo">Provides information about files and directories.</param>
         /// <param name="settings">The settings for the framework dialog.</param>
         /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
-        protected FrameworkDialogBase(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, TSettings settings, AppDialogSettings appSettings)
+        protected FrameworkDialogBase(TSettings settings, AppDialogSettings appSettings)
+            : this(settings, appSettings, new PathInfoFactory(), new FrameworkDialogsApi())
         {
-            Api = api ?? throw new ArgumentNullException(nameof(api));
-            PathInfo = pathInfo ?? throw new ArgumentNullException(nameof(pathInfo));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of a FrameworkDialog.
+        /// </summary>
+        /// <param name="settings">The settings for the framework dialog.</param>
+        /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
+        /// <param name="pathInfo">Provides information about files and directories.</param>
+        /// <param name="api">An interface exposing Win32 framework dialogs.</param>
+        internal FrameworkDialogBase(TSettings settings, AppDialogSettings appSettings, IPathInfoFactory pathInfo, IFrameworkDialogsApi api)
+        {
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             AppSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
+            PathInfo = pathInfo ?? throw new ArgumentNullException(nameof(pathInfo));
+            Api = api ?? throw new ArgumentNullException(nameof(api));
         }
 
         /// <inheritdoc />

@@ -34,13 +34,13 @@ namespace Demo.CustomFolderBrowserDialog
             var settings = new OpenFolderDialogSettings
             {
                 Description = "This is a description",
-                SelectedPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
+                InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
             };
 
             var success = dialogService.ShowFolderBrowserDialog(this, settings);
             if (success == true)
             {
-                Path = settings.SelectedPath;
+                Path = settings.InitialPath;
             }
         }
     }

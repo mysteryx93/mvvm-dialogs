@@ -21,9 +21,12 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             // d.CheckFileExists = s.CheckFileExists;
             // d.CheckPathExists = s.CheckPathExists;
             var s = Settings;
-            var file = PathInfo.GetFileInfo(s.InitialPath);
-            d.Directory = file.DirectoryName;
-            d.InitialFileName = file.FileName;
+            if (!string.IsNullOrEmpty(s.InitialPath))
+            {
+                var file = PathInfo.GetFileInfo(s.InitialPath);
+                d.Directory = file.DirectoryName;
+                d.InitialFileName = file.FileName;
+            }
             d.Filters = SyncFilters(s.Filters);
             d.Title = s.Title;
         }

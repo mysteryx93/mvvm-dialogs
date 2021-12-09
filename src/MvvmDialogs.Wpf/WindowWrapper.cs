@@ -56,8 +56,7 @@ namespace MvvmDialogs.Wpf
         }
 
         /// <inheritdoc />
-        public Task<bool?> ShowDialogAsync() =>
-            Task.Run(() => Ref.ShowDialog());
+        public Task<bool?> ShowDialogAsync() => Ref.ShowDialogAsync();
 
         /// <inheritdoc />
         public void Show() => Ref.Show();

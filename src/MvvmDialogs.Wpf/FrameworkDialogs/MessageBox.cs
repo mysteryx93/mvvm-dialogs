@@ -16,27 +16,26 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     {
         /// <inheritdoc />
         public MessageBox(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, MessageBoxSettings settings, AppDialogSettings appSettings)
-            : base(api, pathInfo, settings, appSettings)
+            : base(settings, appSettings, pathInfo, api)
         {
         }
 
         /// <inheritdoc />
-        public override Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner) =>
-            Task.Run(
-                () =>
-                {
-                    var apiSettings = GetApiSettings();
-                    var result = Api.ShowMessageBox(owner.Ref, apiSettings);
+        public override Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
+        {
+            var apiSettings = GetApiSettings();
+            var result = Api.ShowMessageBox(owner.Ref, apiSettings);
 
-                    return result switch
-                    {
-                        Win32Result.Yes => MessageBoxResult.Yes,
-                        Win32Result.OK => MessageBoxResult.Ok,
-                        Win32Result.No => MessageBoxResult.No,
-                        Win32Result.Cancel => MessageBoxResult.Cancel,
-                        _ => MessageBoxResult.None
-                    };
+            return Task.FromResult(
+                result switch
+                {
+                    Win32Result.Yes => MessageBoxResult.Yes,
+                    Win32Result.OK => MessageBoxResult.Ok,
+                    Win32Result.No => MessageBoxResult.No,
+                    Win32Result.Cancel => MessageBoxResult.Cancel,
+                    _ => MessageBoxResult.None
                 });
+        }
 
         // Convert platform-agnostic types into Win32 types.
 

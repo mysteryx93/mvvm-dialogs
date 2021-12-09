@@ -36,10 +36,10 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         /// <param name="pathInfo">Provides information about files and directories.</param>
         /// <param name="settings">The settings for the framework dialog.</param>
         /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
-        protected FrameworkDialogBase(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, TSettings settings, AppDialogSettings appSettings)
+        protected FrameworkDialogBase(IFrameworkDialogsApi? api, IPathInfoFactory? pathInfo, TSettings settings, AppDialogSettings appSettings)
         {
-            Api = api ?? throw new ArgumentNullException(nameof(api));
-            PathInfo = pathInfo ?? throw new ArgumentNullException(nameof(pathInfo));
+            Api = api ?? new FrameworkDialogsApi();
+            PathInfo = pathInfo ?? new PathInfoFactory();
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             AppSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }

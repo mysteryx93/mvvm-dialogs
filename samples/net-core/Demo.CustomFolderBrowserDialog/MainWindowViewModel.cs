@@ -24,7 +24,7 @@ namespace Demo.CustomFolderBrowserDialog
         public string Path
         {
             get => path;
-            private set { Set(() => Path, ref path, value); }
+            private set => Set(() => Path, ref path, value);
         }
 
         public ICommand BrowseFolderCommand { get; }
@@ -33,14 +33,14 @@ namespace Demo.CustomFolderBrowserDialog
         {
             var settings = new OpenFolderDialogSettings
             {
-                Description = "This is a description",
-                SelectedPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                Title = "This is a description",
+                InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
             };
 
-            bool? success = dialogService.ShowFolderBrowserDialog(this, settings);
-            if (success == true)
+            var success = dialogService.ShowOpenFolderDialogAsync(this, settings).Result;
+            if (success != null)
             {
-                Path = settings.SelectedPath;
+                Path = settings.InitialPath;
             }
         }
     }

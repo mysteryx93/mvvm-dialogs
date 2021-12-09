@@ -12,25 +12,24 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     {
         /// <inheritdoc />
         public OpenFolderDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, pathInfo, settings, appSettings)
+            : base(settings, appSettings, pathInfo, api)
         {
         }
 
         /// <inheritdoc />
-        public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
-            Task.Run(
-                () =>
-                {
-                    var apiSettings = GetApiSettings();
-                    return Api.ShowOpenFolderDialog(owner.Ref, apiSettings);
-                });
+        public override Task<string?> ShowDialogAsync(WindowWrapper owner)
+        {
+            var apiSettings = GetApiSettings();
+            return Task.FromResult(Api.ShowOpenFolderDialog(owner.Ref, apiSettings));
+        }
 
         private OpenFolderApiSettings GetApiSettings() =>
             new()
             {
                 Description = Settings.Title,
-                SelectedPath = Settings.SelectedPath,
-                ShowNewFolderButton = Settings.ShowNewFolderButton
+                SelectedPath = Settings.InitialPath,
+                ShowNewFolderButton = Settings.ShowNewFolderButton,
+                HelpRequest = Settings.HelpRequest
             };
     }
 }
