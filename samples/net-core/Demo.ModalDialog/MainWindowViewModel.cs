@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -27,23 +28,24 @@ namespace Demo.ModalDialog
 
         private void ImplicitShowDialog()
         {
-            ShowDialog(viewModel => dialogService.ShowDialog(this, viewModel));
+            ShowDialog(viewModel => dialogService.ShowDialogAsync(this, viewModel));
         }
 
         private void ExplicitShowDialog()
         {
-            ShowDialog(viewModel => dialogService.ShowDialog<Demo.ModalDialog.AddTextDialog>(this, viewModel));
+            ShowDialog(viewModel => dialogService.ShowDialogAsync(this, viewModel));
         }
 
-        private void ShowDialog(Func<AddTextDialogViewModel, bool?> showDialog)
+        private void ShowDialog(Func<AddTextDialogViewModel, Task<bool?>> showDialog)
         {
             var dialogViewModel = new AddTextDialogViewModel();
 
-            bool? success = showDialog(dialogViewModel);
-            if (success == true)
-            {
-                Texts.Add(dialogViewModel.Text);
-            }
+            showDialog(dialogViewModel);
+            // bool? success = showDialog(dialogViewModel);
+            // if (success == true)
+            // {
+            //     Texts.Add(dialogViewModel.Text);
+            // }
         }
     }
 }

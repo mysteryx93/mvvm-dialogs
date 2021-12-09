@@ -32,8 +32,7 @@ namespace Demo.ModalCustomDialog
             set => dialog.Owner = value.AsWrapper()?.Ref;
         }
 
-        Task<bool?> IWindow.ShowDialogAsync() =>
-            Task.Run(() => dialog.ShowDialog());
+        Task<bool?> IWindow.ShowDialogAsync() => Task.FromResult(dialog.ShowDialog());
 
         void IWindow.Show() => dialog.Show();
     }

@@ -57,11 +57,11 @@ namespace MvvmDialogs
 
         /// <inheritdoc />
         public Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
-            Task.Run(() => ShowDialogInternalAsync(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel)));
+            ShowDialogInternalAsync(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel));
 
         /// <inheritdoc />
         public Task<bool?> ShowDialogAsync<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
-            Task.Run(() => ShowDialogInternalAsync(ownerViewModel, viewModel, typeof(T)));
+            ShowDialogInternalAsync(ownerViewModel, viewModel, typeof(T));
 
         /// <summary>
         /// Attempts to bring the window to the foreground and activates it.

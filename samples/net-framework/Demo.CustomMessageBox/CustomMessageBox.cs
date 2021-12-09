@@ -7,14 +7,15 @@ using Ookii.Dialogs.Wpf;
 
 namespace Demo.CustomMessageBox
 {
-    public class CustomMessageBox : FrameworkDialogBase<MessageBoxSettings>
+    public class CustomMessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomMessageBox"/> class.
         /// </summary>
         /// <param name="settings">The settings for the folder browser dialog.</param>
-        public CustomMessageBox(MessageBoxSettings settings)
-            : base(settings)
+        /// <param name="appSettings">Application-wide settings configured on the DialogService.</param>
+        public CustomMessageBox(MessageBoxSettings settings, AppDialogSettings appSettings)
+            : base(settings, appSettings)
         {
         }
 
@@ -28,7 +29,7 @@ namespace Demo.CustomMessageBox
         /// A <see cref="System.Windows.MessageBoxResult"/> value that specifies which message box button is
         /// clicked by the user.
         /// </returns>
-        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
         {
             using var messageBox = new TaskDialog
             {
@@ -41,11 +42,11 @@ namespace Demo.CustomMessageBox
 
             if (owner == null) throw new ArgumentNullException(nameof(owner));
 
-            var result = await Task.Run(() => messageBox.ShowDialog(owner.Ref));
-            return ToMessageBoxResult(result);
+            var result = messageBox.ShowDialog(owner.Ref);
+            return Task.FromResult(ToMessageBoxResult(result));
         }
 
-        private string SyncTitle() => string.IsNullOrEmpty(Settings.Caption) ? " " : Settings.Caption;
+        private string SyncTitle() => string.IsNullOrEmpty(Settings.Title) ? " " : Settings.Title;
 
         private void SetUpButtons(TaskDialog messageBox)
         {
@@ -82,14 +83,14 @@ namespace Demo.CustomMessageBox
                 _ => TaskDialogIcon.Custom
             };
 
-        private static bool? ToMessageBoxResult(TaskDialogButton button) =>
+        private static MessageBoxResult ToMessageBoxResult(TaskDialogButton button) =>
             button.ButtonType switch
             {
-                ButtonType.Cancel => null,
-                ButtonType.No => false,
-                ButtonType.Ok => true,
-                ButtonType.Yes => true,
-                _ => null
+                ButtonType.Cancel => MessageBoxResult.Cancel,
+                ButtonType.No => MessageBoxResult.No,
+                ButtonType.Ok => MessageBoxResult.Ok,
+                ButtonType.Yes => MessageBoxResult.Yes,
+                _ => MessageBoxResult.None
             };
     }
 }

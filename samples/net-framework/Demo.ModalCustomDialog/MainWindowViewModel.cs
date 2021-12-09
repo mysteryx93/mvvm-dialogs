@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -27,19 +28,19 @@ namespace Demo.ModalCustomDialog
 
         private void ImplicitShowDialog()
         {
-            ShowDialog(viewModel => dialogService.ShowDialog(this, viewModel));
+            ShowDialog(viewModel => dialogService.ShowDialogAsync(this, viewModel));
         }
 
         private void ExplicitShowDialog()
         {
-            ShowDialog(viewModel => dialogService.ShowDialog<AddTextCustomDialog>(this, viewModel));
+            ShowDialog(viewModel => dialogService.ShowDialogAsync<AddTextCustomDialog>(this, viewModel));
         }
 
-        private void ShowDialog(Func<AddTextCustomDialogViewModel, bool?> showDialog)
+        private void ShowDialog(Func<AddTextCustomDialogViewModel, Task<bool?>> showDialog)
         {
             var dialogViewModel = new AddTextCustomDialogViewModel();
 
-            bool? success = showDialog(dialogViewModel);
+            var success = showDialog(dialogViewModel).Result;
             if (success == true)
             {
                 Texts.Add(dialogViewModel.Text);

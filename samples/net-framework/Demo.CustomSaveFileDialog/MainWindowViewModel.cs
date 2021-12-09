@@ -34,15 +34,15 @@ namespace Demo.CustomSaveFileDialog
             var settings = new SaveFileDialogSettings
             {
                 Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
+                InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                // Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
                 CheckFileExists = false
             };
 
-            var success = dialogService.ShowSaveFileDialog(this, settings);
-            if (success == true)
+            var result = dialogService.ShowSaveFileDialogAsync(this, settings).Result;
+            if (result != null)
             {
-                Path = settings.FileName;
+                Path = result;
             }
         }
     }
