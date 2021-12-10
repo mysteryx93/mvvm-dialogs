@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -19,7 +18,7 @@ namespace Demo.SaveFileDialog
         {
             this.dialogService = dialogService;
 
-            SaveFileCommand = new RelayCommand(SaveFile);
+            SaveFileCommand = new RelayCommand(SaveFileAsync);
         }
 
         public string Path
@@ -30,20 +29,20 @@ namespace Demo.SaveFileDialog
 
         public ICommand SaveFileCommand { get; }
 
-        private async Task SaveFileAsync()
+        private async void SaveFileAsync()
         {
             var settings = new SaveFileDialogSettings
             {
                 Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
+                InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                // Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
                 CheckFileExists = false
             };
 
-            var success = await dialogService.ShowSaveFileDialogAsync(this, settings);
-            if (success == true)
+            var result = await dialogService.ShowSaveFileDialogAsync(this, settings);
+            if (result != null)
             {
-                Path = settings.FileName;
+                Path = result;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
@@ -6,36 +7,38 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
     /// <inheritdoc />
     internal class FrameworkDialogsApi : IFrameworkDialogsApi
     {
-        public MessageBoxResult ShowMessageBox(Window owner, MessageBoxApiSettings settings) =>
+
+    public Task<MessageBoxResult> ShowMessageBoxAsync(Window owner, MessageBoxApiSettings settings) =>
+        Task.FromResult(
             System.Windows.MessageBox.Show(
                 owner,
                 settings.MessageBoxText,
                 settings.Caption,
                 settings.Buttons,
                 settings.Icon,
-                settings.DefaultButton);
+                settings.DefaultButton));
 
-        public string[]? ShowOpenFileDialog(Window owner, OpenFileApiSettings settings)
+    public async Task<string[]?> ShowOpenFileDialogAsync(Window owner, OpenFileApiSettings settings)
         {
             var dialog = new System.Windows.Forms.OpenFileDialog();
             settings.ApplyTo(dialog);
-            var result = dialog.ShowDialog();
+            var result = await dialog.ShowDialogAsync(owner);
             return result == DialogResult.OK ? dialog.FileNames : null;
         }
 
-        public string? ShowSaveFileDialog(Window owner, SaveFileApiSettings settings)
+        public async Task<string?> ShowSaveFileDialogAsync(Window owner, SaveFileApiSettings settings)
         {
             var dialog = new System.Windows.Forms.SaveFileDialog();
             settings.ApplyTo(dialog);
-            var result = dialog.ShowDialog();
+            var result = await dialog.ShowDialogAsync(owner);
             return result == DialogResult.OK ? dialog.FileName : null;
         }
 
-        public string? ShowOpenFolderDialog(Window owner, OpenFolderApiSettings settings)
+        public async Task<string?> ShowOpenFolderDialogAsync(Window owner, OpenFolderApiSettings settings)
         {
             var dialog = new FolderBrowserDialog();
             settings.ApplyTo(dialog);
-            var result = dialog.ShowDialog();
+            var result = await dialog.ShowDialogAsync(owner);
             return result == DialogResult.OK ? dialog.SelectedPath : null;
         }
     }

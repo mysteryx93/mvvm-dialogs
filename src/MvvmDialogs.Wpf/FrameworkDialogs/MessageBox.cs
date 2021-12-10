@@ -21,10 +21,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<bool?> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             var apiSettings = GetApiSettings();
-            var button = Api.ShowMessageBox(owner.Ref, apiSettings);
+            var button = await Api.ShowMessageBoxAsync(owner.Ref, apiSettings);
             var result = button switch
                 {
                     Win32Result.Yes => true,
@@ -33,7 +33,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                     Win32Result.Cancel => null,
                     _ => (bool?)null
                 };
-            return Task.FromResult(result);
+            return result;
         }
 
         // Convert platform-agnostic types into Win32 types.

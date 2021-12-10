@@ -20,10 +20,10 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<string[]> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<string[]> ShowDialogAsync(WindowWrapper owner)
         {
             var apiSettings = GetApiSettings();
-            return Task.FromResult(Api.ShowOpenFileDialog(owner.Ref, apiSettings) ?? Array.Empty<string>());
+            return await Api.ShowOpenFileDialogAsync(owner.Ref, apiSettings) ?? Array.Empty<string>();
         }
 
         private OpenFileApiSettings GetApiSettings()

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
 {
@@ -7,9 +8,9 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
     /// </summary>
     internal interface IFrameworkDialogsApi
     {
-        MessageBoxResult ShowMessageBox(Window owner, MessageBoxApiSettings settings);
-        string[]? ShowOpenFileDialog(Window owner, OpenFileApiSettings settings);
-        string? ShowSaveFileDialog(Window owner, SaveFileApiSettings settings);
-        string? ShowOpenFolderDialog(Window owner, OpenFolderApiSettings settings);
+        Task<MessageBoxResult> ShowMessageBoxAsync(Window owner, MessageBoxApiSettings settings);
+        Task<string[]?> ShowOpenFileDialogAsync(Window owner, OpenFileApiSettings settings);
+        Task<string?> ShowSaveFileDialogAsync(Window owner, SaveFileApiSettings settings);
+        Task<string?> ShowOpenFolderDialogAsync(Window owner, OpenFolderApiSettings settings);
     }
 }
