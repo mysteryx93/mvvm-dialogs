@@ -29,8 +29,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             {
                 Title = Settings.Title,
                 Directory = Settings.InitialPath
-                // d.Description = Settings.Description;
-                // d.RootFolder = Settings.RootFolder;
+
                 // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
             };
     }
