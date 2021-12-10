@@ -1,4 +1,5 @@
-﻿namespace Demo.MessageBox
+﻿
+namespace Demo.MessageBox
 {
     public partial class MainWindow
     {

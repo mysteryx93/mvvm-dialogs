@@ -39,57 +39,57 @@ namespace Demo.MessageBox
             private set => Set(() => Confirmation, ref confirmation, value);
         }
 
-        private void ShowMessageBoxWithMessage()
+        private async void ShowMessageBoxWithMessage()
         {
-            var result = dialogService.ShowMessageBoxAsync(
+            var result = await dialogService.ShowMessageBoxAsync(
                 this,
-                "This is the text.").Result;
+                "This is the text.");
 
             UpdateResult(result);
         }
 
-        private void ShowMessageBoxWithCaption()
+        private async void ShowMessageBoxWithCaption()
         {
-            var result = dialogService.ShowMessageBoxAsync(
+            var result = await dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
-                "This Is The Caption").Result;
+                "This Is The Caption");
 
             UpdateResult(result);
         }
 
-        private void ShowMessageBoxWithButton()
+        private async void ShowMessageBoxWithButton()
         {
-            var result = dialogService.ShowMessageBoxAsync(
+            var result = await dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
-                MessageBoxButton.OkCancel).Result;
+                MessageBoxButton.OkCancel);
 
             UpdateResult(result);
         }
 
-        private void ShowMessageBoxWithIcon()
+        private async void ShowMessageBoxWithIcon()
         {
-            var result = dialogService.ShowMessageBoxAsync(
+            var result = await dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
                 MessageBoxButton.OkCancel,
-                MessageBoxImage.Information).Result;
+                MessageBoxImage.Information);
 
             UpdateResult(result);
         }
 
-        private void ShowMessageBoxWithDefaultResult()
+        private async void ShowMessageBoxWithDefaultResult()
         {
-            var result = dialogService.ShowMessageBoxAsync(
+            var result = await dialogService.ShowMessageBoxAsync(
                 this,
                 "This is the text.",
                 "This Is The Caption",
                 MessageBoxButton.OkCancel,
                 MessageBoxImage.Information,
-                null).Result;
+                null);
 
             UpdateResult(result);
         }

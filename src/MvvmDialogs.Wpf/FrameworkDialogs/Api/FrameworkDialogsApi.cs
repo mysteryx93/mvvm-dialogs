@@ -9,7 +9,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api
     {
 
     public Task<MessageBoxResult> ShowMessageBoxAsync(Window owner, MessageBoxApiSettings settings) =>
-        Task.FromResult(
+        owner.RunUiAsync(() =>
             System.Windows.MessageBox.Show(
                 owner,
                 settings.MessageBoxText,
