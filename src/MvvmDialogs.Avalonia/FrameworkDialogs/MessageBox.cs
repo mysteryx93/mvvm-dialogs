@@ -61,11 +61,9 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
             (value) switch
             {
                 MessageBoxImage.None => Icon.None,
-                // MessageBoxImage.Asterisk => Icon.Asterisk,
                 MessageBoxImage.Error => Icon.Error,
-                // MessageBoxImage.Exclamation => Icon.Exclamation,
-                // MessageBoxImage.Hand => Icon.Hand,
-                // MessageBoxImage.Information => Icon.Information,
+                MessageBoxImage.Exclamation => Icon.Warning,
+                MessageBoxImage.Information => Icon.Info,
                 MessageBoxImage.Stop => Icon.Stop,
                 MessageBoxImage.Warning => Icon.Warning,
                 _ => Icon.None

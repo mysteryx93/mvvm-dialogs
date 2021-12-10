@@ -63,10 +63,8 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             (value) switch
             {
                 MessageBoxImage.None => Win32Image.None,
-                MessageBoxImage.Asterisk => Win32Image.Asterisk,
                 MessageBoxImage.Error => Win32Image.Error,
                 MessageBoxImage.Exclamation => Win32Image.Exclamation,
-                MessageBoxImage.Hand => Win32Image.Hand,
                 MessageBoxImage.Information => Win32Image.Information,
                 MessageBoxImage.Stop => Win32Image.Stop,
                 MessageBoxImage.Warning => Win32Image.Warning,

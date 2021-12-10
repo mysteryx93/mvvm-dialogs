@@ -11,11 +11,6 @@
         None,
 
         /// <summary>
-        /// The message box contains a symbol consisting of a lowercase letter i in a circle.
-        /// </summary>
-        Asterisk,
-
-        /// <summary>
         /// The message box contains a symbol consisting of white X in a circle with a red background.
         /// </summary>
         Error,
@@ -24,11 +19,6 @@
         /// The message box contains a symbol consisting of an exclamation point in a triangle with a yellow background.
         /// </summary>
         Exclamation,
-
-        /// <summary>
-        /// The message box contains a symbol consisting of a white X in a circle with a red background.
-        /// </summary>
-        Hand,
 
         /// <summary>
         /// The message box contains a symbol consisting of a lowercase letter i in a circle.
