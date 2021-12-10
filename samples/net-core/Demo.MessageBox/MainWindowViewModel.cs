@@ -89,12 +89,12 @@ namespace Demo.MessageBox
                 "This Is The Caption",
                 MessageBoxButton.OkCancel,
                 MessageBoxImage.Information,
-                MessageBoxResult.Cancel).Result;
+                null).Result;
 
             UpdateResult(result);
         }
 
-        private void UpdateResult(MessageBoxResult result) =>
-            Confirmation = result == MessageBoxResult.Ok ? "We got confirmation to continue!" : string.Empty;
+        private void UpdateResult(bool? result) =>
+            Confirmation = result == true ? "We got confirmation to continue!" : string.Empty;
     }
 }

@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />
-    <PackageReference Include="MessageBox.Avalonia" Version="1.6.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="1.7.0" />
   </ItemGroup>
 
 </Project>

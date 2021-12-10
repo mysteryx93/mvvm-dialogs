@@ -1,7 +1,7 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using MessageBox.Avalonia;
+using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
 
 namespace MvvmDialogs.Avalonia.FrameworkDialogs.Api
@@ -10,13 +10,16 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs.Api
     internal class FrameworkDialogsApi : IFrameworkDialogsApi
     {
         public Task<ButtonResult> ShowMessageBox(Window owner, MessageBoxApiSettings settings) =>
-            MessageBoxManager.GetMessageBoxStandardWindow(
-                settings.Title,
-                settings.Text,
-                settings.Buttons,
-                settings.Icon,
-                settings.StartupLocation,
-                settings.Style).ShowDialog(owner);
+            MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams() {
+                ContentTitle = settings.Title,
+                ContentMessage = settings.Text,
+                ButtonDefinitions = settings.Buttons,
+                Icon = settings.Icon,
+                WindowStartupLocation = settings.StartupLocation,
+                Style = settings.Style,
+                EnterDefaultButton = settings.EnterDefaultButton,
+                EscDefaultButton = settings.EscDefaultButton
+            }).ShowDialog(owner);
 
         public Task<string[]?> ShowOpenFileDialog(Window owner, OpenFileApiSettings settings)
         {

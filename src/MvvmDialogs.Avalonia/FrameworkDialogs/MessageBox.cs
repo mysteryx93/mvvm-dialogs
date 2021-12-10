@@ -9,7 +9,7 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="MessageBoxManager"/>.
     /// </summary>
-    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
+    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, bool?>
     {
         /// <inheritdoc />
         public MessageBox(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, MessageBoxSettings settings, AppDialogSettings appSettings)
@@ -18,18 +18,18 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override async Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
+        public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             var apiSettings = GetApiSettings();
             var result = await Api.ShowMessageBox(owner.Ref, apiSettings).ConfigureAwait(false);
 
             return result switch
             {
-                ButtonResult.Yes => MessageBoxResult.Yes,
-                ButtonResult.Ok => MessageBoxResult.Ok,
-                ButtonResult.No => MessageBoxResult.No,
-                ButtonResult.Cancel => MessageBoxResult.Cancel,
-                _ => MessageBoxResult.None
+                ButtonResult.Yes => true,
+                ButtonResult.Ok => true,
+                ButtonResult.No => false,
+                ButtonResult.Cancel => null,
+                _ => null
             };
         }
 
@@ -40,9 +40,9 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 Text = Settings.Text,
                 Buttons = SyncButton(Settings.Button),
                 Icon = SyncIcon(Settings.Icon),
-                Style = AppSettings.MessageBoxStyle
-                // SyncDefault(Settings.DefaultResult),
-                // SyncOptions());
+                Style = AppSettings.MessageBoxStyle,
+                EnterDefaultButton = SyncDefaultEnter(Settings.Button, Settings.DefaultValue),
+                EscDefaultButton = SyncDefaultEsc(Settings.Button)
             };
 
         // Convert platform-agnostic types into Win32 types.
@@ -71,15 +71,29 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs
                 _ => Icon.None
             };
 
-        // private static Win32Result SyncDefault(MessageBoxResult value) =>
-        //     (value) switch
-        //     {
-        //         MessageBoxResult.None => Win32Result.None,
-        //         MessageBoxResult.Ok => Win32Result.OK,
-        //         MessageBoxResult.Cancel => Win32Result.Cancel,
-        //         MessageBoxResult.Yes => Win32Result.Yes,
-        //         MessageBoxResult.No => Win32Result.No,
-        //         _ => Win32Result.None
-        //     };
+        private static ClickEnum SyncDefaultEnter(MessageBoxButton buttons, bool? value) =>
+            buttons switch
+            {
+                MessageBoxButton.Ok => ClickEnum.Ok,
+                MessageBoxButton.OkCancel => value == true ? ClickEnum.Ok : ClickEnum.Cancel,
+                MessageBoxButton.YesNo => value == true ? ClickEnum.Yes : ClickEnum.No,
+                MessageBoxButton.YesNoCancel => value switch
+                {
+                    true => ClickEnum.Yes,
+                    false => ClickEnum.No,
+                    null => ClickEnum.Cancel
+                },
+                _ => ClickEnum.Default
+            };
+
+        private static ClickEnum SyncDefaultEsc(MessageBoxButton buttons) =>
+            buttons switch
+            {
+                MessageBoxButton.Ok => ClickEnum.Ok,
+                MessageBoxButton.OkCancel => ClickEnum.Cancel,
+                MessageBoxButton.YesNo => ClickEnum.No,
+                MessageBoxButton.YesNoCancel => ClickEnum.Cancel,
+                _ => ClickEnum.Default
+            };
     }
 }

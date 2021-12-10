@@ -24,17 +24,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             d.AddExtension = !string.IsNullOrEmpty(s.DefaultExtension);
             d.CheckFileExists = s.CheckFileExists;
             d.CheckPathExists = s.CheckPathExists;
-            foreach (var item in AppSettings.CustomPlaces)
-            {
-                if (!string.IsNullOrWhiteSpace(item.Path))
-                {
-                    d.CustomPlaces.Add(item.Path);
-                }
-                else
-                {
-                    d.CustomPlaces.Add(item.KnownFolderGuid);
-                }
-            }
             if (!string.IsNullOrEmpty(s.InitialPath))
             {
                 var file = PathInfo.GetFileInfo(s.InitialPath);

@@ -13,10 +13,9 @@ namespace MvvmDialogs.FrameworkDialogs
         public MessageBoxButton Button { get; set; } = MessageBoxButton.Ok;
 
         /// <summary>
-        /// Gets or sets the <see cref="MessageBoxResult"/> value that specifies the default result
-        /// of the message box. Default value is <see cref="MessageBoxResult.None"/>.
+        /// Gets or sets the value of the button selected by default. True=OK/Yes, False=No, Null=Cancel.
         /// </summary>
-        public MessageBoxResult DefaultResult { get; set; } = MessageBoxResult.None;
+        public bool? DefaultValue { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the <see cref="MessageBoxImage"/> value that specifies the icon to

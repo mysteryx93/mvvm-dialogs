@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace MvvmDialogs.Wpf
 {
@@ -53,20 +52,5 @@ namespace MvvmDialogs.Wpf
             var owner = frameworkElement as Window ?? Window.GetWindow(frameworkElement);
             return owner.AsWrapper();
         }
-
-        /// <summary>
-        /// Returns true if DialogResult is Yes or OK; false if No or Abort; otherwise null.
-        /// </summary>
-        /// <param name="result">The DialogResult to evaluate.</param>
-        /// <returns>Whether the value is Yes or OK.</returns>
-        internal static bool? AsBool(this DialogResult result) =>
-            result switch
-            {
-                DialogResult.OK => true,
-                DialogResult.Yes => true,
-                DialogResult.No => false,
-                DialogResult.Abort => false,
-                _ => null
-            };
     }
 }

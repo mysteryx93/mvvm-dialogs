@@ -22,19 +22,18 @@ namespace MvvmDialogs
         /// Default value is <see cref="MessageBoxButton.Ok"/>.</param>
         /// <param name="icon">A <see cref="MessageBoxImage"/> value that specifies the icon to display.
         /// Default value is <see cref="MessageBoxImage.None"/>.</param>
-        /// <param name="defaultResult">A <see cref="MessageBoxResult"/> value that specifies the default result of the message box.
-        /// Default value is <see cref="MessageBoxResult.None"/>.</param>
+        /// <param name="defaultResult">Specifies the value of the button selected by default. Default value is true.</param>
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
+        /// <returns>A value that specifies which message box button is clicked by the user. True=OK/Yes, False=No, Null=Cancel</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<MessageBoxResult> ShowMessageBoxAsync(
+        public static Task<bool?> ShowMessageBoxAsync(
             this IDialogService service,
             INotifyPropertyChanged ownerViewModel,
             string text,
             string title = "",
             MessageBoxButton button = MessageBoxButton.Ok,
             MessageBoxImage icon = MessageBoxImage.None,
-            MessageBoxResult defaultResult = MessageBoxResult.None,
+            bool? defaultResult = true,
             AppDialogSettingsBase? appSettings = null)
         {
             var settings = new MessageBoxSettings
@@ -43,7 +42,7 @@ namespace MvvmDialogs
                 Title = title,
                 Button = button,
                 Icon = icon,
-                DefaultResult = defaultResult
+                DefaultValue = defaultResult
             };
 
             return ShowMessageBoxAsync(service, ownerViewModel, settings, appSettings ?? service.AppSettings);
@@ -57,16 +56,16 @@ namespace MvvmDialogs
         /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
         /// <param name="settings">The settings for the message box dialog.</param>
         /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
-        /// <returns>A <see cref="MessageBoxResult"/> value that specifies which message box button is clicked by the user.</returns>
+        /// <returns>A value that specifies which message box button is clicked by the user. True=OK/Yes, False=No, Null=Cancel</returns>
         /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-        public static Task<MessageBoxResult> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
+        public static Task<bool?> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
         {
             if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             DialogLogger.Write($"Caption: {settings.Title}; Message: {settings.Text}");
 
-            return service.FrameworkDialogFactory.Create<MessageBoxSettings, MessageBoxResult>(settings, appSettings ?? service.AppSettings)
+            return service.FrameworkDialogFactory.Create<MessageBoxSettings, bool?>(settings, appSettings ?? service.AppSettings)
                 .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
         }
 

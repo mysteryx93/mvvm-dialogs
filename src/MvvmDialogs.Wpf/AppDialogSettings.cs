@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-
+﻿
 namespace MvvmDialogs.Wpf
 {
     /// <summary>
@@ -9,20 +7,6 @@ namespace MvvmDialogs.Wpf
     /// </summary>
     public class AppDialogSettings : AppDialogSettingsBase
     {
-        /// <summary>
-        /// Gets or sets the list of custom places for file dialog boxes.
-        /// </summary>
-        /// <value>
-        /// The list of custom places.
-        /// </value>
-        /// <remarks>
-        /// Starting in Windows Vista, open and save file dialog boxes have a <b>Favorite Links</b>
-        /// panel on the left side of the dialog box that allows the user to quickly navigate to a
-        /// different location. These links are called custom places. This property allows you to
-        /// modify the list that appears when your application uses a file dialog box.
-        /// </remarks>
-        public IList<FileDialogCustomPlace> CustomPlaces { get; set; } = new List<FileDialogCustomPlace>();
-
         /// <summary>
         /// Gets or sets whether message boxes are displayed right-to-left (RightAlign+RtlReading).
         /// </summary>

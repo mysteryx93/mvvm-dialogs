@@ -12,7 +12,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
     /// <summary>
     /// Class wrapping <see cref="System.Windows.MessageBox"/>.
     /// </summary>
-    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, MessageBoxResult>
+    internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, bool?>
     {
         /// <inheritdoc />
         public MessageBox(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, MessageBoxSettings settings, AppDialogSettings appSettings)
@@ -21,20 +21,19 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
         }
 
         /// <inheritdoc />
-        public override Task<MessageBoxResult> ShowDialogAsync(WindowWrapper owner)
+        public override Task<bool?> ShowDialogAsync(WindowWrapper owner)
         {
             var apiSettings = GetApiSettings();
-            var result = Api.ShowMessageBox(owner.Ref, apiSettings);
-
-            return Task.FromResult(
-                result switch
+            var button = Api.ShowMessageBox(owner.Ref, apiSettings);
+            var result = button switch
                 {
-                    Win32Result.Yes => MessageBoxResult.Yes,
-                    Win32Result.OK => MessageBoxResult.Ok,
-                    Win32Result.No => MessageBoxResult.No,
-                    Win32Result.Cancel => MessageBoxResult.Cancel,
-                    _ => MessageBoxResult.None
-                });
+                    Win32Result.Yes => true,
+                    Win32Result.OK => true,
+                    Win32Result.No => false,
+                    Win32Result.Cancel => null,
+                    _ => (bool?)null
+                };
+            return Task.FromResult(result);
         }
 
         // Convert platform-agnostic types into Win32 types.
@@ -46,7 +45,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 Caption = Settings.Title,
                 Buttons = SyncButton(Settings.Button),
                 Icon = SyncIcon(Settings.Icon),
-                DefaultButton = SyncDefault(Settings.DefaultResult),
+                DefaultButton = SyncDefault(Settings.Button, Settings.DefaultValue),
                 Options = SyncOptions()
             };
 
@@ -74,14 +73,18 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
                 _ => Win32Image.None
             };
 
-        private static Win32Result SyncDefault(MessageBoxResult value) =>
-            (value) switch
+        private static Win32Result SyncDefault(MessageBoxButton buttons, bool? value) =>
+            buttons switch
             {
-                MessageBoxResult.None => Win32Result.None,
-                MessageBoxResult.Ok => Win32Result.OK,
-                MessageBoxResult.Cancel => Win32Result.Cancel,
-                MessageBoxResult.Yes => Win32Result.Yes,
-                MessageBoxResult.No => Win32Result.No,
+                MessageBoxButton.Ok => Win32Result.OK,
+                MessageBoxButton.YesNo => value == true ? Win32Result.Yes : Win32Result.No,
+                MessageBoxButton.OkCancel => value == true ? Win32Result.OK : Win32Result.Cancel,
+                MessageBoxButton.YesNoCancel => value switch
+                {
+                    true => Win32Result.Yes,
+                    false => Win32Result.No,
+                    _ => Win32Result.Cancel
+                },
                 _ => Win32Result.None
             };
 
