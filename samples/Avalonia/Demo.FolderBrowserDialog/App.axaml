@@ -3,7 +3,7 @@
              xmlns:local="using:Demo.FolderBrowserDialog"
              x:Class="Demo.FolderBrowserDialog.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>

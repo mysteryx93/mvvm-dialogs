@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Demo.FolderBrowserDialog.ViewModels;
-using Demo.FolderBrowserDialog.Views;
+using MvvmDialogs;
+using MvvmDialogs.Avalonia;
+using Splat;
 
 namespace Demo.FolderBrowserDialog
 {
@@ -11,6 +12,10 @@ namespace Demo.FolderBrowserDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            var build = Locator.CurrentMutable;
+            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+            build.Register(() => new MainWindowViewModel(new DialogService()));
+            build.RegisterLazySingleton(() => (IDialogService)new DialogService());
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -19,7 +24,7 @@ namespace Demo.FolderBrowserDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = ViewLocator.MainWindow
                 };
             }
 

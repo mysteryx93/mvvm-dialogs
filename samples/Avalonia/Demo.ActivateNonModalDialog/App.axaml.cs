@@ -25,7 +25,7 @@ namespace Demo.ActivateNonModalDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = ViewLocator.MainWindowViewModel
+                    DataContext = ViewLocator.MainWindow
                 };
             }
 

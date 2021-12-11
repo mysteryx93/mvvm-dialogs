@@ -14,11 +14,6 @@ namespace MvvmDialogs.FrameworkDialogs
         public string? InitialPath { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to show a <b>New Folder</b> button.
-        /// </summary>
-        public bool ShowNewFolderButton { get; set; } = true;
-
-        /// <summary>
         /// Callback to invoke when the user clicks the help button. Setting this will display a help button.
         /// </summary>
         public EventHandler? HelpRequest { get; set; }

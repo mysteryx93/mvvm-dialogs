@@ -25,7 +25,7 @@ namespace Demo.CloseNonModalDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = ViewLocator.MainWindowViewModel
+                    DataContext = ViewLocator.MainWindow
                 };
             }
 

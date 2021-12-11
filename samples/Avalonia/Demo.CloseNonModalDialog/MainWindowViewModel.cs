@@ -30,7 +30,7 @@ namespace Demo.CloseNonModalDialog
 
         private void Show()
         {
-            DialogViewModel = ViewLocator.CurrentTimeDialogViewModel;
+            DialogViewModel = ViewLocator.CurrentTimeDialog;
             dialogService.Show(this, DialogViewModel);
         }
 

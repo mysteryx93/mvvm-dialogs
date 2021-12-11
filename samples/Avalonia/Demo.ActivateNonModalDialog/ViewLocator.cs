@@ -27,8 +27,8 @@ namespace Demo.ActivateNonModalDialog
             return data is ViewModelBase;
         }
 
-        public static MainWindowViewModel MainWindowViewModel => Locator.Current.GetService<MainWindowViewModel>();
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
 
-        public static CurrentTimeDialogViewModel CurrentTimeDialogViewModel => Locator.Current.GetService<CurrentTimeDialogViewModel>();
+        public static CurrentTimeDialogViewModel CurrentTimeDialog => Locator.Current.GetService<CurrentTimeDialogViewModel>();
     }
 }

@@ -28,7 +28,6 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs
             {
                 Description = Settings.Title,
                 SelectedPath = Settings.InitialPath,
-                ShowNewFolderButton = Settings.ShowNewFolderButton,
                 HelpRequest = Settings.HelpRequest
             };
     }

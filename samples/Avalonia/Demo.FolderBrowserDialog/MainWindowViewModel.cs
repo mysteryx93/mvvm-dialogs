@@ -1,9 +1,8 @@
 using System.Reflection;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
+using ReactiveUI;
 using IOPath = System.IO.Path;
 
 namespace Demo.FolderBrowserDialog
@@ -11,33 +10,31 @@ namespace Demo.FolderBrowserDialog
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IDialogService dialogService;
-
-        private string path;
+        private string path = string.Empty;
+        public IReactiveCommand BrowseFolderCommand { get; }
 
         public MainWindowViewModel(IDialogService dialogService)
         {
             this.dialogService = dialogService;
 
-            BrowseFolderCommand = new RelayCommand(BrowseFolder);
+            BrowseFolderCommand = ReactiveCommand.CreateFromTask(BrowseFolderAsync);
         }
 
         public string Path
         {
             get => path;
-            private set => Set(() => Path, ref path, value);
+            private set => this.RaiseAndSetIfChanged(ref path, value, nameof(Path));
         }
 
-        public ICommand BrowseFolderCommand { get; }
-
-        private async void BrowseFolder()
+        private async Task BrowseFolderAsync()
         {
             var settings = new OpenFolderDialogSettings
             {
-                Title = "This is a description",
+                Title = "This is a title",
                 InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
             };
 
-            var result = await dialogService.ShowOpenFolderDialogAsync(this, settings);
+            var result = await dialogService.ShowOpenFolderDialogAsync(this, settings).ConfigureAwait(true);
             if (result != null)
             {
                 Path = result;

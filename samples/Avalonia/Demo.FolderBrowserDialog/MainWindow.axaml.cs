@@ -1,8 +1,8 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Demo.FolderBrowserDialog.Views
+namespace Demo.FolderBrowserDialog
 {
     public partial class MainWindow : Window
     {
@@ -14,9 +14,6 @@ namespace Demo.FolderBrowserDialog.Views
 #endif
         }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+        private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
     }
 }
