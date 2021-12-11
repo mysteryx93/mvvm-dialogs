@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Demo.ActivateNonModalDialog.ViewModels;
-using Demo.ActivateNonModalDialog.Views;
+using MvvmDialogs;
+using MvvmDialogs.Avalonia;
+using Splat;
 
 namespace Demo.ActivateNonModalDialog
 {
@@ -11,6 +12,11 @@ namespace Demo.ActivateNonModalDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            var build = Locator.CurrentMutable;
+            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+            build.Register(() => new MainWindowViewModel(new DialogService()));
+            build.Register(() => new CurrentTimeDialogViewModel());
+            build.RegisterLazySingleton(() => (IDialogService)new DialogService());
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -19,7 +25,7 @@ namespace Demo.ActivateNonModalDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = ViewLocator.MainWindowViewModel
                 };
             }
 

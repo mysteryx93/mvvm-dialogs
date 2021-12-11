@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/App.axaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/CurrentTimeDialog.axaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/CurrentTimeDialog.xaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/MainWindow.axaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/MainWindow.xaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ActivateNonModalDialog/Views/MainWindow.axaml" value="samples/Avalonia/Demo.ActivateNonModalDialog/Demo.ActivateNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/App.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/CurrentTimeDialog.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/CurrentTimeDialog.xaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/MainWindow.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/MainWindow.xaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CloseNonModalDialog/Views/MainWindow.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

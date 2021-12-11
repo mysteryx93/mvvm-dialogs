@@ -1,8 +1,8 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Demo.ActivateNonModalDialog.Views
+namespace Demo.ActivateNonModalDialog
 {
     public partial class MainWindow : Window
     {
@@ -14,9 +14,6 @@ namespace Demo.ActivateNonModalDialog.Views
 #endif
         }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+        private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
     }
 }

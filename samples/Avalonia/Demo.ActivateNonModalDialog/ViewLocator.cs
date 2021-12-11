@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Demo.ActivateNonModalDialog.ViewModels;
+using Splat;
 
 namespace Demo.ActivateNonModalDialog
 {
@@ -26,5 +26,9 @@ namespace Demo.ActivateNonModalDialog
         {
             return data is ViewModelBase;
         }
+
+        public static MainWindowViewModel MainWindowViewModel => Locator.Current.GetService<MainWindowViewModel>();
+
+        public static CurrentTimeDialogViewModel CurrentTimeDialogViewModel => Locator.Current.GetService<CurrentTimeDialogViewModel>();
     }
 }

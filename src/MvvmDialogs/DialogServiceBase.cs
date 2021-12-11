@@ -117,7 +117,7 @@ namespace MvvmDialogs
 
             DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
-            IWindow dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+            var dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
             dialog.Show();
         }
 
