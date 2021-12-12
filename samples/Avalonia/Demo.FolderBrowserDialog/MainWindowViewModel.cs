@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using ReactiveUI;
@@ -11,13 +12,13 @@ namespace Demo.FolderBrowserDialog
     {
         private readonly IDialogService dialogService;
         private string path = string.Empty;
-        public IReactiveCommand BrowseFolderCommand { get; }
+        public ICommand OpenFolderCommand { get; }
 
         public MainWindowViewModel(IDialogService dialogService)
         {
             this.dialogService = dialogService;
 
-            BrowseFolderCommand = ReactiveCommand.CreateFromTask(BrowseFolderAsync);
+            OpenFolderCommand = ReactiveCommand.CreateFromTask(BrowseFolderAsync);
         }
 
         public string Path

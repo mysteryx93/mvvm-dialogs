@@ -24,11 +24,13 @@ namespace Demo.FolderBrowserDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = ViewLocator.MainWindow
+                    DataContext = MainWindow
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
     }
 }

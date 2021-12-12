@@ -25,11 +25,14 @@ namespace Demo.ActivateNonModalDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = ViewLocator.MainWindow
+                    DataContext = MainWindow
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
+        public static CurrentTimeDialogViewModel CurrentTimeDialog => Locator.Current.GetService<CurrentTimeDialogViewModel>();
     }
 }

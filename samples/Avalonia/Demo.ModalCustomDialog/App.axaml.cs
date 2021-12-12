@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Demo.ModalCustomDialog.ViewModels;
-using Demo.ModalCustomDialog.Views;
+using MvvmDialogs;
+using MvvmDialogs.Avalonia;
+using Splat;
 
 namespace Demo.ModalCustomDialog
 {
@@ -11,6 +12,11 @@ namespace Demo.ModalCustomDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            var build = Locator.CurrentMutable;
+            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+            build.Register(() => new MainWindowViewModel(new DialogService()));
+            build.Register(() => new AddTextCustomDialogViewModel());
+            build.RegisterLazySingleton(() => (IDialogService)new DialogService());
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -19,11 +25,14 @@ namespace Demo.ModalCustomDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = MainWindow
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
+        public static AddTextCustomDialogViewModel AddTextDialog => Locator.Current.GetService<AddTextCustomDialogViewModel>();
     }
 }

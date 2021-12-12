@@ -8,7 +8,7 @@ namespace MvvmDialogs.Avalonia
     /// <summary>
     /// Extension methods.
     /// </summary>
-    internal static class Extensions
+    public static class Extensions
     {
         /// <summary>
         /// Gets the owner of a <see cref="StyledElement"/> wrapped in a <see cref="WindowWrapper"/>.
@@ -29,7 +29,7 @@ namespace MvvmDialogs.Avalonia
         /// <param name="window">The Window to get a wrapper for.</param>
         /// <returns>A WindowWrapper referencing the window.</returns>
         [return: NotNullIfNotNull("window")]
-        internal static WindowWrapper? AsWrapper(this Window? window) =>
+        public static WindowWrapper? AsWrapper(this Window? window) =>
             window != null ? new WindowWrapper(window) : null;
 
         /// <summary>
@@ -40,20 +40,5 @@ namespace MvvmDialogs.Avalonia
         [return: System.Diagnostics.CodeAnalysis.NotNullIfNotNull("window")]
         public static WindowWrapper? AsWrapper(this IWindow? window) =>
             (WindowWrapper?)window;
-
-        // /// <summary>
-        // /// Returns true if DialogResult is Yes or OK; false if No or Abort; otherwise null.
-        // /// </summary>
-        // /// <param name="result">The DialogResult to evaluate.</param>
-        // /// <returns>Whether the value is Yes or OK.</returns>
-        // internal static bool? AsBool(this DialogResult result) =>
-        //     result switch
-        //     {
-        //         DialogResult.OK => true,
-        //         DialogResult.Yes => true,
-        //         DialogResult.No => false,
-        //         DialogResult.Abort => false,
-        //         _ => null
-        //     };
     }
 }

@@ -11,10 +11,8 @@
     WindowStartupLocation="CenterOwner"
     Width="200"
     Height="100"
-    CanResize="False">
-    <Design.DataContext>
-        <local:CurrentTimeDialogViewModel />
-    </Design.DataContext>
+    CanResize="False"
+    d:DataContext="{x:Static local:App.CurrentTimeDialog}">
 
     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                Text="{Binding CurrentTime, StringFormat=Current time is {0:HH:mm:ss}}" />

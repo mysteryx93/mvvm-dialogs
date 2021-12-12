@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using MvvmDialogs;
 using ReactiveUI;
 
@@ -15,8 +16,8 @@ namespace Demo.ActivateNonModalDialog
             get => dialogViewModel;
             set => this.RaiseAndSetIfChanged(ref dialogViewModel, value, nameof(DialogViewModel));
         }
-        public IReactiveCommand ShowCommand { get; }
-        public IReactiveCommand ActivateCommand { get; }
+        public ICommand ShowCommand { get; }
+        public ICommand ActivateCommand { get; }
 
         public MainWindowViewModel(IDialogService dialogService)
         {
@@ -31,7 +32,7 @@ namespace Demo.ActivateNonModalDialog
 
         public void Show()
         {
-            DialogViewModel = ViewLocator.CurrentTimeDialog;
+            DialogViewModel = App.CurrentTimeDialog;
             dialogService.Show(this, DialogViewModel);
         }
 

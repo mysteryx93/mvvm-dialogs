@@ -8,7 +8,7 @@ namespace Demo.CloseNonModalDialog
     {
         public DateTime CurrentTime => DateTime.Now;
 
-        public CurrentTimeDialogViewModel() =>
+        public CurrentTimeDialogViewModel(bool _) =>
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).Subscribe((_) =>
             {
                 this.RaisePropertyChanged(nameof(CurrentTime));

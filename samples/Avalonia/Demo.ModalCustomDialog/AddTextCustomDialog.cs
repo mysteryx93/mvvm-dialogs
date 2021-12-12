@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MvvmDialogs;
-using MvvmDialogs.Wpf;
+using MvvmDialogs.Avalonia;
 
 namespace Demo.ModalCustomDialog
 {
     public class AddTextCustomDialog : IWindow
     {
-        private readonly AddTextDialog dialog;
-
-        public AddTextCustomDialog()
-        {
-            dialog = new AddTextDialog();
-        }
+        private readonly AddTextDialog dialog = new();
 
         event EventHandler IWindow.Closed
         {
@@ -20,20 +15,20 @@ namespace Demo.ModalCustomDialog
             remove => dialog.Closed -= value;
         }
 
-        object IWindow.DataContext
+        object? IWindow.DataContext
         {
             get => dialog.DataContext;
             set => dialog.DataContext = value;
         }
 
-        public IWindow Owner
-        {
-            get => dialog.Owner.AsWrapper();
-            set => dialog.Owner = value.AsWrapper()?.Ref;
-        }
+        public IWindow? Owner { get; set; }
 
-        Task<bool?> IWindow.ShowDialogAsync() => Task.FromResult(dialog.ShowDialog());
+        Task<bool?> IWindow.ShowDialogAsync() => dialog.ShowDialog<bool?>(Owner.AsWrapper()!.Ref);
 
         void IWindow.Show() => dialog.Show();
+
+        public void Activate() => dialog.Activate();
+
+        public void Close() => dialog.Close();
     }
 }

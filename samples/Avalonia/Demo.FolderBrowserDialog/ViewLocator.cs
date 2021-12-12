@@ -1,7 +1,6 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Splat;
 
 namespace Demo.FolderBrowserDialog
 {
@@ -26,7 +25,5 @@ namespace Demo.FolderBrowserDialog
         {
             return data is ViewModelBase;
         }
-
-        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
     }
 }

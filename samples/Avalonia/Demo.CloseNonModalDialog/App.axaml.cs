@@ -15,7 +15,7 @@ namespace Demo.CloseNonModalDialog
             var build = Locator.CurrentMutable;
             // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
             build.Register(() => new MainWindowViewModel(new DialogService()));
-            build.Register(() => new CurrentTimeDialogViewModel());
+            build.Register(() => new CurrentTimeDialogViewModel(true));
             build.RegisterLazySingleton(() => (IDialogService)new DialogService());
         }
 
@@ -25,11 +25,14 @@ namespace Demo.CloseNonModalDialog
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = ViewLocator.MainWindow
+                    DataContext = MainWindow
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
+        public static CurrentTimeDialogViewModel CurrentTimeDialog => Locator.Current.GetService<CurrentTimeDialogViewModel>();
     }
 }

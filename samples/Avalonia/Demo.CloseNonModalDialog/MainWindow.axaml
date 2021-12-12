@@ -5,19 +5,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="clr-namespace:MvvmDialogs.Avalonia;assembly=MvvmDialogs.Avalonia"
+    xmlns:local="clr-namespace:Demo.CloseNonModalDialog"
     mc:Ignorable="d"
     md:DialogServiceViews.IsRegistered="True"
     WindowStartupLocation="CenterScreen"
     Title="Demo - Activate Non-Modal Dialog"
     Width="300"
-    Height="200">
+    Height="200"
+    d:DataContext="{x:Static local:App.MainWindow}">
 
     <UniformGrid Rows="2">
-        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+        <Button
                 Command="{Binding ShowCommand}">
             <TextBlock Text="Show current time" />
         </Button>
-        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+        <Button
                 Command="{Binding CloseCommand}">
             <TextBlock Text="Close dialog showing current time" />
         </Button>

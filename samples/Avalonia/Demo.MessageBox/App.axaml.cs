@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Demo.MessageBox.ViewModels;
-using Demo.MessageBox.Views;
+using MvvmDialogs;
+using MvvmDialogs.Avalonia;
+using Splat;
 
 namespace Demo.MessageBox
 {
@@ -11,6 +12,10 @@ namespace Demo.MessageBox
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            var build = Locator.CurrentMutable;
+            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+            build.Register(() => new MainWindowViewModel(new DialogService()));
+            build.RegisterLazySingleton(() => (IDialogService)new DialogService());
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -19,11 +24,13 @@ namespace Demo.MessageBox
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = MainWindow
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
     }
 }

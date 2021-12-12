@@ -15,8 +15,19 @@
         <entry key="samples/Avalonia/Demo.CloseNonModalDialog/MainWindow.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
         <entry key="samples/Avalonia/Demo.CloseNonModalDialog/MainWindow.xaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
         <entry key="samples/Avalonia/Demo.CloseNonModalDialog/Views/MainWindow.axaml" value="samples/Avalonia/Demo.CloseNonModalDialog/Demo.CloseNonModalDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.CustomDialogTypeLocator/Views/MainWindow.axaml" value="samples/Avalonia/Demo.CustomDialogTypeLocator/Demo.CustomDialogTypeLocator.csproj" />
         <entry key="samples/Avalonia/Demo.FolderBrowserDialog/App.axaml" value="samples/Avalonia/Demo.FolderBrowserDialog/Demo.FolderBrowserDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.FolderBrowserDialog/MainWindow.axaml" value="samples/Avalonia/Demo.FolderBrowserDialog/Demo.FolderBrowserDialog.csproj" />
         <entry key="samples/Avalonia/Demo.FolderBrowserDialog/MainWindow.xaml" value="samples/Avalonia/Demo.FolderBrowserDialog/Demo.FolderBrowserDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.MessageBox/App.axaml" value="samples/Avalonia/Demo.MessageBox/Demo.MessageBox.csproj" />
+        <entry key="samples/Avalonia/Demo.MessageBox/MainWindow.axaml" value="samples/Avalonia/Demo.MessageBox/Demo.MessageBox.csproj" />
+        <entry key="samples/Avalonia/Demo.MessageBox/MainWindow.xaml" value="samples/Avalonia/Demo.MessageBox/Demo.MessageBox.csproj" />
+        <entry key="samples/Avalonia/Demo.MessageBox/Views/MainWindow.axaml" value="samples/Avalonia/Demo.MessageBox/Demo.MessageBox.csproj" />
+        <entry key="samples/Avalonia/Demo.ModalCustomDialog/AddTextDialog.axaml" value="samples/Avalonia/Demo.ModalCustomDialog/Demo.ModalCustomDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ModalCustomDialog/AddTextDialog.xaml" value="samples/Avalonia/Demo.ModalCustomDialog/Demo.ModalCustomDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ModalCustomDialog/App.axaml" value="samples/Avalonia/Demo.ModalCustomDialog/Demo.ModalCustomDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ModalCustomDialog/MainWindow.axaml" value="samples/Avalonia/Demo.ModalCustomDialog/Demo.ModalCustomDialog.csproj" />
+        <entry key="samples/Avalonia/Demo.ModalCustomDialog/MainWindow.xaml" value="samples/Avalonia/Demo.ModalCustomDialog/Demo.ModalCustomDialog.csproj" />
       </map>
     </option>
   </component>

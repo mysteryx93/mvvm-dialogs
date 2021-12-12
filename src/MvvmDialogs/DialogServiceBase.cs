@@ -118,6 +118,10 @@ namespace MvvmDialogs
             DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
             var dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+            if (viewModel is ICloseable c)
+            {
+                c.RequestClose += (_, _) => dialog.Close();
+            }
             dialog.Show();
         }
 
@@ -136,7 +140,11 @@ namespace MvvmDialogs
 
             DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
-            IWindow dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+            var dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+            if (viewModel is ICloseable c)
+            {
+                c.RequestClose += (_, _) => dialog.Close();
+            }
 
             var result = await dialog.ShowDialogAsync();
 
