@@ -12,11 +12,13 @@ namespace Demo.ActivateNonModalDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+
             var build = Locator.CurrentMutable;
-            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
-            build.Register(() => new MainWindowViewModel(new DialogService()));
-            build.Register(() => new CurrentTimeDialogViewModel());
             build.RegisterLazySingleton(() => (IDialogService)new DialogService());
+
+            SplatRegistrations.Register<MainWindowViewModel>();
+            SplatRegistrations.Register<CurrentTimeDialogViewModel>();
+            SplatRegistrations.SetupIOC();
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -32,7 +34,7 @@ namespace Demo.ActivateNonModalDialog
             base.OnFrameworkInitializationCompleted();
         }
 
-        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>();
-        public static CurrentTimeDialogViewModel CurrentTimeDialog => Locator.Current.GetService<CurrentTimeDialogViewModel>();
+        public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>()!;
+        public static CurrentTimeDialogViewModel CurrentTimeDialog => Locator.Current.GetService<CurrentTimeDialogViewModel>()!;
     }
 }

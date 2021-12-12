@@ -146,7 +146,7 @@
     <PackageReference Include="MvvmLight" Version="5.4.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\universal\MvvmDialogs.csproj">
+    <ProjectReference Include="..\..\..\src\MvvmDialogs.Uwp\MvvmDialogs.Uwp.csproj">
       <Project>{18462094-a6ed-461b-8fca-1e38a95ebb09}</Project>
       <Name>MvvmDialogs</Name>
     </ProjectReference>

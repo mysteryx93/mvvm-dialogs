@@ -12,11 +12,13 @@ namespace Demo.ModalCustomDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+
             var build = Locator.CurrentMutable;
-            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
-            build.Register(() => new MainWindowViewModel(new DialogService()));
-            build.Register(() => new AddTextCustomDialogViewModel());
             build.RegisterLazySingleton(() => (IDialogService)new DialogService());
+
+            SplatRegistrations.Register<MainWindowViewModel>();
+            SplatRegistrations.Register<AddTextCustomDialogViewModel>();
+            SplatRegistrations.SetupIOC();
         }
 
         public override void OnFrameworkInitializationCompleted()

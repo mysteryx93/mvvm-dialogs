@@ -12,11 +12,13 @@ namespace Demo.CloseNonModalDialog
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+
             var build = Locator.CurrentMutable;
-            // build.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
-            build.Register(() => new MainWindowViewModel(new DialogService()));
-            build.Register(() => new CurrentTimeDialogViewModel(true));
             build.RegisterLazySingleton(() => (IDialogService)new DialogService());
+
+            SplatRegistrations.Register<MainWindowViewModel>();
+            SplatRegistrations.Register<CurrentTimeDialogViewModel>();
+            SplatRegistrations.SetupIOC();
         }
 
         public override void OnFrameworkInitializationCompleted()
