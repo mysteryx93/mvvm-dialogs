@@ -14,5 +14,8 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
     </Application.Styles>
 </Application>

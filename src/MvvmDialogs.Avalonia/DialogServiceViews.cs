@@ -50,7 +50,7 @@ namespace MvvmDialogs.Avalonia
             // if (DesignerProperties.GetIsInDesignMode(target))
             //     return;
 
-            if (e.Sender is Window view)
+            if (e.Sender is StyledElement view)
             {
                 if (e.NewValue.Value)
                 {
