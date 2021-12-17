@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using ReactiveUI;
 
-namespace Demo.SaveFileDialog.ViewModels
+namespace Demo.SaveFileDialog.ViewModels;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

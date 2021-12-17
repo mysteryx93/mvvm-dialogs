@@ -4,45 +4,44 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs;
 
-namespace Demo.ActivateNonModalDialog
+namespace Demo.ActivateNonModalDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    private INotifyPropertyChanged dialogViewModel;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        private INotifyPropertyChanged dialogViewModel;
+        ShowCommand = new RelayCommand(Show, CanShow);
+        ActivateCommand = new RelayCommand(Activate, CanActivate);
+    }
 
-        public MainWindowViewModel(IDialogService dialogService)
-        {
-            this.dialogService = dialogService;
+    public ICommand ShowCommand { get; }
 
-            ShowCommand = new RelayCommand(Show, CanShow);
-            ActivateCommand = new RelayCommand(Activate, CanActivate);
-        }
+    public ICommand ActivateCommand { get; }
 
-        public ICommand ShowCommand { get; }
+    private void Show()
+    {
+        dialogViewModel = new CurrentTimeDialogViewModel();
+        dialogService.Show(this, dialogViewModel);
+    }
 
-        public ICommand ActivateCommand { get; }
+    private bool CanShow()
+    {
+        return dialogViewModel == null;
+    }
 
-        private void Show()
-        {
-            dialogViewModel = new CurrentTimeDialogViewModel();
-            dialogService.Show(this, dialogViewModel);
-        }
+    private void Activate()
+    {
+        dialogService.Activate(dialogViewModel);
+    }
 
-        private bool CanShow()
-        {
-            return dialogViewModel == null;
-        }
-
-        private void Activate()
-        {
-            dialogService.Activate(dialogViewModel);
-        }
-
-        private bool CanActivate()
-        {
-            return dialogViewModel != null;
-        }
+    private bool CanActivate()
+    {
+        return dialogViewModel != null;
     }
 }

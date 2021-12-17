@@ -3,25 +3,24 @@ using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Utils;
 using NUnit.Framework;
 
-namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox
+namespace MvvmDialogs.Wpf.FrameworkDialogs.MessageBox;
+
+[TestFixture]
+public class MessageBoxSettingsTest
 {
-    [TestFixture]
-    public class MessageBoxSettingsTest
+    [Test]
+    public void NativeDialogSettingsParity()
     {
-        [Test]
-        public void NativeDialogSettingsParity()
-        {
-            // Arrange
-            var messageBoxSettingsPropertyNames = string.Join(
-                ", ",
-                AppDialogSettings.GetPropertyNames(typeof(MessageBoxSettings)));
+        // Arrange
+        var messageBoxSettingsPropertyNames = string.Join(
+            ", ",
+            AppDialogSettings.GetPropertyNames(typeof(MessageBoxSettings)));
 
-            var messageBoxPropertyNames = string.Join(
-                ", ",
-                AppDialogSettings.GetMessageBoxParameters().Except(AppDialogSettings.ExcludedMessageBoxPropertyNames));
+        var messageBoxPropertyNames = string.Join(
+            ", ",
+            AppDialogSettings.GetMessageBoxParameters().Except(AppDialogSettings.ExcludedMessageBoxPropertyNames));
 
-            // Assert
-            Assert.That(messageBoxSettingsPropertyNames, Is.EqualTo(messageBoxPropertyNames));
-        }
+        // Assert
+        Assert.That(messageBoxSettingsPropertyNames, Is.EqualTo(messageBoxPropertyNames));
     }
 }

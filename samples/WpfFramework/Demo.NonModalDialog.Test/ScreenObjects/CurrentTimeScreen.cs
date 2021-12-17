@@ -3,18 +3,17 @@ using TestStack.White.ScreenObjects.ScreenAttributes;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.WindowItems;
 
-namespace Demo.NonModalDialog.ScreenObjects
+namespace Demo.NonModalDialog.ScreenObjects;
+
+public class CurrentTimeScreen : AppScreen
 {
-    public class CurrentTimeScreen : AppScreen
+    [AutomationId("n_Mu0TdFak-4VJD8RosMEQ")]
+    private readonly Label currentTime = null;
+
+    public CurrentTimeScreen(Window window, ScreenRepository screenRepository)
+        : base(window, screenRepository)
     {
-        [AutomationId("n_Mu0TdFak-4VJD8RosMEQ")]
-        private readonly Label currentTime = null;
-
-        public CurrentTimeScreen(Window window, ScreenRepository screenRepository)
-            : base(window, screenRepository)
-        {
-        }
-
-        public virtual bool CurrentTimeVisible => currentTime.Visible;
     }
+
+    public virtual bool CurrentTimeVisible => currentTime.Visible;
 }

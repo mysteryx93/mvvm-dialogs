@@ -1,15 +1,14 @@
 ﻿using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
-namespace Demo.CustomFolderBrowserDialog
+namespace Demo.CustomFolderBrowserDialog;
+
+public class CustomFrameworkDialogFactory : FrameworkDialogFactory
 {
-    public class CustomFrameworkDialogFactory : FrameworkDialogFactory
-    {
-        public override IFrameworkDialog Create<T>(T settings) =>
-            settings switch
-            {
-                OpenFolderDialogSettings s => new CustomFolderBrowserDialog(s),
-                _ => base.Create(settings)
-            };
-    }
+    public override IFrameworkDialog Create<T>(T settings) =>
+        settings switch
+        {
+            OpenFolderDialogSettings s => new CustomFolderBrowserDialog(s),
+            _ => base.Create(settings)
+        };
 }

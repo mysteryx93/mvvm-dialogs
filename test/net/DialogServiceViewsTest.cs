@@ -4,211 +4,210 @@ using Moq;
 using MvvmDialogs.Wpf;
 using NUnit.Framework;
 
-namespace MvvmDialogs
+namespace MvvmDialogs;
+
+// ReSharper disable UnusedVariable
+[TestFixture]
+[Apartment(ApartmentState.STA)]
+public class DialogServiceViewsTest
 {
-    // ReSharper disable UnusedVariable
-    [TestFixture]
-    [Apartment(ApartmentState.STA)]
-    public class DialogServiceViewsTest
+    [TearDown]
+    public void TearDown() => ViewLocator.Clear();
+
+    [Test]
+    public void RegisterWindowUsingAttachedProperty()
     {
-        [TearDown]
-        public void TearDown() => ViewLocator.Clear();
+        // Arrange
+        var window = new Window();
 
-        [Test]
-        public void RegisterWindowUsingAttachedProperty()
+        var expected = new[]
         {
-            // Arrange
-            var window = new Window();
+            new ViewWrapper(window)
+        };
 
-            var expected = new[]
-            {
-                new ViewWrapper(window)
-            };
+        // Act
+        window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
 
-            // Act
-            window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
+        // Assert
+        Assert.That(ViewLocator.Views, Is.EqualTo(expected));
+    }
 
-            // Assert
-            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
-        }
+    [Test]
+    public void UnregisterWindowUsingAttachedProperty()
+    {
+        // Arrange
+        var window = new Window();
+        window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
 
-        [Test]
-        public void UnregisterWindowUsingAttachedProperty()
+        // Act
+        window.SetValue(DialogServiceViews.IsRegisteredProperty, false);
+
+        // Assert
+        Assert.That(ViewLocator.Views, Is.Empty);
+    }
+
+    [Test]
+    public void RegisterFrameworkElementUsingAttachedProperty()
+    {
+        // Arrange
+        var frameworkElement = new FrameworkElement();
+
+        var window = new Window
         {
-            // Arrange
-            var window = new Window();
-            window.SetValue(DialogServiceViews.IsRegisteredProperty, true);
+            Content = frameworkElement
+        };
 
-            // Act
-            window.SetValue(DialogServiceViews.IsRegisteredProperty, false);
-
-            // Assert
-            Assert.That(ViewLocator.Views, Is.Empty);
-        }
-
-        [Test]
-        public void RegisterFrameworkElementUsingAttachedProperty()
+        var expected = new[]
         {
-            // Arrange
-            var frameworkElement = new FrameworkElement();
+            new ViewWrapper(frameworkElement)
+        };
 
-            var window = new Window
-            {
-                Content = frameworkElement
-            };
+        // Act
+        frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
 
-            var expected = new[]
-            {
-                new ViewWrapper(frameworkElement)
-            };
+        // Assert
+        Assert.That(ViewLocator.Views, Is.EqualTo(expected));
+    }
 
-            // Act
-            frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
+    [Test]
+    public void UnregisterFrameworkElementUsingAttachedProperty()
+    {
+        // Arrange
+        var frameworkElement = new FrameworkElement();
 
-            // Assert
-            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
-        }
 
-        [Test]
-        public void UnregisterFrameworkElementUsingAttachedProperty()
+        var window = new Window
         {
-            // Arrange
-            var frameworkElement = new FrameworkElement();
+            Content = frameworkElement
+        };
 
+        frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
 
-            var window = new Window
-            {
-                Content = frameworkElement
-            };
+        // Act
+        frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, false);
 
-            frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, true);
+        // Assert
+        Assert.That(ViewLocator.Views, Is.Empty);
+    }
 
-            // Act
-            frameworkElement.SetValue(DialogServiceViews.IsRegisteredProperty, false);
+    [Test]
+    public void RegisterLoadedView()
+    {
+        // Arrange
+        var view = new Mock<ViewMock>();
+        view
+            .Setup(mock => mock.IsAlive)
+            .Returns(true);
+        view
+            .Setup(mock => mock.GetOwner())
+            .Returns(new Window().AsWrapper());
 
-            // Assert
-            Assert.That(ViewLocator.Views, Is.Empty);
-        }
-
-        [Test]
-        public void RegisterLoadedView()
+        var expected = new[]
         {
-            // Arrange
-            var view = new Mock<ViewMock>();
-            view
-                .Setup(mock => mock.IsAlive)
-                .Returns(true);
-            view
-                .Setup(mock => mock.GetOwner())
-                .Returns(new Window().AsWrapper());
+            view.Object
+        };
 
-            var expected = new[]
-            {
-                view.Object
-            };
+        // Act
+        ViewLocator.Register(view.Object);
 
-            // Act
-            ViewLocator.Register(view.Object);
+        // Assert
+        Assert.That(ViewLocator.Views, Is.EqualTo(expected));
+    }
 
-            // Assert
-            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
-        }
+    [Test]
+    public void UnregisterLoadedView()
+    {
+        // Arrange
+        var view = new Mock<ViewMock>();
+        view
+            .Setup(mock => mock.IsAlive)
+            .Returns(true);
+        view
+            .Setup(mock => mock.GetOwner())
+            .Returns(new Window().AsWrapper());
 
-        [Test]
-        public void UnregisterLoadedView()
+        DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, true);
+
+        // Act
+        DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, false);
+
+        // Assert
+        Assert.That(ViewLocator.Views, Is.Empty);
+    }
+
+    [Test]
+    public void RegisterViewThatNeverGetsLoaded()
+    {
+        // Arrange
+        var view = new Mock<ViewMock>();
+        view
+            .Setup(mock => mock.IsAlive)
+            .Returns(true);
+
+        // Act
+        ViewLocator.Register(view.Object);
+
+        // Assert
+        Assert.That(ViewLocator.Views, Is.Empty);
+    }
+
+    [Test]
+    public void RegisterViewThatGetsLoaded()
+    {
+        // Arrange
+        var view = new Mock<ViewMock>();
+        view
+            .Setup(mock => mock.IsAlive)
+            .Returns(true);
+
+        // At time of register the view has no parent, thus is not loaded
+        ViewLocator.Register(view.Object);
+
+        // After register we can simulate that the view gets loaded
+        view
+            .Setup(mock => mock.GetOwner())
+            .Returns(new Window().AsWrapper());
+
+        var expected = new[]
         {
-            // Arrange
-            var view = new Mock<ViewMock>();
-            view
-                .Setup(mock => mock.IsAlive)
-                .Returns(true);
-            view
-                .Setup(mock => mock.GetOwner())
-                .Returns(new Window().AsWrapper());
+            view.Object
+        };
 
-            DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, true);
+        // Act
+        view.Raise(mock => mock.Loaded += null, new RoutedEventArgs(null, view.Object));
 
-            // Act
-            DialogServiceViews.SetIsRegistered((FrameworkElement)view.Object.SourceObj, false);
+        // Assert
+        Assert.That(ViewLocator.Views, Is.EqualTo(expected));
+    }
 
-            // Assert
-            Assert.That(ViewLocator.Views, Is.Empty);
-        }
+    [Test]
+    public void UnregisterWhenClosingOwner()
+    {
+        // Arrange
+        var window = new Window();
 
-        [Test]
-        public void RegisterViewThatNeverGetsLoaded()
+        var view = new Mock<ViewMock>();
+        view
+            .Setup(mock => mock.IsAlive)
+            .Returns(true);
+        view
+            .Setup(mock => mock.GetOwner())
+            .Returns(window.AsWrapper());
+
+        ViewLocator.Register(view.Object);
+
+        // Act
+        window.Close();
+
+        // Assert
+        Assert.That(ViewLocator.Views, Is.Empty);
+    }
+
+    public abstract class ViewMock : ViewBase
+    {
+        protected ViewMock()
+            : base(new FrameworkElement())
         {
-            // Arrange
-            var view = new Mock<ViewMock>();
-            view
-                .Setup(mock => mock.IsAlive)
-                .Returns(true);
-
-            // Act
-            ViewLocator.Register(view.Object);
-
-            // Assert
-            Assert.That(ViewLocator.Views, Is.Empty);
-        }
-
-        [Test]
-        public void RegisterViewThatGetsLoaded()
-        {
-            // Arrange
-            var view = new Mock<ViewMock>();
-            view
-                .Setup(mock => mock.IsAlive)
-                .Returns(true);
-
-            // At time of register the view has no parent, thus is not loaded
-            ViewLocator.Register(view.Object);
-
-            // After register we can simulate that the view gets loaded
-            view
-                .Setup(mock => mock.GetOwner())
-                .Returns(new Window().AsWrapper());
-
-            var expected = new[]
-            {
-                view.Object
-            };
-
-            // Act
-            view.Raise(mock => mock.Loaded += null, new RoutedEventArgs(null, view.Object));
-
-            // Assert
-            Assert.That(ViewLocator.Views, Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void UnregisterWhenClosingOwner()
-        {
-            // Arrange
-            var window = new Window();
-
-            var view = new Mock<ViewMock>();
-            view
-                .Setup(mock => mock.IsAlive)
-                .Returns(true);
-            view
-                .Setup(mock => mock.GetOwner())
-                .Returns(window.AsWrapper());
-
-            ViewLocator.Register(view.Object);
-
-            // Act
-            window.Close();
-
-            // Assert
-            Assert.That(ViewLocator.Views, Is.Empty);
-        }
-
-        public abstract class ViewMock : ViewBase
-        {
-            protected ViewMock()
-                : base(new FrameworkElement())
-            {
-            }
         }
     }
 }

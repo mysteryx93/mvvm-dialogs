@@ -3,14 +3,13 @@ using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
-namespace Demo.CustomFolderBrowserDialog
+namespace Demo.CustomFolderBrowserDialog;
+
+public partial class App
 {
-    public partial class App
+    protected override void OnStartup(StartupEventArgs e)
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            SimpleIoc.Default.Register<IDialogService>(
-                () => new DialogService(frameworkDialogFactory: new FrameworkDialogFactory()));
-        }
+        SimpleIoc.Default.Register<IDialogService>(
+            () => new DialogService(frameworkDialogFactory: new FrameworkDialogFactory()));
     }
 }

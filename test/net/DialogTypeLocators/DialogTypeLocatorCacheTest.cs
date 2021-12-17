@@ -1,71 +1,70 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace MvvmDialogs.DialogTypeLocators
+namespace MvvmDialogs.DialogTypeLocators;
+
+[TestFixture]
+public class DialogTypeLocatorCacheTest
 {
-    [TestFixture]
-    public class DialogTypeLocatorCacheTest
+    private DialogTypeLocatorCache cache;
+
+    [SetUp]
+    public void SetUp()
     {
-        private DialogTypeLocatorCache cache;
+        cache = new DialogTypeLocatorCache();
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            cache = new DialogTypeLocatorCache();
-        }
+    [Test]
+    public void Add()
+    {
+        // Act
+        cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
 
-        [Test]
-        public void Add()
-        {
-            // Act
-            cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
+        // Assert
+        Assert.That(cache.Count, Is.EqualTo(1));
+    }
 
-            // Assert
-            Assert.That(cache.Count, Is.EqualTo(1));
-        }
+    [Test]
+    public void AddSameTwice()
+    {
+        // Arrange
+        cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
 
-        [Test]
-        public void AddSameTwice()
-        {
-            // Arrange
-            cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
+        // Assert
+        Assert.Throws<ArgumentException>(() => cache.Add(typeof(TestDialogViewModel), typeof(TestDialog)));
+    }
 
-            // Assert
-            Assert.Throws<ArgumentException>(() => cache.Add(typeof(TestDialogViewModel), typeof(TestDialog)));
-        }
+    [Test]
+    public void Get()
+    {
+        // Arrange
+        cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
 
-        [Test]
-        public void Get()
-        {
-            // Arrange
-            cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
+        // Act
+        var dialogType = cache.Get(typeof(TestDialogViewModel));
 
-            // Act
-            var dialogType = cache.Get(typeof(TestDialogViewModel));
+        // Assert
+        Assert.That(dialogType, Is.EqualTo(typeof(TestDialog)));
+    }
 
-            // Assert
-            Assert.That(dialogType, Is.EqualTo(typeof(TestDialog)));
-        }
+    [Test]
+    public void Clear()
+    {
+        // Arrange
+        cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
 
-        [Test]
-        public void Clear()
-        {
-            // Arrange
-            cache.Add(typeof(TestDialogViewModel), typeof(TestDialog));
+        // Act
+        cache.Clear();
 
-            // Act
-            cache.Clear();
+        // Assert
+        Assert.That(cache.Count, Is.EqualTo(0));
+    }
 
-            // Assert
-            Assert.That(cache.Count, Is.EqualTo(0));
-        }
+    private class TestDialogViewModel : ViewModelBase
+    {
+    }
 
-        private class TestDialogViewModel : ViewModelBase
-        {
-        }
-
-        private class TestDialog
-        {
-        }
+    private class TestDialog
+    {
     }
 }

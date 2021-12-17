@@ -1,8 +1,7 @@
 ﻿using ReactiveUI;
 
-namespace Demo.FolderBrowserDialog
+namespace Demo.FolderBrowserDialog;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

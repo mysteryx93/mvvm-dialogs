@@ -7,43 +7,42 @@ using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
-namespace Demo.CustomOpenFileDialog
+namespace Demo.CustomOpenFileDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    private string path;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        private string path;
+        OpenFileCommand = new RelayCommand(OpenFile);
+    }
 
-        public MainWindowViewModel(IDialogService dialogService)
+    public string Path
+    {
+        get => path;
+        private set { Set(() => Path, ref path, value); }
+    }
+
+    public ICommand OpenFileCommand { get; }
+
+    private async Task OpenFile()
+    {
+        var settings = new OpenFileDialogSettings
         {
-            this.dialogService = dialogService;
+            Title = "This Is The Title",
+            InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+            Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
+        };
 
-            OpenFileCommand = new RelayCommand(OpenFile);
-        }
-
-        public string Path
+        var success = await dialogService.ShowOpenFileDialogAsync(this, settings);
+        if (success == true)
         {
-            get => path;
-            private set { Set(() => Path, ref path, value); }
-        }
-
-        public ICommand OpenFileCommand { get; }
-
-        private async Task OpenFile()
-        {
-            var settings = new OpenFileDialogSettings
-            {
-                Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
-            };
-
-            var success = await dialogService.ShowOpenFileDialogAsync(this, settings);
-            if (success == true)
-            {
-                Path = settings.FileName;
-            }
+            Path = settings.FileName;
         }
     }
 }

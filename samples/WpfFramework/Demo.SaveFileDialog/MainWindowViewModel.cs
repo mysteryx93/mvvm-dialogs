@@ -6,44 +6,43 @@ using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
-namespace Demo.SaveFileDialog
+namespace Demo.SaveFileDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    private string path;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        private string path;
+        SaveFileCommand = new RelayCommand(SaveFile);
+    }
 
-        public MainWindowViewModel(IDialogService dialogService)
+    public string Path
+    {
+        get => path;
+        private set { Set(() => Path, ref path, value); }
+    }
+
+    public ICommand SaveFileCommand { get; }
+
+    private void SaveFile()
+    {
+        var settings = new SaveFileDialogSettings
         {
-            this.dialogService = dialogService;
+            Title = "This Is The Title",
+            InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
+            CheckFileExists = false
+        };
 
-            SaveFileCommand = new RelayCommand(SaveFile);
-        }
-
-        public string Path
+        bool? success = dialogService.ShowSaveFileDialog(this, settings);
+        if (success == true)
         {
-            get => path;
-            private set { Set(() => Path, ref path, value); }
-        }
-
-        public ICommand SaveFileCommand { get; }
-
-        private void SaveFile()
-        {
-            var settings = new SaveFileDialogSettings
-            {
-                Title = "This Is The Title",
-                InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*",
-                CheckFileExists = false
-            };
-
-            bool? success = dialogService.ShowSaveFileDialog(this, settings);
-            if (success == true)
-            {
-                Path = settings.FileName;
-            }
+            Path = settings.FileName;
         }
     }
 }

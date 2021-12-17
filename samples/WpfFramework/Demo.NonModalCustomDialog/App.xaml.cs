@@ -2,13 +2,12 @@
 using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs;
 
-namespace Demo.NonModalCustomDialog
+namespace Demo.NonModalCustomDialog;
+
+public partial class App
 {
-    public partial class App
+    protected override void OnStartup(StartupEventArgs e)
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
-        }
+        SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
     }
 }

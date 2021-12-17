@@ -5,38 +5,37 @@ using System.Windows.Input;
 using MvvmDialogs;
 using ReactiveUI;
 
-namespace Demo.ModalCustomDialog
+namespace Demo.ModalCustomDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+    public ICommand ImplicitShowDialogCommand { get; }
+    public ICommand ExplicitShowDialogCommand { get; }
+    public ObservableCollection<string> Texts { get; } = new ObservableCollection<string>();
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
-        public ICommand ImplicitShowDialogCommand { get; }
-        public ICommand ExplicitShowDialogCommand { get; }
-        public ObservableCollection<string> Texts { get; } = new ObservableCollection<string>();
+        this.dialogService = dialogService;
 
-        public MainWindowViewModel(IDialogService dialogService)
+        ImplicitShowDialogCommand = ReactiveCommand.Create(ImplicitShowDialog);
+        ExplicitShowDialogCommand = ReactiveCommand.Create(ExplicitShowDialog);
+    }
+
+    private Task ImplicitShowDialog() =>
+        ShowDialogAsync(viewModel => dialogService.ShowDialogAsync(this, viewModel));
+
+    private Task ExplicitShowDialog() =>
+        ShowDialogAsync(viewModel => dialogService.ShowDialogAsync<AddTextCustomDialog>(this, viewModel));
+
+    private async Task ShowDialogAsync(Func<AddTextCustomDialogViewModel, Task<bool?>> showDialogAsync)
+    {
+        var dialogViewModel = new AddTextCustomDialogViewModel();
+
+        var success = await showDialogAsync(dialogViewModel).ConfigureAwait(true);
+        if (success == true)
         {
-            this.dialogService = dialogService;
-
-            ImplicitShowDialogCommand = ReactiveCommand.Create(ImplicitShowDialog);
-            ExplicitShowDialogCommand = ReactiveCommand.Create(ExplicitShowDialog);
-        }
-
-        private Task ImplicitShowDialog() =>
-            ShowDialogAsync(viewModel => dialogService.ShowDialogAsync(this, viewModel));
-
-        private Task ExplicitShowDialog() =>
-            ShowDialogAsync(viewModel => dialogService.ShowDialogAsync<AddTextCustomDialog>(this, viewModel));
-
-        private async Task ShowDialogAsync(Func<AddTextCustomDialogViewModel, Task<bool?>> showDialogAsync)
-        {
-            var dialogViewModel = new AddTextCustomDialogViewModel();
-
-            var success = await showDialogAsync(dialogViewModel).ConfigureAwait(true);
-            if (success == true)
-            {
-                Texts.Add(dialogViewModel.Text);
-            }
+            Texts.Add(dialogViewModel.Text);
         }
     }
 }

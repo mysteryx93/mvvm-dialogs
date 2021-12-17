@@ -2,65 +2,64 @@
 using MvvmDialogs;
 using NUnit.Framework;
 
-namespace Demo.CloseNonModalDialog
+namespace Demo.CloseNonModalDialog;
+
+[TestFixture]
+public class MainWindowViewModelTest
 {
-    [TestFixture]
-    public class MainWindowViewModelTest
+    private Mock<IDialogService> dialogService;
+    private MainWindowViewModel viewModel;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IDialogService> dialogService;
-        private MainWindowViewModel viewModel;
+        dialogService = new Mock<IDialogService>();
+        viewModel = new MainWindowViewModel(dialogService.Object);
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            dialogService = new Mock<IDialogService>();
-            viewModel = new MainWindowViewModel(dialogService.Object);
-        }
+    [Test]
+    public void CanShow()
+    {
+        // Act
+        bool canShow = viewModel.ShowCommand.CanExecute(null);
 
-        [Test]
-        public void CanShow()
-        {
-            // Act
-            bool canShow = viewModel.ShowCommand.CanExecute(null);
+        // Assert
+        Assert.That(canShow, Is.True);
+    }
 
-            // Assert
-            Assert.That(canShow, Is.True);
-        }
+    [Test]
+    public void CanNotShow()
+    {
+        // Arrange
+        viewModel.ShowCommand.Execute(null);
 
-        [Test]
-        public void CanNotShow()
-        {
-            // Arrange
-            viewModel.ShowCommand.Execute(null);
+        // Act
+        bool canShow = viewModel.ShowCommand.CanExecute(null);
 
-            // Act
-            bool canShow = viewModel.ShowCommand.CanExecute(null);
+        // Assert
+        Assert.That(canShow, Is.False);
+    }
 
-            // Assert
-            Assert.That(canShow, Is.False);
-        }
+    [Test]
+    public void CanClose()
+    {
+        // Arrange
+        viewModel.ShowCommand.Execute(null);
 
-        [Test]
-        public void CanClose()
-        {
-            // Arrange
-            viewModel.ShowCommand.Execute(null);
+        // Act
+        bool canClose = viewModel.CloseCommand.CanExecute(null);
 
-            // Act
-            bool canClose = viewModel.CloseCommand.CanExecute(null);
+        // Assert
+        Assert.That(canClose, Is.True);
+    }
 
-            // Assert
-            Assert.That(canClose, Is.True);
-        }
+    [Test]
+    public void CanNotClose()
+    {
+        // Act
+        bool canClose = viewModel.CloseCommand.CanExecute(null);
 
-        [Test]
-        public void CanNotClose()
-        {
-            // Act
-            bool canClose = viewModel.CloseCommand.CanExecute(null);
-
-            // Assert
-            Assert.That(canClose, Is.False);
-        }
+        // Assert
+        Assert.That(canClose, Is.False);
     }
 }

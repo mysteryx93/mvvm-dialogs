@@ -4,34 +4,33 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
-namespace Demo.CloseNonModalDialog
+namespace Demo.CloseNonModalDialog;
+
+public class CurrentTimeDialogViewModel : ViewModelBase
 {
-    public class CurrentTimeDialogViewModel : ViewModelBase
+    // ReSharper disable once NotAccessedField.Local
+    private DispatcherTimer timer;
+
+    public CurrentTimeDialogViewModel()
     {
-        // ReSharper disable once NotAccessedField.Local
-        private DispatcherTimer timer;
+        StartClockCommand = new RelayCommand(StartClock);
+    }
 
-        public CurrentTimeDialogViewModel()
-        {
-            StartClockCommand = new RelayCommand(StartClock);
-        }
+    public ICommand StartClockCommand { get; }
 
-        public ICommand StartClockCommand { get; }
+    public DateTime CurrentTime => DateTime.Now;
 
-        public DateTime CurrentTime => DateTime.Now;
+    private void StartClock()
+    {
+        timer = new DispatcherTimer(
+            TimeSpan.FromSeconds(1),
+            DispatcherPriority.Normal,
+            OnTick,
+            Dispatcher.CurrentDispatcher);
+    }
 
-        private void StartClock()
-        {
-            timer = new DispatcherTimer(
-                TimeSpan.FromSeconds(1),
-                DispatcherPriority.Normal,
-                OnTick,
-                Dispatcher.CurrentDispatcher);
-        }
-
-        private void OnTick(object sender, EventArgs e)
-        {
-            RaisePropertyChanged(() => CurrentTime);
-        }
+    private void OnTick(object sender, EventArgs e)
+    {
+        RaisePropertyChanged(() => CurrentTime);
     }
 }

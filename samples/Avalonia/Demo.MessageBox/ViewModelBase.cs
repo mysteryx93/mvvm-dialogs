@@ -1,8 +1,7 @@
 ﻿using ReactiveUI;
 
-namespace Demo.MessageBox.ViewModels
+namespace Demo.MessageBox.ViewModels;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

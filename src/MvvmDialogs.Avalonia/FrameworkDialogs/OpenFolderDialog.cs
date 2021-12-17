@@ -3,34 +3,33 @@ using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 using AvaloniaOpenFolderDialog = Avalonia.Controls.OpenFolderDialog;
 
-namespace MvvmDialogs.Avalonia.FrameworkDialogs
+namespace MvvmDialogs.Avalonia.FrameworkDialogs;
+
+/// <summary>
+/// Class wrapping <see cref="OpenFolderDialog"/>.
+/// </summary>
+internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
 {
-    /// <summary>
-    /// Class wrapping <see cref="OpenFolderDialog"/>.
-    /// </summary>
-    internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, string?>
+    /// <inheritdoc />
+    public OpenFolderDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
+        : base(api, pathInfo, settings, appSettings)
     {
-        /// <inheritdoc />
-        public OpenFolderDialog(IFrameworkDialogsApi api, IPathInfoFactory pathInfo, OpenFolderDialogSettings settings, AppDialogSettings appSettings)
-            : base(api, pathInfo, settings, appSettings)
-        {
-        }
-
-        /// <inheritdoc />
-        public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
-        {
-            var apiSettings = GetApiSettings();
-            var result = await Api.ShowOpenFolderDialog(owner.Ref, apiSettings).ConfigureAwait(false);
-            return result;
-        }
-
-        private OpenFolderApiSettings GetApiSettings() =>
-            new()
-            {
-                Title = Settings.Title,
-                Directory = Settings.InitialPath
-
-                // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
-            };
     }
+
+    /// <inheritdoc />
+    public override async Task<string?> ShowDialogAsync(WindowWrapper owner)
+    {
+        var apiSettings = GetApiSettings();
+        var result = await Api.ShowOpenFolderDialog(owner.Ref, apiSettings).ConfigureAwait(false);
+        return result;
+    }
+
+    private OpenFolderApiSettings GetApiSettings() =>
+        new()
+        {
+            Title = Settings.Title,
+            Directory = Settings.InitialPath
+
+            // d.ShowNewFolderButton = Settings.ShowNewFolderButton;
+        };
 }

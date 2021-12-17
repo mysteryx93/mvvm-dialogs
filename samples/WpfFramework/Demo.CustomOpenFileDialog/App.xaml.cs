@@ -2,14 +2,13 @@
 using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs;
 
-namespace Demo.CustomOpenFileDialog
+namespace Demo.CustomOpenFileDialog;
+
+public partial class App
 {
-    public partial class App
+    protected override void OnStartup(StartupEventArgs e)
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            SimpleIoc.Default.Register<IDialogService>(
-                () => new DialogService(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
-        }
+        SimpleIoc.Default.Register<IDialogService>(
+            () => new DialogService(frameworkDialogFactory: new CustomFrameworkDialogFactory()));
     }
 }

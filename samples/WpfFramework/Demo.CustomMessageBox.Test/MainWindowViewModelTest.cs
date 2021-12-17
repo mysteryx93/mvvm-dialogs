@@ -3,129 +3,128 @@ using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using NUnit.Framework;
 
-namespace Demo.CustomMessageBox
+namespace Demo.CustomMessageBox;
+
+[TestFixture]
+public class MainWindowViewModelTest
 {
-    [TestFixture]
-    public class MainWindowViewModelTest
+    private Mock<IDialogService> dialogService;
+    private MainWindowViewModel viewModel;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IDialogService> dialogService;
-        private MainWindowViewModel viewModel;
+        dialogService = new Mock<IDialogService>();
+        viewModel = new MainWindowViewModel(dialogService.Object);
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            dialogService = new Mock<IDialogService>();
-            viewModel = new MainWindowViewModel(dialogService.Object);
-        }
+    [Test]
+    public void ShowMessageBoxWithMessage()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock =>
+                mock.ShowMessageBox(
+                    viewModel,
+                    It.IsAny<string>(),
+                    "",
+                    MessageBoxButton.Ok,
+                    MessageBoxImage.None,
+                    MessageBoxResult.None))
+            .Returns(true);
 
-        [Test]
-        public void ShowMessageBoxWithMessage()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock =>
-                    mock.ShowMessageBox(
-                        viewModel,
-                        It.IsAny<string>(),
-                        "",
-                        MessageBoxButton.Ok,
-                        MessageBoxImage.None,
-                        MessageBoxResult.None))
-                .Returns(true);
+        // Act
+        viewModel.ShowMessageBoxWithMessageCommand.Execute(null);
 
-            // Act
-            viewModel.ShowMessageBoxWithMessageCommand.Execute(null);
+        // Assert
+        dialogService.VerifyAll();
+    }
 
-            // Assert
-            dialogService.VerifyAll();
-        }
+    [Test]
+    public void ShowMessageBoxWithCaption()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock =>
+                mock.ShowMessageBox(
+                    viewModel,
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    MessageBoxButton.Ok,
+                    MessageBoxImage.None,
+                    MessageBoxResult.None))
+            .Returns(true);
 
-        [Test]
-        public void ShowMessageBoxWithCaption()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock =>
-                    mock.ShowMessageBox(
-                        viewModel,
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        MessageBoxButton.Ok,
-                        MessageBoxImage.None,
-                        MessageBoxResult.None))
-                .Returns(true);
+        // Act
+        viewModel.ShowMessageBoxWithCaptionCommand.Execute(null);
 
-            // Act
-            viewModel.ShowMessageBoxWithCaptionCommand.Execute(null);
+        // Assert
+        dialogService.VerifyAll();
+    }
 
-            // Assert
-            dialogService.VerifyAll();
-        }
+    [Test]
+    public void ShowMessageBoxWithButton()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock =>
+                mock.ShowMessageBox(
+                    viewModel,
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    MessageBoxButton.OkCancel,
+                    MessageBoxImage.None,
+                    MessageBoxResult.None))
+            .Returns(true);
 
-        [Test]
-        public void ShowMessageBoxWithButton()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock =>
-                    mock.ShowMessageBox(
-                        viewModel,
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        MessageBoxButton.OkCancel,
-                        MessageBoxImage.None,
-                        MessageBoxResult.None))
-                .Returns(true);
+        // Act
+        viewModel.ShowMessageBoxWithButtonCommand.Execute(null);
 
-            // Act
-            viewModel.ShowMessageBoxWithButtonCommand.Execute(null);
+        // Assert
+        dialogService.VerifyAll();
+    }
 
-            // Assert
-            dialogService.VerifyAll();
-        }
+    [Test]
+    public void ShowMessageBoxWithIcon()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock =>
+                mock.ShowMessageBox(
+                    viewModel,
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    MessageBoxButton.OkCancel,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.None))
+            .Returns(true);
 
-        [Test]
-        public void ShowMessageBoxWithIcon()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock =>
-                    mock.ShowMessageBox(
-                        viewModel,
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        MessageBoxButton.OkCancel,
-                        MessageBoxImage.Information,
-                        MessageBoxResult.None))
-                .Returns(true);
+        // Act
+        viewModel.ShowMessageBoxWithIconCommand.Execute(null);
 
-            // Act
-            viewModel.ShowMessageBoxWithIconCommand.Execute(null);
+        // Assert
+        dialogService.VerifyAll();
+    }
 
-            // Assert
-            dialogService.VerifyAll();
-        }
+    [Test]
+    public void ShowMessageBoxWithDefaultResult()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock =>
+                mock.ShowMessageBox(
+                    viewModel,
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    MessageBoxButton.OkCancel,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.Cancel))
+            .Returns(true);
 
-        [Test]
-        public void ShowMessageBoxWithDefaultResult()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock =>
-                    mock.ShowMessageBox(
-                        viewModel,
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        MessageBoxButton.OkCancel,
-                        MessageBoxImage.Information,
-                        MessageBoxResult.Cancel))
-                .Returns(true);
+        // Act
+        viewModel.ShowMessageBoxWithDefaultResultCommand.Execute(null);
 
-            // Act
-            viewModel.ShowMessageBoxWithDefaultResultCommand.Execute(null);
-
-            // Assert
-            dialogService.VerifyAll();
-        }
+        // Assert
+        dialogService.VerifyAll();
     }
 }

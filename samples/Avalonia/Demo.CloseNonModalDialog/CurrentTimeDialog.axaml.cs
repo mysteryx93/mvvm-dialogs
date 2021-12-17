@@ -2,19 +2,17 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Demo.CloseNonModalDialog
+namespace Demo.CloseNonModalDialog;
 
+public partial class CurrentTimeDialog : Window
 {
-    public partial class CurrentTimeDialog : Window
+    public CurrentTimeDialog()
     {
-        public CurrentTimeDialog()
-        {
-            InitializeComponent();
+        InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+        this.AttachDevTools();
 #endif
-        }
-
-        private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
     }
+
+    private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }

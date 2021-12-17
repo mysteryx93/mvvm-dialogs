@@ -1,12 +1,11 @@
-﻿namespace MvvmDialogs
+﻿namespace MvvmDialogs;
+
+/// <inheritdoc />
+public class PathInfoFactory : IPathInfoFactory
 {
     /// <inheritdoc />
-    public class PathInfoFactory : IPathInfoFactory
-    {
-        /// <inheritdoc />
-        public IFileInfo GetFileInfo(string filePath) => new FileInfo(filePath);
+    public IFileInfo GetFileInfo(string filePath) => new FileInfo(filePath);
 
-        /// <inheritdoc />
-        public IDirectoryInfo GetDirectoryInfo(string path) => new DirectoryInfo(path);
-    }
+    /// <inheritdoc />
+    public IDirectoryInfo GetDirectoryInfo(string path) => new DirectoryInfo(path);
 }

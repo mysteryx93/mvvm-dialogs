@@ -1,9 +1,8 @@
 ﻿using ReactiveUI;
 
-namespace Demo.ModalCustomDialog
-{
-    public class ViewModelBase : ReactiveObject
-    {
+namespace Demo.ModalCustomDialog;
 
-    }
+public class ViewModelBase : ReactiveObject
+{
+
 }

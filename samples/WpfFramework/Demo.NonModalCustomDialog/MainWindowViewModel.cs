@@ -4,32 +4,31 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs;
 
-namespace Demo.NonModalCustomDialog
+namespace Demo.NonModalCustomDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        public MainWindowViewModel(IDialogService dialogService)
-        {
-            this.dialogService = dialogService;
+        ImplicitShowCommand = new RelayCommand(ImplicitShow);
+        ExplicitShowCommand = new RelayCommand(ExplicitShow);
+    }
 
-            ImplicitShowCommand = new RelayCommand(ImplicitShow);
-            ExplicitShowCommand = new RelayCommand(ExplicitShow);
-        }
+    public ICommand ImplicitShowCommand { get; }
 
-        public ICommand ImplicitShowCommand { get; }
+    public ICommand ExplicitShowCommand { get; }
 
-        public ICommand ExplicitShowCommand { get; }
+    private void ImplicitShow() => Show(viewModel => dialogService.Show(this, viewModel));
 
-        private void ImplicitShow() => Show(viewModel => dialogService.Show(this, viewModel));
+    private void ExplicitShow() => Show(viewModel => dialogService.Show<CurrentTimeCustomDialog>(this, viewModel));
 
-        private void ExplicitShow() => Show(viewModel => dialogService.Show<CurrentTimeCustomDialog>(this, viewModel));
-
-        private static void Show(Action<CurrentTimeCustomDialogViewModel> show)
-        {
-            var dialogViewModel = new CurrentTimeCustomDialogViewModel();
-            show(dialogViewModel);
-        }
+    private static void Show(Action<CurrentTimeCustomDialogViewModel> show)
+    {
+        var dialogViewModel = new CurrentTimeCustomDialogViewModel();
+        show(dialogViewModel);
     }
 }

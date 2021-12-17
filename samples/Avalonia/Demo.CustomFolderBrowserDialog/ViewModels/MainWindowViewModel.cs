@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.CustomFolderBrowserDialog.ViewModels
+namespace Demo.CustomFolderBrowserDialog.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
-    {
-        public string Greeting => "Welcome to Avalonia!";
-    }
+    public string Greeting => "Welcome to Avalonia!";
 }

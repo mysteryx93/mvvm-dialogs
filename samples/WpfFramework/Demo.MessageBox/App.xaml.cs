@@ -2,13 +2,12 @@
 using GalaSoft.MvvmLight.Ioc;
 using MvvmDialogs;
 
-namespace Demo.MessageBox
+namespace Demo.MessageBox;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    protected override void OnStartup(StartupEventArgs e)
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
-        }
+        SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
     }
 }

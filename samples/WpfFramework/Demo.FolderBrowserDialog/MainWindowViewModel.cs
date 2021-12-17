@@ -6,42 +6,41 @@ using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using IOPath = System.IO.Path;
 
-namespace Demo.FolderBrowserDialog
+namespace Demo.FolderBrowserDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    private string path;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        private string path;
+        BrowseFolderCommand = new RelayCommand(BrowseFolder);
+    }
 
-        public MainWindowViewModel(IDialogService dialogService)
+    public string Path
+    {
+        get => path;
+        private set { Set(() => Path, ref path, value); }
+    }
+
+    public ICommand BrowseFolderCommand { get; }
+
+    private void BrowseFolder()
+    {
+        var settings = new OpenFolderDialogSettings
         {
-            this.dialogService = dialogService;
+            Description = "This is a description",
+            InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
+        };
 
-            BrowseFolderCommand = new RelayCommand(BrowseFolder);
-        }
-
-        public string Path
+        var success = dialogService.ShowFolderBrowserDialog(this, settings);
+        if (success == true)
         {
-            get => path;
-            private set { Set(() => Path, ref path, value); }
-        }
-
-        public ICommand BrowseFolderCommand { get; }
-
-        private void BrowseFolder()
-        {
-            var settings = new OpenFolderDialogSettings
-            {
-                Description = "This is a description",
-                InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
-            };
-
-            var success = dialogService.ShowFolderBrowserDialog(this, settings);
-            if (success == true)
-            {
-                Path = settings.InitialPath;
-            }
+            Path = settings.InitialPath;
         }
     }
 }

@@ -4,51 +4,50 @@ using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs;
 using NUnit.Framework;
 
-namespace Demo.OpenFileDialog
+namespace Demo.OpenFileDialog;
+
+[TestFixture]
+public class MainWindowViewModelTest
 {
-    [TestFixture]
-    public class MainWindowViewModelTest
+    private Mock<IDialogService> dialogService;
+    private MainWindowViewModel viewModel;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IDialogService> dialogService;
-        private MainWindowViewModel viewModel;
+        dialogService = new Mock<IDialogService>();
+        viewModel = new MainWindowViewModel(dialogService.Object);
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            dialogService = new Mock<IDialogService>();
-            viewModel = new MainWindowViewModel(dialogService.Object);
-        }
+    [Test]
+    public void OpenFileSuccessful()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
+            .Returns(true)
+            .Callback((INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings) =>
+                settings.FileName = @"C:\SomeFile.txt");
 
-        [Test]
-        public void OpenFileSuccessful()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
-                .Returns(true)
-                .Callback((INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings) =>
-                    settings.FileName = @"C:\SomeFile.txt");
+        // Act
+        viewModel.OpenFileCommand.Execute(null);
 
-            // Act
-            viewModel.OpenFileCommand.Execute(null);
+        // Assert
+        Assert.That(viewModel.Path, Is.EqualTo(@"C:\SomeFile.txt"));
+    }
 
-            // Assert
-            Assert.That(viewModel.Path, Is.EqualTo(@"C:\SomeFile.txt"));
-        }
+    [Test]
+    public void OpenFileUnsuccessful()
+    {
+        // Arrange
+        dialogService
+            .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
+            .Returns(false);
 
-        [Test]
-        public void OpenFileUnsuccessful()
-        {
-            // Arrange
-            dialogService
-                .Setup(mock => mock.ShowOpenFileDialogAsync(viewModel, It.IsAny<OpenFileDialogSettings>()))
-                .Returns(false);
+        // Act
+        viewModel.OpenFileCommand.Execute(null);
 
-            // Act
-            viewModel.OpenFileCommand.Execute(null);
-
-            // Assert
-            Assert.That(viewModel.Path, Is.Null);
-        }
+        // Assert
+        Assert.That(viewModel.Path, Is.Null);
     }
 }

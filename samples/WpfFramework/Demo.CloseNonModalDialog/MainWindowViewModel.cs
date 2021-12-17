@@ -4,46 +4,45 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MvvmDialogs;
 
-namespace Demo.CloseNonModalDialog
+namespace Demo.CloseNonModalDialog;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IDialogService dialogService;
+
+    private INotifyPropertyChanged dialogViewModel;
+
+    public MainWindowViewModel(IDialogService dialogService)
     {
-        private readonly IDialogService dialogService;
+        this.dialogService = dialogService;
 
-        private INotifyPropertyChanged dialogViewModel;
+        ShowCommand = new RelayCommand(Show, CanShow);
+        CloseCommand = new RelayCommand(Close, CanClose);
+    }
 
-        public MainWindowViewModel(IDialogService dialogService)
-        {
-            this.dialogService = dialogService;
+    public ICommand ShowCommand { get; }
 
-            ShowCommand = new RelayCommand(Show, CanShow);
-            CloseCommand = new RelayCommand(Close, CanClose);
-        }
+    public ICommand CloseCommand { get; }
 
-        public ICommand ShowCommand { get; }
+    private void Show()
+    {
+        dialogViewModel = new CurrentTimeDialogViewModel();
+        dialogService.Show(this, dialogViewModel);
+    }
 
-        public ICommand CloseCommand { get; }
+    private bool CanShow()
+    {
+        return dialogViewModel == null;
+    }
 
-        private void Show()
-        {
-            dialogViewModel = new CurrentTimeDialogViewModel();
-            dialogService.Show(this, dialogViewModel);
-        }
+    private void Close()
+    {
+        dialogService.Close(dialogViewModel);
+        dialogViewModel = null;
+    }
 
-        private bool CanShow()
-        {
-            return dialogViewModel == null;
-        }
-
-        private void Close()
-        {
-            dialogService.Close(dialogViewModel);
-            dialogViewModel = null;
-        }
-
-        private bool CanClose()
-        {
-            return dialogViewModel != null;
-        }
+    private bool CanClose()
+    {
+        return dialogViewModel != null;
     }
 }

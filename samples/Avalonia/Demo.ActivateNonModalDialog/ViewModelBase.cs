@@ -1,8 +1,7 @@
 ﻿using ReactiveUI;
 
-namespace Demo.ActivateNonModalDialog
+namespace Demo.ActivateNonModalDialog;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }
