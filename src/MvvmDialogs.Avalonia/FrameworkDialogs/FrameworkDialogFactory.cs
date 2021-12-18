@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 
@@ -9,8 +11,8 @@ namespace MvvmDialogs.Avalonia.FrameworkDialogs;
 /// </summary>
 public class FrameworkDialogFactory : IFrameworkDialogFactory
 {
-    private readonly IFrameworkDialogsApi api;
-    private readonly IPathInfoFactory pathInfo;
+    private readonly IFrameworkDialogsApi _api;
+    private readonly IPathInfoFactory _pathInfo;
 
     public FrameworkDialogFactory() : this(null)
     {}
@@ -22,22 +24,23 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
     /// <param name="pathInfo">Optional. An interface providing information about file and directory paths. Can be replaced with a mock for unit testing.</param>
     internal FrameworkDialogFactory(IFrameworkDialogsApi? api = null, IPathInfoFactory? pathInfo = null)
     {
-        this.api = api ?? new FrameworkDialogsApi();
-        this.pathInfo = pathInfo ?? new PathInfoFactory();
+        this._api = api ?? new FrameworkDialogsApi();
+        this._pathInfo = pathInfo ?? new PathInfoFactory();
     }
 
     /// <inheritdoc />
-    public IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
+    public Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase
     {
         var s2 = (AppDialogSettings)appSettings;
-        return settings switch
+        var dialog = settings switch
         {
-            MessageBoxSettings s => (IFrameworkDialog<TResult>)new MessageBox(api, pathInfo, s, s2),
-            OpenFileDialogSettings s => (IFrameworkDialog<TResult>)new OpenFileDialog(api, pathInfo, s, s2),
-            SaveFileDialogSettings s => (IFrameworkDialog<TResult>)new SaveFileDialog(api, pathInfo, s, s2),
-            OpenFolderDialogSettings s => (IFrameworkDialog<TResult>)new OpenFolderDialog(api, pathInfo, s, s2),
+            MessageBoxSettings s => (IFrameworkDialog<TResult>)new MessageBox(_api, _pathInfo, s, s2),
+            OpenFileDialogSettings s => (IFrameworkDialog<TResult>)new OpenFileDialog(_api, _pathInfo, s, s2),
+            SaveFileDialogSettings s => (IFrameworkDialog<TResult>)new SaveFileDialog(_api, _pathInfo, s, s2),
+            OpenFolderDialogSettings s => (IFrameworkDialog<TResult>)new OpenFolderDialog(_api, _pathInfo, s, s2),
             _ => throw new NotSupportedException()
         };
+        return dialog.ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 
@@ -27,11 +29,11 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
     }
 
     /// <inheritdoc />
-    public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
+    public virtual Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase
     {
         var s2 = (AppDialogSettings)appSettings;
-        return settings switch
+        var dialog = settings switch
         {
             MessageBoxSettings s => (IFrameworkDialog<TResult>)new MessageBox(api, pathInfo, s, s2),
             OpenFileDialogSettings s => (IFrameworkDialog<TResult>)new OpenFileDialog(api, pathInfo, s, s2),
@@ -39,5 +41,6 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
             OpenFolderDialogSettings s => (IFrameworkDialog<TResult>)new OpenFolderDialog(api, pathInfo, s, s2),
             _ => throw new NotSupportedException()
         };
+        return dialog.ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
     }
 }

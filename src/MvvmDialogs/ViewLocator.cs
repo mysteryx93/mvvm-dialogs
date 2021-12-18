@@ -97,7 +97,7 @@ public static class ViewLocator
 
         if (view == null || owner == null)
         {
-            string message =
+            var message =
                 $"View model of type '{viewModel.GetType()}' is not present as data context on any registered view. Please register the view by setting DialogServiceViews.IsRegistered=\"True\" in your XAML.";
 
             throw new ViewNotRegisteredException(message);
@@ -130,12 +130,12 @@ public static class ViewLocator
         if (sender is IWindow owner)
         {
             // Find views acting within closed window
-            ViewBase[] windowViews = Views
+            var windowViews = Views
                 .Where(view => ReferenceEquals(view.GetOwner(), owner))
                 .ToArray();
 
             // Unregister Views in window
-            foreach (ViewBase windowView in windowViews)
+            foreach (var windowView in windowViews)
             {
                 DialogLogger.Write($"Window containing view {windowView.Id} closed");
                 Unregister(windowView);

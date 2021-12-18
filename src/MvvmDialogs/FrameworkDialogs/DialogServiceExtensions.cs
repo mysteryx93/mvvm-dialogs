@@ -58,15 +58,16 @@ public static class FrameworkDialogsExtensions
     /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
     /// <returns>A value that specifies which message box button is clicked by the user. True=OK/Yes, False=No, Null=Cancel</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static Task<bool?> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
+    public static Task<bool?> ShowMessageBoxAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel,
+        MessageBoxSettings settings, AppDialogSettingsBase? appSettings = null)
     {
         if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
         if (settings == null) throw new ArgumentNullException(nameof(settings));
 
         DialogLogger.Write($"Caption: {settings.Title}; Message: {settings.Text}");
 
-        return service.FrameworkDialogFactory.Create<MessageBoxSettings, bool?>(settings, appSettings ?? service.AppSettings)
-            .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        return service.FrameworkDialogFactory.ShowAsync<MessageBoxSettings, bool?>(
+            ownerViewModel, settings, appSettings ?? service.AppSettings);
     }
 
     /// <summary>
@@ -78,15 +79,16 @@ public static class FrameworkDialogsExtensions
     /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
     /// <returns>The list of files selected by the user, or null if the user cancelled.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static Task<string[]> ShowOpenFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, OpenFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
+    public static Task<string[]> ShowOpenFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel,
+        OpenFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
     {
         if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
         if (settings == null) throw new ArgumentNullException(nameof(settings));
 
         DialogLogger.Write($"Title: {settings.Title}");
 
-        return service.FrameworkDialogFactory.Create<OpenFileDialogSettings, string[]>(settings, appSettings ?? service.AppSettings)
-            .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        return service.FrameworkDialogFactory.ShowAsync<OpenFileDialogSettings, string[]>(
+            ownerViewModel, settings, appSettings ?? service.AppSettings);
     }
 
     /// <summary>
@@ -98,15 +100,16 @@ public static class FrameworkDialogsExtensions
     /// <param name="appSettings">Overrides application-wide settings configured on <see cref="IDialogService"/>.</param>
     /// <returns>The path to the file selected by the user, or null if the user cancelled.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static Task<string?> ShowSaveFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel, SaveFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
+    public static Task<string?> ShowSaveFileDialogAsync(this IDialogService service, INotifyPropertyChanged ownerViewModel,
+        SaveFileDialogSettings settings, AppDialogSettingsBase? appSettings = null)
     {
         if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
         if (settings == null) throw new ArgumentNullException(nameof(settings));
 
         DialogLogger.Write($"Title: {settings.Title}");
 
-        return service.FrameworkDialogFactory.Create<SaveFileDialogSettings, string?>(settings, appSettings ?? service.AppSettings)
-            .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        return service.FrameworkDialogFactory.ShowAsync<SaveFileDialogSettings, string?>(
+            ownerViewModel, settings, appSettings ?? service.AppSettings);
     }
 
     /// <summary>
@@ -126,7 +129,7 @@ public static class FrameworkDialogsExtensions
 
         DialogLogger.Write($"Title: {settings.Title}");
 
-        return service.FrameworkDialogFactory.Create<OpenFolderDialogSettings, string?>(settings, appSettings ?? service.AppSettings)
-            .ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        return service.FrameworkDialogFactory.ShowAsync<OpenFolderDialogSettings, string?>(
+            ownerViewModel, settings, appSettings ?? service.AppSettings);
     }
 }
