@@ -59,5 +59,5 @@ public class DialogService : DialogServiceBase
         Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext)).AsWrapper();
 
     protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
-        (ViewLocator.FindView(ownerViewModel) as WindowWrapper)?.Ref;
+        (ViewRegistration.FindView(ownerViewModel) as WindowWrapper)?.Ref;
 }

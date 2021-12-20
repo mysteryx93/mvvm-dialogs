@@ -52,11 +52,11 @@ public static class DialogServiceViews
         {
             if ((bool)e.NewValue)
             {
-                ViewLocator.Register(new ViewWrapper(view));
+                ViewRegistration.Register(new ViewWrapper(view));
             }
             else
             {
-                ViewLocator.Unregister(new ViewWrapper(view));
+                ViewRegistration.Unregister(new ViewWrapper(view));
             }
         }
     }
