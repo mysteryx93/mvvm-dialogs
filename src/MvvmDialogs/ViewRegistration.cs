@@ -11,7 +11,7 @@ namespace MvvmDialogs;
 /// model when using the MVVM pattern. The view will then be used by the
 /// <see cref="DialogServiceBase"/> when opening dialogs.
 /// </summary>
-public static class ViewLocator
+public static class ViewRegistration
 {
     /// <summary>
     /// The registered views.

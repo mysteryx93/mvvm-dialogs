@@ -21,7 +21,7 @@ public class DialogService : DialogServiceBase
     /// </summary>
     /// <remarks>
     /// By default <see cref="ReflectionDialogFactory"/> is used as dialog factory,
-    /// <see cref="NamingConventionDialogTypeLocator"/> is used as dialog type locator
+    /// <see cref="DialogTypeLocatorBase"/> is used as dialog type locator
     /// and <see cref="FrameworkDialogFactory"/> is used as framework dialog factory.
     /// </remarks>
     public DialogService()
@@ -36,7 +36,7 @@ public class DialogService : DialogServiceBase
     /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
     /// <see cref="ReflectionDialogFactory"/>.</param>
     /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
-    /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.</param>
+    /// an instance of <see cref="DialogTypeLocatorBase"/>.</param>
     /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
     /// <see cref="FrameworkDialogFactory"/>.</param>
     public DialogService(
@@ -59,5 +59,5 @@ public class DialogService : DialogServiceBase
         Windows.FirstOrDefault(x => ReferenceEquals(viewModel, x.DataContext)).AsWrapper();
 
     protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
-        (ViewLocator.FindView(ownerViewModel) as WindowWrapper)?.Ref;
+        (ViewRegistration.FindView(ownerViewModel) as WindowWrapper)?.Ref;
 }

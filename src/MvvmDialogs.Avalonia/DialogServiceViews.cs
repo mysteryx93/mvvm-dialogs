@@ -54,11 +54,11 @@ public class DialogServiceViews : AvaloniaObject
         {
             if (e.NewValue.Value)
             {
-                ViewLocator.Register(new ViewWrapper(view));
+                ViewRegistration.Register(new ViewWrapper(view));
             }
             else
             {
-                ViewLocator.Unregister(new ViewWrapper(view));
+                ViewRegistration.Unregister(new ViewWrapper(view));
             }
         }
     }

@@ -170,7 +170,7 @@ public abstract class DialogServiceBase : IDialogService
     private IWindow CreateDialog(Type dialogType, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
     {
         var dialog = DialogFactory.Create(dialogType);
-        dialog.Owner = ViewLocator.FindView(ownerViewModel);
+        dialog.Owner = ViewRegistration.FindView(ownerViewModel);
         dialog.DataContext = viewModel;
 
         return dialog;

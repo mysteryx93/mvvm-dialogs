@@ -41,6 +41,6 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
             OpenFolderDialogSettings s => (IFrameworkDialog<TResult>)new OpenFolderDialog(_api, _pathInfo, s, s2),
             _ => throw new NotSupportedException()
         };
-        return dialog.ShowDialogAsync(ViewLocator.FindView(ownerViewModel));
+        return dialog.ShowDialogAsync(ViewRegistration.FindView(ownerViewModel));
     }
 }
