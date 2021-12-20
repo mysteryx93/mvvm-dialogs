@@ -21,10 +21,14 @@ internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, bool?>
     }
 
     /// <inheritdoc />
-    public override async Task<bool?> ShowDialogAsync(WindowWrapper owner)
+    public override Task<bool?> ShowDialogAsync(WindowWrapper owner) =>
+        owner.Ref.RunUiAsync(() => ShowDialog(owner));
+
+    /// <inheritdoc />
+    public override bool? ShowDialog(WindowWrapper owner)
     {
         var apiSettings = GetApiSettings();
-        var button = await Api.ShowMessageBoxAsync(owner.Ref, apiSettings);
+        var button = Api.ShowMessageBox(owner.Ref, apiSettings);
         var result = button switch
         {
             Win32Result.Yes => true,

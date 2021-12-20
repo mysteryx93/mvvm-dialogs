@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 using Win32CustomPlace = System.Windows.Forms.FileDialogCustomPlace;
@@ -20,10 +19,14 @@ internal class OpenFileDialog : FileDialogBase<OpenFileDialogSettings, string[]>
     }
 
     /// <inheritdoc />
-    public override async Task<string[]> ShowDialogAsync(WindowWrapper owner)
+    public override Task<string[]> ShowDialogAsync(WindowWrapper owner) =>
+        owner.Ref.RunUiAsync(() => ShowDialog(owner));
+
+    /// <inheritdoc />
+    public override string[] ShowDialog(WindowWrapper owner)
     {
         var apiSettings = GetApiSettings();
-        return await Api.ShowOpenFileDialogAsync(owner.Ref, apiSettings) ?? Array.Empty<string>();
+        return Api.ShowOpenFileDialog(owner.Ref, apiSettings);
     }
 
     private OpenFileApiSettings GetApiSettings()

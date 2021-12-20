@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.FrameworkDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs;
@@ -10,7 +11,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs;
 /// </summary>
 /// <typeparam name="TSettings">The type of settings to use for this dialog.</typeparam>
 /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
-public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>
+public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog<TResult>, IFrameworkDialogSync<TResult>
 {
     /// <summary>
     /// Gets the Win32 dialogs API interface.
@@ -62,10 +63,25 @@ public abstract class FrameworkDialogBase<TSettings, TResult> : IFrameworkDialog
         return ShowDialogAsync(window);
     }
 
+    /// <inheritdoc />
+    public TResult ShowDialog(IWindow owner)
+    {
+        if (owner == null) throw new ArgumentNullException(nameof(owner));
+        if (owner is not WindowWrapper window) throw new ArgumentException($"{nameof(owner)} must be of type {nameof(WindowWrapper)}");
+        return ShowDialog(window);
+    }
+
     /// <summary>
     /// Opens a framework dialog with specified owner.
     /// </summary>
     /// <param name="owner">Handle to the window that owns the dialog.</param>
     /// <returns>true if user clicks the OK button; otherwise false.</returns>
     public abstract Task<TResult> ShowDialogAsync(WindowWrapper owner);
+
+    /// <summary>
+    /// Opens a framework dialog with specified owner.
+    /// </summary>
+    /// <param name="owner">Handle to the window that owns the dialog.</param>
+    /// <returns>true if user clicks the OK button; otherwise false.</returns>
+    public abstract TResult ShowDialog(WindowWrapper owner);
 }

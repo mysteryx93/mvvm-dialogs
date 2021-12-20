@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
-using System.Threading.Tasks;
 
-namespace MvvmDialogs.FrameworkDialogs;
+namespace MvvmDialogs.FrameworkDialogs.Wpf;
 
 /// <summary>
 /// Interface responsible for creating framework dialogs.
+/// This provides sync compatibility methods for WPF.
 /// </summary>
-public interface IFrameworkDialogFactory
+public interface IFrameworkDialogFactorySync
 {
     /// <summary>
     /// Shows a framework dialog whose type depends on the settings type.
@@ -17,6 +17,6 @@ public interface IFrameworkDialogFactory
     /// <typeparam name="TSettings">The settings type used to determine the implementation of <see cref="IFrameworkDialog{TResult}"/> to create.</typeparam>
     /// <typeparam name="TResult">The data type returned by the dialog.</typeparam>
     /// <returns>A framework dialog implementing <see cref="IFrameworkDialog{TResult}"/>.</returns>
-    Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    TResult Show<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase;
 }

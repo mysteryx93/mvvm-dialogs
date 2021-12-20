@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -8,37 +8,36 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs.Api;
 internal class FrameworkDialogsApi : IFrameworkDialogsApi
 {
 
-    public Task<MessageBoxResult> ShowMessageBoxAsync(Window owner, MessageBoxApiSettings settings) =>
-        owner.RunUiAsync(() =>
+    public MessageBoxResult ShowMessageBox(Window owner, MessageBoxApiSettings settings) =>
             System.Windows.MessageBox.Show(
                 owner,
                 settings.MessageBoxText,
                 settings.Caption,
                 settings.Buttons,
                 settings.Icon,
-                settings.DefaultButton));
+                settings.DefaultButton);
 
-    public async Task<string[]?> ShowOpenFileDialogAsync(Window owner, OpenFileApiSettings settings)
+    public string[] ShowOpenFileDialog(Window owner, OpenFileApiSettings settings)
     {
         var dialog = new System.Windows.Forms.OpenFileDialog();
         settings.ApplyTo(dialog);
-        var result = await dialog.ShowDialogAsync(owner);
-        return result == DialogResult.OK ? dialog.FileNames : null;
+        var result = dialog.ShowDialog(owner);
+        return result == DialogResult.OK ? dialog.FileNames : Array.Empty<string>();
     }
 
-    public async Task<string?> ShowSaveFileDialogAsync(Window owner, SaveFileApiSettings settings)
+    public string? ShowSaveFileDialog(Window owner, SaveFileApiSettings settings)
     {
         var dialog = new System.Windows.Forms.SaveFileDialog();
         settings.ApplyTo(dialog);
-        var result = await dialog.ShowDialogAsync(owner);
+        var result = dialog.ShowDialog(owner);
         return result == DialogResult.OK ? dialog.FileName : null;
     }
 
-    public async Task<string?> ShowOpenFolderDialogAsync(Window owner, OpenFolderApiSettings settings)
+    public string? ShowOpenFolderDialog(Window owner, OpenFolderApiSettings settings)
     {
         var dialog = new FolderBrowserDialog();
         settings.ApplyTo(dialog);
-        var result = await dialog.ShowDialogAsync(owner);
+        var result = dialog.ShowDialog(owner);
         return result == DialogResult.OK ? dialog.SelectedPath : null;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -14,7 +15,7 @@ namespace MvvmDialogs;
 /// Class abstracting the interaction between view models and views when it comes to
 /// opening dialogs using the MVVM pattern in WPF.
 /// </summary>
-public class DialogService : DialogServiceBase
+public class DialogService : DialogServiceBase, IDialogServiceSync
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
@@ -60,4 +61,43 @@ public class DialogService : DialogServiceBase
 
     protected Window? FindOwnerWindow(INotifyPropertyChanged ownerViewModel) =>
         (ViewRegistration.FindView(ownerViewModel) as WindowWrapper)?.Ref;
+
+    /// <inheritdoc />
+    public bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+        ShowDialogInternal(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel));
+
+    /// <inheritdoc />
+    public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+        ShowDialogInternal(ownerViewModel, viewModel, typeof(T));
+
+    /// <summary>
+    /// Displays a modal dialog of specified type.
+    /// </summary>
+    /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
+    /// <param name="viewModel">The view model of the new dialog.</param>
+    /// <param name="dialogType">The type of the dialog to show.</param>
+    /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
+    /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
+    protected bool? ShowDialogInternal(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
+    {
+        if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
+        if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+        DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
+
+        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
+        if (viewModel is ICloseable c)
+        {
+            c.RequestClose += (_, _) => dialog.Close();
+        }
+        if (viewModel is IActivable activable)
+        {
+            activable.RequestActivate += (_, _) => dialog.Activate();
+        }
+        var result = dialog.AsSync().ShowDialog();
+
+        DialogLogger.Write($"Dialog: {dialog.GetType()}; Result: {result}");
+
+        return viewModel.DialogResult;
+    }
 }

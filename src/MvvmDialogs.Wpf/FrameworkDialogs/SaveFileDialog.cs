@@ -17,11 +17,14 @@ internal class SaveFileDialog : FileDialogBase<SaveFileDialogSettings, string?>
     }
 
     /// <inheritdoc />
-    public override Task<string?> ShowDialogAsync(WindowWrapper owner)
+    public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
+        owner.Ref.RunUiAsync(() => ShowDialog(owner));
+
+    /// <inheritdoc />
+    public override string? ShowDialog(WindowWrapper owner)
     {
         var apiSettings = GetApiSettings();
-        return Api.ShowSaveFileDialogAsync(owner.Ref, apiSettings);
-        // return Task.FromResult(Api.ShowSaveFileDialog(owner.Ref, apiSettings));
+        return Api.ShowSaveFileDialog(owner.Ref, apiSettings);
     }
 
     private SaveFileApiSettings GetApiSettings()

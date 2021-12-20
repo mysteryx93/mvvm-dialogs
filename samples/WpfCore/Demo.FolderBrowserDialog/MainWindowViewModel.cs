@@ -29,7 +29,7 @@ namespace Demo.FolderBrowserDialog
 
         public ICommand BrowseFolderCommand { get; }
 
-        private async void BrowseFolder()
+        private void BrowseFolder()
         {
             var settings = new OpenFolderDialogSettings
             {
@@ -37,7 +37,7 @@ namespace Demo.FolderBrowserDialog
                 InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
             };
 
-            var result = await dialogService.ShowOpenFolderDialogAsync(this, settings);
+            var result = dialogService.ShowOpenFolderDialog(this, settings);
             if (result != null)
             {
                 Path = result;

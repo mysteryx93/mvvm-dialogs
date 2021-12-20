@@ -17,10 +17,14 @@ internal class OpenFolderDialog : FrameworkDialogBase<OpenFolderDialogSettings, 
     }
 
     /// <inheritdoc />
-    public override Task<string?> ShowDialogAsync(WindowWrapper owner)
+    public override Task<string?> ShowDialogAsync(WindowWrapper owner) =>
+        owner.Ref.RunUiAsync(() => ShowDialog(owner));
+
+    /// <inheritdoc />
+    public override string? ShowDialog(WindowWrapper owner)
     {
         var apiSettings = GetApiSettings();
-        return Api.ShowOpenFolderDialogAsync(owner.Ref, apiSettings);
+        return Api.ShowOpenFolderDialog(owner.Ref, apiSettings);
     }
 
     private OpenFolderApiSettings GetApiSettings() =>

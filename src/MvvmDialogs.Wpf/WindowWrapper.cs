@@ -10,7 +10,7 @@ namespace MvvmDialogs.Wpf;
 /// Class wrapping an instance of WPF <see cref="Window"/> within <see cref="IWindow"/>.
 /// </summary>
 /// <seealso cref="IWindow" />
-public class WindowWrapper : IWindow
+public class WindowWrapper : IWindow, IWindowSync
 {
     /// <summary>
     /// Gets the Window reference held by this class.
@@ -56,7 +56,10 @@ public class WindowWrapper : IWindow
     }
 
     /// <inheritdoc />
-    public Task<bool?> ShowDialogAsync() => Ref.ShowDialogAsync();
+    public Task<bool?> ShowDialogAsync() => Ref.RunUiAsync(ShowDialog);
+
+    /// <inheritdoc />
+    public bool? ShowDialog() => Ref.ShowDialog();
 
     /// <inheritdoc />
     public void Show() => Ref.Show();

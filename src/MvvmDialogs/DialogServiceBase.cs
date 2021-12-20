@@ -117,7 +117,7 @@ public abstract class DialogServiceBase : IDialogService
 
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
-        var dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
         if (viewModel is ICloseable closable)
         {
             closable.RequestClose += (_, _) => dialog.Close();
@@ -144,7 +144,7 @@ public abstract class DialogServiceBase : IDialogService
 
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
 
-        var dialog = CreateDialog(dialogType, ownerViewModel, viewModel);
+        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
         if (viewModel is ICloseable c)
         {
             c.RequestClose += (_, _) => dialog.Close();
@@ -167,7 +167,14 @@ public abstract class DialogServiceBase : IDialogService
     /// <returns>A Window, or null.</returns>
     protected abstract IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel);
 
-    private IWindow CreateDialog(Type dialogType, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel)
+    /// <summary>
+    /// Creates a new window of specified type.
+    /// </summary>
+    /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
+    /// <param name="viewModel">The view model of the new dialog.</param>
+    /// <param name="dialogType">The type of the dialog to show.</param>
+    /// <returns>The newly created window.</returns>
+    protected IWindow CreateDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
     {
         var dialog = DialogFactory.Create(dialogType);
         dialog.Owner = ViewRegistration.FindView(ownerViewModel);
