@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -17,7 +17,7 @@
     <PackageVersion>9.0.0</PackageVersion>
     <Copyright>Copyright © 2009-2021 MVVM Dialogs contributors</Copyright>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />

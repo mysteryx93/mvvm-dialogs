@@ -40,7 +40,6 @@ internal class MessageBox : FrameworkDialogBase<MessageBoxSettings, bool?>
             Text = Settings.Text,
             Buttons = SyncButton(Settings.Button),
             Icon = SyncIcon(Settings.Icon),
-            Style = AppSettings.MessageBoxStyle,
             EnterDefaultButton = SyncDefaultEnter(Settings.Button, Settings.DefaultValue),
             EscDefaultButton = SyncDefaultEsc(Settings.Button)
         };

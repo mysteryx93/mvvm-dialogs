@@ -10,7 +10,6 @@ internal class MessageBoxApiSettings
     public ButtonEnum Buttons { get; set; } = ButtonEnum.Ok;
     public Icon Icon { get; set; } = Icon.None;
     public WindowStartupLocation StartupLocation { get; set; } = WindowStartupLocation.CenterScreen;
-    public Style Style { get; set; } = Style.None;
     public ClickEnum EnterDefaultButton { get; set; } = ClickEnum.Default;
     public ClickEnum EscDefaultButton { get; set; } = ClickEnum.Default;
 }

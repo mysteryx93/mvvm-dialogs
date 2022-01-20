@@ -16,7 +16,6 @@ internal class FrameworkDialogsApi : IFrameworkDialogsApi
             ButtonDefinitions = settings.Buttons,
             Icon = settings.Icon,
             WindowStartupLocation = settings.StartupLocation,
-            Style = settings.Style,
             EnterDefaultButton = settings.EnterDefaultButton,
             EscDefaultButton = settings.EscDefaultButton
         }).ShowDialog(owner);
