@@ -13,7 +13,7 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
     private readonly IFrameworkDialogsApi _api;
     private readonly IPathInfoFactory _pathInfo;
 
-    public FrameworkDialogFactory() : this(null)
+    public FrameworkDialogFactory() : this(null, null)
     {}
 
     /// <summary>
@@ -28,7 +28,7 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
     }
 
     /// <inheritdoc />
-    public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase
     {
         var s2 = (AppDialogSettings)appSettings;
