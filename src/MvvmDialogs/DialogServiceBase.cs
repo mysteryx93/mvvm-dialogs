@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using MvvmDialogs.DialogTypeLocators;
-using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs;
 
@@ -16,15 +15,13 @@ public abstract class DialogServiceBase : IDialogService
     /// Initializes a new instance of the <see cref="DialogServiceBase"/> class.
     /// </summary>
     /// <param name="appSettings">Set application-wide settings.</param>
-    /// <param name="dialogFactory">Factory responsible for creating dialogs.</param>
+    /// <param name="dialogManager">Class responsible to manage UI interactions.</param>
     /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model.</param>
-    /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs.</param>
-    protected DialogServiceBase(AppDialogSettingsBase appSettings, IDialogFactory dialogFactory, IDialogTypeLocator dialogTypeLocator, IFrameworkDialogFactory frameworkDialogFactory)
+    protected DialogServiceBase(AppDialogSettingsBase appSettings, IDialogManager dialogManager, IDialogTypeLocator dialogTypeLocator)
     {
         AppSettings = appSettings;
-        DialogFactory = dialogFactory;
+        DialogManager = dialogManager;
         DialogTypeLocator = dialogTypeLocator;
-        FrameworkDialogFactory = frameworkDialogFactory;
     }
 
     /// <summary>
@@ -33,14 +30,9 @@ public abstract class DialogServiceBase : IDialogService
     public AppDialogSettingsBase AppSettings { get; }
 
     /// <summary>
-    /// Factory responsible for creating framework dialogs.
-    /// </summary>
-    public IFrameworkDialogFactory FrameworkDialogFactory { get; }
-
-    /// <summary>
     /// Factory responsible for creating dialogs.
     /// </summary>
-    protected IDialogFactory DialogFactory { get; }
+    public IDialogManager DialogManager { get; }
 
     /// <summary>
     /// Locator responsible for finding a dialog type matching a view model.
@@ -116,17 +108,7 @@ public abstract class DialogServiceBase : IDialogService
         if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
-
-        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
-        if (viewModel is ICloseable closable)
-        {
-            closable.RequestClose += (_, _) => dialog.Close();
-        }
-        if (viewModel is IActivable activable)
-        {
-            activable.RequestActivate += (_, _) => dialog.Activate();
-        }
-        dialog.Show();
+        DialogManager.Show(ownerViewModel, viewModel, dialogType);
     }
 
     /// <summary>
@@ -143,20 +125,8 @@ public abstract class DialogServiceBase : IDialogService
         if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
-
-        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
-        if (viewModel is ICloseable c)
-        {
-            c.RequestClose += (_, _) => dialog.Close();
-        }
-        if (viewModel is IActivable activable)
-        {
-            activable.RequestActivate += (_, _) => dialog.Activate();
-        }
-        var result = await dialog.ShowDialogAsync();
-
-        DialogLogger.Write($"Dialog: {dialog.GetType()}; Result: {result}");
-
+        var result = await DialogManager.ShowDialogAsync(ownerViewModel, viewModel, dialogType);
+        DialogLogger.Write($"Dialog: {dialogType}; Result: {result}");
         return viewModel.DialogResult;
     }
 
@@ -166,20 +136,4 @@ public abstract class DialogServiceBase : IDialogService
     /// <param name="viewModel">The ViewModel to search for.</param>
     /// <returns>A Window, or null.</returns>
     protected abstract IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel);
-
-    /// <summary>
-    /// Creates a new window of specified type.
-    /// </summary>
-    /// <param name="ownerViewModel">A view model that represents the owner window of the dialog.</param>
-    /// <param name="viewModel">The view model of the new dialog.</param>
-    /// <param name="dialogType">The type of the dialog to show.</param>
-    /// <returns>The newly created window.</returns>
-    protected IWindow CreateDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
-    {
-        var dialog = DialogFactory.Create(dialogType);
-        dialog.Owner = ViewRegistration.FindView(ownerViewModel);
-        dialog.DataContext = viewModel;
-
-        return dialog;
-    }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using MvvmDialogs.Avalonia.FrameworkDialogs.Api;
 using MvvmDialogs.FrameworkDialogs;
 
@@ -29,11 +28,11 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
     }
 
     /// <inheritdoc />
-    public Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase
     {
         var s2 = (AppDialogSettings)appSettings;
-        var dialog = settings switch
+        return settings switch
         {
             MessageBoxSettings s => (IFrameworkDialog<TResult>)new MessageBox(_api, _pathInfo, s, s2),
             OpenFileDialogSettings s => (IFrameworkDialog<TResult>)new OpenFileDialog(_api, _pathInfo, s, s2),
@@ -41,6 +40,5 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
             OpenFolderDialogSettings s => (IFrameworkDialog<TResult>)new OpenFolderDialog(_api, _pathInfo, s, s2),
             _ => throw new NotSupportedException()
         };
-        return dialog.ShowDialogAsync(ViewRegistration.FindView(ownerViewModel));
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs;

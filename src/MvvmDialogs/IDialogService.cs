@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
-using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.DialogTypeLocators;
 
 namespace MvvmDialogs;
 
@@ -13,7 +13,7 @@ public interface IDialogService
     /// <summary>
     /// Factory responsible for creating framework dialogs.
     /// </summary>
-    IFrameworkDialogFactory FrameworkDialogFactory { get; }
+    IDialogManager DialogManager { get; }
 
     /// <summary>
     /// Set application-wide settings.

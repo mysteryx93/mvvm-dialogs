@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using MvvmDialogs.DialogTypeLocators;
 using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.Wpf;
 using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 
@@ -101,26 +101,26 @@ public static class Extensions
     }
 
     /// <summary>
-    /// Returns the Sync interface of an IFrameworkDialogFactory.
-    /// </summary>
-    internal static IFrameworkDialogFactorySync AsSync(this IFrameworkDialogFactory factory) =>
-        (IFrameworkDialogFactorySync)factory;
-
-    /// <summary>
     /// Returns the Sync interface of an IFrameworkDialog.
     /// </summary>
     internal static IFrameworkDialogSync<T> AsSync<T>(this IFrameworkDialog<T> factory) =>
-        (IFrameworkDialogSync<T>)factory;
+        factory as IFrameworkDialogSync<T> ?? throw new InvalidCastException("IFrameworkDialog<T> instance doesn't implement IFrameworkDialogAsync<T>.");
 
     /// <summary>
     /// Returns the Sync interface of an IWindow.
     /// </summary>
     internal static IWindowSync AsSync(this IWindow window) =>
-        (IWindowSync)window;
+        window as IWindowSync ?? throw new InvalidCastException("IWindow instance doesn't implement IWindowSync.");
 
     /// <summary>
     /// Returns the Sync interface of an IDialogService.
     /// </summary>
     internal static IDialogServiceSync AsSync(this IDialogService service) =>
-        (IDialogServiceSync)service;
+        service as IDialogServiceSync ?? throw new InvalidCastException("IDialogService instance doesn't implement IDialogServiceSync.");
+
+    /// <summary>
+    /// Returns the Sync interface of an IDialogManager.
+    /// </summary>
+    internal static IDialogManagerSync AsSync(this IDialogManager service) =>
+        service as IDialogManagerSync ?? throw new InvalidCastException("IDialogManager instance doesn't implement IDialogManagerSync.");
 }

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
-using MvvmDialogs.FrameworkDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs.Api;
 
 namespace MvvmDialogs.Wpf.FrameworkDialogs;
@@ -10,7 +9,7 @@ namespace MvvmDialogs.Wpf.FrameworkDialogs;
 /// <summary>
 /// Default framework dialog factory that will create instances of standard Windows dialogs.
 /// </summary>
-public class FrameworkDialogFactory : IFrameworkDialogFactory, IFrameworkDialogFactorySync
+public class FrameworkDialogFactory : IFrameworkDialogFactory
 {
     private readonly IFrameworkDialogsApi api;
     private readonly IPathInfoFactory pathInfo;
@@ -29,27 +28,29 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory, IFrameworkDialogF
         this.pathInfo = pathInfo ?? new PathInfoFactory();
     }
 
-    /// <inheritdoc />
-    public virtual Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
-        where TSettings : DialogSettingsBase
-    {
-        var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
-        var owner = ViewRegistration.FindView(ownerViewModel);
-        return dialog.ShowDialogAsync(owner);
-    }
+    ///// <inheritdoc />
+    //public virtual Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    //    where TSettings : DialogSettingsBase
+    //{
+    //    var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
+    //    var owner = ViewRegistration.FindView(ownerViewModel);
+    //    return dialog.ShowDialogAsync(owner);
+    //}
+
+    ///// <inheritdoc />
+    //public virtual TResult Show<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    //    where TSettings : DialogSettingsBase
+    //{
+    //    var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
+    //    var owner = ViewRegistration.FindView(ownerViewModel);
+    //    var dialogSync = dialog as IFrameworkDialogSync<TResult> ??
+    //                     throw new InvalidCastException("Dialog cannot be shows with non-async method because it doesn't implement IDialogFrameworkDialogSync.");
+    //    return dialogSync.ShowDialog(owner);
+    //}
 
     /// <inheritdoc />
-    public virtual TResult Show<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
+    public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase
-    {
-        var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
-        var owner = ViewRegistration.FindView(ownerViewModel);
-        var dialogSync = dialog as IFrameworkDialogSync<TResult> ??
-                         throw new InvalidCastException("Dialog cannot be shows with non-async method because it doesn't implement IDialogFrameworkDialogSync.");
-        return dialogSync.ShowDialog(owner);
-    }
-
-    protected virtual IFrameworkDialog<TResult> GetDialog<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
     {
         var s2 = (AppDialogSettings)appSettings;
         return settings switch

@@ -65,7 +65,7 @@ public static class FrameworkDialogsExtensions
 
         DialogLogger.Write($"Caption: {settings?.Title}; Message: {settings?.Text}");
 
-        return service.FrameworkDialogFactory.ShowAsync<MessageBoxSettings, bool?>(
+        return service.DialogManager.ShowFrameworkDialogAsync<MessageBoxSettings, bool?>(
             ownerViewModel, settings ?? new MessageBoxSettings(), appSettings ?? service.AppSettings);
     }
 
@@ -85,7 +85,7 @@ public static class FrameworkDialogsExtensions
 
         DialogLogger.Write($"Title: {settings?.Title}");
 
-        return service.FrameworkDialogFactory.ShowAsync<OpenFileDialogSettings, string[]>(
+        return service.DialogManager.ShowFrameworkDialogAsync<OpenFileDialogSettings, string[]>(
             ownerViewModel, settings ?? new OpenFileDialogSettings(), appSettings ?? service.AppSettings);
     }
 
@@ -105,7 +105,7 @@ public static class FrameworkDialogsExtensions
 
         DialogLogger.Write($"Title: {settings?.Title}");
 
-        return service.FrameworkDialogFactory.ShowAsync<SaveFileDialogSettings, string?>(
+        return service.DialogManager.ShowFrameworkDialogAsync<SaveFileDialogSettings, string?>(
             ownerViewModel, settings ?? new SaveFileDialogSettings(), appSettings ?? service.AppSettings);
     }
 
@@ -125,7 +125,7 @@ public static class FrameworkDialogsExtensions
 
         DialogLogger.Write($"Title: {settings?.Title}");
 
-        return service.FrameworkDialogFactory.ShowAsync<OpenFolderDialogSettings, string?>(
+        return service.DialogManager.ShowFrameworkDialogAsync<OpenFolderDialogSettings, string?>(
             ownerViewModel, settings ?? new OpenFolderDialogSettings(), appSettings ?? service.AppSettings);
     }
 }

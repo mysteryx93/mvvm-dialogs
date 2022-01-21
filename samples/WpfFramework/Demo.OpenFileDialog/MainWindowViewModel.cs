@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -30,19 +29,19 @@ public class MainWindowViewModel : ViewModelBase
 
     public ICommand OpenFileCommand { get; }
 
-    private async Task OpenFile()
+    private void OpenFile()
     {
         var settings = new OpenFileDialogSettings
         {
             Title = "This Is The Title",
-            InitialDirectory = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-            Filter = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
+            InitialPath = IOPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!
+            // Filters = "Text Documents (*.txt)|*.txt|All Files (*.*)|*.*"
         };
 
-        var success = await dialogService.ShowOpenFileDialogAsync(this, settings);
-        if (success == true)
+        var success = dialogService.ShowOpenFileDialog(this, settings);
+        if (success.Length > 0)
         {
-            Path = settings.FileName;
+            Path = success[0];
         }
     }
 }

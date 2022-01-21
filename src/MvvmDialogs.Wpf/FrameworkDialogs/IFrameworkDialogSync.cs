@@ -1,5 +1,5 @@
 
-namespace MvvmDialogs.FrameworkDialogs.Wpf;
+namespace MvvmDialogs.Wpf.FrameworkDialogs;
 
 /// <summary>
 /// Interface representing a framework dialog.

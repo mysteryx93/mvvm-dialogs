@@ -6,7 +6,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using MvvmDialogs.Avalonia.FrameworkDialogs;
 using MvvmDialogs.DialogTypeLocators;
-using MvvmDialogs.FrameworkDialogs;
 
 namespace MvvmDialogs.Avalonia;
 
@@ -33,21 +32,16 @@ public class DialogService : DialogServiceBase
     /// Initializes a new instance of the <see cref="DialogService"/> class.
     /// </summary>
     /// <param name="settings">Set application-wide settings.</param>
-    /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
-    /// <see cref="ReflectionDialogFactory"/>.</param>
+    /// <param name="dialogManager">Class responsible for UI interactions.</param>
     /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
     /// an instance of <see cref="DialogTypeLocatorBase"/>.</param>
-    /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
-    /// <see cref="FrameworkDialogFactory"/>.</param>
     public DialogService(
         AppDialogSettings? settings = null,
-        IDialogFactory? dialogFactory = null,
-        IDialogTypeLocator? dialogTypeLocator = null,
-        IFrameworkDialogFactory? frameworkDialogFactory = null)
+        IDialogManager? dialogManager = null,
+        IDialogTypeLocator? dialogTypeLocator = null)
         : base(settings ?? new AppDialogSettings(),
-            dialogFactory ?? new ReflectionDialogFactory(),
-            dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
-            frameworkDialogFactory ?? new FrameworkDialogFactory())
+            dialogManager ?? new DialogManager(new ReflectionDialogFactory(), new FrameworkDialogFactory()),
+            dialogTypeLocator ?? new NamingConventionDialogTypeLocator())
     {
     }
 

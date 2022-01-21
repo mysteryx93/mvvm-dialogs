@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using MvvmDialogs.DialogTypeLocators;
-using MvvmDialogs.FrameworkDialogs;
 using MvvmDialogs.Wpf;
 using MvvmDialogs.Wpf.FrameworkDialogs;
 using Application = System.Windows.Application;
@@ -34,21 +33,16 @@ public class DialogService : DialogServiceBase, IDialogServiceSync
     /// Initializes a new instance of the <see cref="DialogService"/> class.
     /// </summary>
     /// <param name="settings">Set application-wide settings.</param>
-    /// <param name="dialogFactory">Factory responsible for creating dialogs. Default value is an instance of
-    /// <see cref="ReflectionDialogFactory"/>.</param>
+    /// <param name="dialogManager">Class responsible for UI interactions.</param>
     /// <param name="dialogTypeLocator">Locator responsible for finding a dialog type matching a view model. Default value is
     /// an instance of <see cref="NamingConventionDialogTypeLocator"/>.</param>
-    /// <param name="frameworkDialogFactory">Factory responsible for creating framework dialogs. Default value is an instance of
-    /// <see cref="FrameworkDialogFactory"/>.</param>
     public DialogService(
         AppDialogSettings? settings = null,
-        IDialogFactory? dialogFactory = null,
-        IDialogTypeLocator? dialogTypeLocator = null,
-        IFrameworkDialogFactory? frameworkDialogFactory = null)
+        IDialogManager? dialogManager = null,
+        IDialogTypeLocator? dialogTypeLocator = null)
         : base(settings ?? new AppDialogSettings(),
-            dialogFactory ?? new ReflectionDialogFactory(),
-            dialogTypeLocator ?? new NamingConventionDialogTypeLocator(),
-            frameworkDialogFactory ?? new FrameworkDialogFactory())
+            dialogManager ?? new DialogManagerSync(new ReflectionDialogFactory(), new FrameworkDialogFactory()),
+            dialogTypeLocator ?? new NamingConventionDialogTypeLocator())
     {
     }
 
@@ -84,20 +78,8 @@ public class DialogService : DialogServiceBase, IDialogServiceSync
         if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
-
-        var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
-        if (viewModel is ICloseable c)
-        {
-            c.RequestClose += (_, _) => dialog.Close();
-        }
-        if (viewModel is IActivable activable)
-        {
-            activable.RequestActivate += (_, _) => dialog.Activate();
-        }
-        var result = dialog.AsSync().ShowDialog();
-
-        DialogLogger.Write($"Dialog: {dialog.GetType()}; Result: {result}");
-
+        var result = DialogManager.AsSync().ShowDialog(ownerViewModel, viewModel, dialogType);
+        DialogLogger.Write($"Dialog: {dialogType}; Result: {result}");
         return viewModel.DialogResult;
     }
 }

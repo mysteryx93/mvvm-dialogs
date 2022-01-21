@@ -15,15 +15,15 @@ namespace Demo.CustomDialogTypeLocator
         {
             dialogService = new DialogService(dialogTypeLocator: new MyCustomDialogTypeLocator());
 
-            ShowDialogCommand = new RelayCommand(ShowDialogAsync);
+            ShowDialogCommand = new RelayCommand(ShowDialog);
         }
 
         public ICommand ShowDialogCommand { get; }
 
-        private Task ShowDialogAsync()
+        private void ShowDialog()
         {
             var dialogViewModel = new MyDialogVM();
-            return dialogService.ShowDialogAsync(this, dialogViewModel);
+            dialogService.ShowDialog(this, dialogViewModel);
         }
     }
 }
