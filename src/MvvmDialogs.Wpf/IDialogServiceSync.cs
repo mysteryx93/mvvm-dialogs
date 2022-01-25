@@ -14,7 +14,7 @@ public interface IDialogServiceSync
     /// <param name="viewModel">The view model of the new dialog.</param>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel);
+    bool? ShowDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel);
 
     /// <summary>
     /// Displays a modal dialog of specified type <typeparamref name="T"/>.
@@ -24,5 +24,5 @@ public interface IDialogServiceSync
     /// <typeparam name="T">The type of the dialog to show.</typeparam>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel);
+    bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel);
 }

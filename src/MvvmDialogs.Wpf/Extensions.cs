@@ -24,7 +24,7 @@ public static class Extensions
     /// <param name="viewModel">The view model of the new dialog.</param>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static bool? ShowDialog(this IDialogService service, INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public static bool? ShowDialog(this IDialogService service, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         service.AsSync().ShowDialog(ownerViewModel, viewModel);
 
     /// <summary>
@@ -36,7 +36,7 @@ public static class Extensions
     /// <typeparam name="T">The type of the dialog to show.</typeparam>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static bool? ShowDialog<T>(this IDialogService service, INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public static bool? ShowDialog<T>(this IDialogService service, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         service.AsSync().ShowDialog(ownerViewModel, viewModel);
 
     /// <summary>

@@ -57,11 +57,11 @@ public class DialogService : DialogServiceBase, IDialogServiceSync
         (ViewRegistration.FindView(ownerViewModel) as WindowWrapper)?.Ref;
 
     /// <inheritdoc />
-    public bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public bool? ShowDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         ShowDialogInternal(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel));
 
     /// <inheritdoc />
-    public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public bool? ShowDialog<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         ShowDialogInternal(ownerViewModel, viewModel, typeof(T));
 
     /// <summary>
@@ -72,7 +72,7 @@ public class DialogService : DialogServiceBase, IDialogServiceSync
     /// <param name="dialogType">The type of the dialog to show.</param>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    protected bool? ShowDialogInternal(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
+    protected bool? ShowDialogInternal(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
     {
         if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
         if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -80,6 +80,6 @@ public class DialogService : DialogServiceBase, IDialogServiceSync
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
         var result = DialogManager.AsSync().ShowDialog(ownerViewModel, viewModel, dialogType);
         DialogLogger.Write($"Dialog: {dialogType}; Result: {result}");
-        return viewModel.DialogResult;
+        return result;
     }
 }
