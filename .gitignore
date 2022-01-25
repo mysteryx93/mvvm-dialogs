@@ -18,8 +18,10 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-# Visual Studo 2015 cache/options directory
+# Cache/options directory for Visual Studio, Visual Studio Code and JetBrains Rider
 .vs/
+.vscode/
+.idea/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -33,9 +35,6 @@ artifacts/
 *.nupkg
 *.snupkg
 **/packages/*
-
-# Rider IDE
-# .idea
 
 # ReSharper
 src/_ReSharper.Caches/
