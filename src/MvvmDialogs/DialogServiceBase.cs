@@ -48,11 +48,11 @@ public abstract class DialogServiceBase : IDialogService
         ShowInternal(ownerViewModel, viewModel, typeof(T));
 
     /// <inheritdoc />
-    public Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         ShowDialogInternalAsync(ownerViewModel, viewModel, DialogTypeLocator.Locate(viewModel));
 
     /// <inheritdoc />
-    public Task<bool?> ShowDialogAsync<T>(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
+    public Task<bool?> ShowDialogAsync<T>(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
         ShowDialogInternalAsync(ownerViewModel, viewModel, typeof(T));
 
     /// <summary>
@@ -119,7 +119,7 @@ public abstract class DialogServiceBase : IDialogService
     /// <param name="dialogType">The type of the dialog to show.</param>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    protected async Task<bool?> ShowDialogInternalAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
+    protected async Task<bool?> ShowDialogInternalAsync(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
     {
         if (ownerViewModel == null) throw new ArgumentNullException(nameof(ownerViewModel));
         if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
@@ -127,7 +127,7 @@ public abstract class DialogServiceBase : IDialogService
         DialogLogger.Write($"Dialog: {dialogType}; View model: {viewModel.GetType()}; Owner: {ownerViewModel.GetType()}");
         var result = await DialogManager.ShowDialogAsync(ownerViewModel, viewModel, dialogType);
         DialogLogger.Write($"Dialog: {dialogType}; Result: {result}");
-        return viewModel.DialogResult;
+        return result;
     }
 
     /// <summary>
