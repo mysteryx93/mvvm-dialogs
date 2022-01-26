@@ -28,26 +28,6 @@ public class FrameworkDialogFactory : IFrameworkDialogFactory
         this.pathInfo = pathInfo ?? new PathInfoFactory();
     }
 
-    ///// <inheritdoc />
-    //public virtual Task<TResult> ShowAsync<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
-    //    where TSettings : DialogSettingsBase
-    //{
-    //    var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
-    //    var owner = ViewRegistration.FindView(ownerViewModel);
-    //    return dialog.ShowDialogAsync(owner);
-    //}
-
-    ///// <inheritdoc />
-    //public virtual TResult Show<TSettings, TResult>(INotifyPropertyChanged ownerViewModel, TSettings settings, AppDialogSettingsBase appSettings)
-    //    where TSettings : DialogSettingsBase
-    //{
-    //    var dialog = GetDialog<TSettings, TResult>(settings, appSettings);
-    //    var owner = ViewRegistration.FindView(ownerViewModel);
-    //    var dialogSync = dialog as IFrameworkDialogSync<TResult> ??
-    //                     throw new InvalidCastException("Dialog cannot be shows with non-async method because it doesn't implement IDialogFrameworkDialogSync.");
-    //    return dialogSync.ShowDialog(owner);
-    //}
-
     /// <inheritdoc />
     public virtual IFrameworkDialog<TResult> Create<TSettings, TResult>(TSettings settings, AppDialogSettingsBase appSettings)
         where TSettings : DialogSettingsBase

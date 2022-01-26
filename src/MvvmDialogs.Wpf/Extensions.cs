@@ -24,7 +24,7 @@ public static class Extensions
     /// <param name="viewModel">The view model of the new dialog.</param>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static bool? ShowDialog(this IDialogService service, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
+    public static bool? ShowDialog(this IDialogService service, INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
         service.AsSync().ShowDialog(ownerViewModel, viewModel);
 
     /// <summary>
@@ -36,7 +36,7 @@ public static class Extensions
     /// <typeparam name="T">The type of the dialog to show.</typeparam>
     /// <returns>A nullable value of type <see cref="bool"/> that signifies how a window was closed by the user.</returns>
     /// <exception cref="ViewNotRegisteredException">No view is registered with specified owner view model as data context.</exception>
-    public static bool? ShowDialog<T>(this IDialogService service, INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel) =>
+    public static bool? ShowDialog<T>(this IDialogService service, INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel) =>
         service.AsSync().ShowDialog(ownerViewModel, viewModel);
 
     /// <summary>
@@ -104,7 +104,7 @@ public static class Extensions
     /// Returns the Sync interface of an IFrameworkDialog.
     /// </summary>
     internal static IFrameworkDialogSync<T> AsSync<T>(this IFrameworkDialog<T> factory) =>
-        factory as IFrameworkDialogSync<T> ?? throw new InvalidCastException("IFrameworkDialog<T> instance doesn't implement IFrameworkDialogAsync<T>.");
+        factory as IFrameworkDialogSync<T> ?? throw new InvalidCastException("IFrameworkDialog<T> instance doesn't implement IFrameworkDialogSync<T>.");
 
     /// <summary>
     /// Returns the Sync interface of an IWindow.

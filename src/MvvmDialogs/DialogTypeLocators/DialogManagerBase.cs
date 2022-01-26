@@ -6,7 +6,7 @@ using MvvmDialogs.FrameworkDialogs;
 namespace MvvmDialogs.DialogTypeLocators;
 
 /// <inheritdoc />
-public class DialogManager : IDialogManager
+public class DialogManagerBase : IDialogManager
 {
     /// <summary>
     /// A factory to resolve dialog types.
@@ -22,7 +22,7 @@ public class DialogManager : IDialogManager
     /// </summary>
     /// <param name="dialogFactory">A factory to resolve dialog types.</param>
     /// <param name="frameworkDialogFactory">A factory to resolve framework dialog types.</param>
-    public DialogManager(IDialogFactory dialogFactory, IFrameworkDialogFactory frameworkDialogFactory)
+    public DialogManagerBase(IDialogFactory dialogFactory, IFrameworkDialogFactory frameworkDialogFactory)
     {
         DialogFactory = dialogFactory;
         FrameworkDialogFactory = frameworkDialogFactory;

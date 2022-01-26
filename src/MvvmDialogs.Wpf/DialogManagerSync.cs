@@ -2,17 +2,18 @@
 using System.ComponentModel;
 using MvvmDialogs.DialogTypeLocators;
 using MvvmDialogs.FrameworkDialogs;
+using MvvmDialogs.Wpf.FrameworkDialogs;
 
 namespace MvvmDialogs.Wpf
 {
     /// <summary>
     /// DialogManager that supports extra sync methods to show dialogs.
     /// </summary>
-    public class DialogManagerSync : DialogManager, IDialogManagerSync
+    public class DialogManager : DialogManagerBase, IDialogManagerSync
     {
         /// <inheritdoc />
-        public DialogManagerSync(IDialogFactory dialogFactory, IFrameworkDialogFactory frameworkDialogFactory) :
-            base(dialogFactory, frameworkDialogFactory)
+        public DialogManager(IDialogFactory? dialogFactory, IFrameworkDialogFactory? frameworkDialogFactory) :
+            base(dialogFactory ?? new ReflectionDialogFactory(), frameworkDialogFactory ?? new FrameworkDialogFactory())
         {
         }
 
