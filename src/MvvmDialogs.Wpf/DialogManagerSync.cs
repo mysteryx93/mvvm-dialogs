@@ -18,10 +18,11 @@ namespace MvvmDialogs.Wpf
         }
 
         /// <inheritdoc />
-        public virtual bool? ShowDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
+        public virtual bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
         {
             var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
-            return dialog.AsSync().ShowDialog();
+            dialog.AsSync().ShowDialog();
+            return viewModel.DialogResult;
         }
 
         /// <inheritdoc />

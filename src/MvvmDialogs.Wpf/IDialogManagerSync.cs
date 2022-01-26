@@ -13,7 +13,7 @@ public interface IDialogManagerSync
     /// <param name="viewModel">The view model of the new dialog.</param>
     /// <param name="dialogType">The type of the dialog to show.</param>
     /// <returns>The dialog result.</returns>
-    bool? ShowDialog(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType);
+    bool? ShowDialog(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType);
 
     /// <summary>
     /// Shows a framework dialog whose type depends on the settings type.

@@ -36,10 +36,11 @@ public class DialogManagerBase : IDialogManager
     }
 
     /// <inheritdoc />
-    public virtual Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, INotifyPropertyChanged viewModel, Type dialogType)
+    public virtual async Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
     {
         var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
-        return dialog.ShowDialogAsync();
+        await dialog.ShowDialogAsync().ConfigureAwait(true);
+        return viewModel.DialogResult;
     }
 
     /// <summary>
