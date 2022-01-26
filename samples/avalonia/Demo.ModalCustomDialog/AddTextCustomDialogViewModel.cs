@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace Demo.ModalCustomDialog;
 
-public class AddTextCustomDialogViewModel : ViewModelBase, ICloseable
+public class AddTextCustomDialogViewModel : ViewModelBase, IModalDialogViewModel, ICloseable
 {
     private string text = string.Empty;
     private bool? dialogResult;
