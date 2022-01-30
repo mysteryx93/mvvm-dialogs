@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using MvvmDialogs.FrameworkDialogs;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace MvvmDialogs.DialogTypeLocators;
 
@@ -36,11 +37,10 @@ public class DialogManagerBase : IDialogManager
     }
 
     /// <inheritdoc />
-    public virtual async Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
+    public virtual async Task ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType)
     {
         var dialog = CreateDialog(ownerViewModel, viewModel, dialogType);
         await dialog.ShowDialogAsync().ConfigureAwait(true);
-        return viewModel.DialogResult;
     }
 
     /// <summary>
@@ -70,6 +70,7 @@ public class DialogManagerBase : IDialogManager
         {
             c.RequestClose += (_, _) => dialog.Close();
         }
+        // ReSharper disable once SuspiciousTypeConversion.Global
         if (viewModel is IActivable activable)
         {
             activable.RequestActivate += (_, _) => dialog.Activate();

@@ -25,7 +25,7 @@ public interface IDialogManager
     /// <param name="viewModel">The view model of the new dialog.</param>
     /// <param name="dialogType">The type of the dialog to show.</param>
     /// <returns>The dialog result.</returns>
-    Task<bool?> ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType);
+    Task ShowDialogAsync(INotifyPropertyChanged ownerViewModel, IModalDialogViewModel viewModel, Type dialogType);
 
     /// <summary>
     /// Shows a framework dialog whose type depends on the settings type.

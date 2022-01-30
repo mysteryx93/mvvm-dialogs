@@ -12,7 +12,7 @@ internal class FrameworkDialogsApi : IFrameworkDialogsApi
     public Task<ButtonResult> ShowMessageBox(Window owner, MessageBoxApiSettings settings) =>
         MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams() {
             ContentTitle = settings.Title,
-            ContentMessage = settings.Text,
+            ContentMessage = settings.Text + " ",
             ButtonDefinitions = settings.Buttons,
             Icon = settings.Icon,
             WindowStartupLocation = settings.StartupLocation,

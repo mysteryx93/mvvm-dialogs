@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Avalonia;
@@ -46,7 +47,7 @@ public class DialogService : DialogServiceBase
     }
 
     private static IEnumerable<Window> Windows =>
-        ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).Windows;
+        (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Windows ?? Array.Empty<Window>();
 
     /// <inheritdoc />
     protected override IWindow? FindWindowByViewModel(INotifyPropertyChanged viewModel) =>

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace MvvmDialogs.FrameworkDialogs;
+﻿namespace MvvmDialogs.FrameworkDialogs;
 
 /// <summary>
 /// Interface responsible for creating framework dialogs.
